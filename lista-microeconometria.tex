@@ -1,0 +1,1323 @@
+\documentclass[11pt,oneside,a4paper]{article}
+% \documentclass[11pt,oneside,a4paper]{letter}
+\usepackage[a4paper, margin=1in]{geometry}   % MARGENS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pacotes básicos 
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage[brazilian]{babel}
+% \selectlanguage{english}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{mathtools, latexsym}
+% \usepackage{mathabx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pacotes de citações
+\usepackage{natbib}	% Citações}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{lscape}				% Gira a página em 90 graus
+%\usepackage{listings}			% Formatação para inserir códigos
+\usepackage[normalem]{ulem}
+\usepackage[all]{xy}
+\usepackage{xcolor}
+\usepackage{ragged2e}           % formatação texto
+\usepackage{bm}                 % bold symbols 
+\usepackage[colorlinks, citecolor=blue, urlcolor=blue, linkcolor=red]{hyperref} % referencias dentro do texo (*QUEBRA MEMOIR*)
+\usepackage{url}                % URL
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{subcaption}			% Faz subfiguras
+\usepackage{textcase}			% MakeTextUppercase
+%\usepackage{subfigure}         % subfigures
+% \usepackage{setspace}         % Espaçamento
+\usepackage{pdfpages}           % inclui páginas de pdfs (*FICHA CATALOGRAFICA*)
+\usepackage[flushleft]{threeparttable} % notas nas tabelas
+\usepackage{enumitem}
+\usepackage[sharp]{easylist}
+\usepackage{titling}          % personalized other things
+\usepackage{fancyhdr}         % personalized page style
+\usepackage{lipsum}           % dummy text
+% \usepackage{exercise}       % exercises
+% \usepackage[displaymath, pagewise]{lineno}           % show line numbers
+\usepackage[pagewise]{lineno}           % show line numbers
+% \linenumbers
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{../macros.tex}
+% \pagestyle{headings}
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% METADATA
+\title{Lista Microeconometria}
+\author{Paulo F. Naibert}
+% \date{25/06/2020}
+% \date{\today}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\pagenumbering{gobble}
+
+\begin{center}
+\textbf{UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL}
+\\
+\textbf{PROGRAMA DE PÓS-GRADUAÇÃO em ECONOMIA}
+\\
+\textbf{Microeconometria -- 2015/3}
+
+\vfill
+\textbf{LISTA DE EXERCÍCIOS}
+
+\vfill
+\textbf{Autor: Paulo Ferreira Naibert } 
+\\
+\textbf{Professor: Hudson Torrent} 
+
+
+\end{center}
+
+\vfill
+
+\begin{center}
+\textbf{Porto Alegre \\ 25/06/2020 \\ Revisão: \today}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pagenumbering{arabic}
+\section{Panel Data and FGLS}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 1:}
+Estabeleça o modelo de equações lineares, definindo a notação matricial para dados em painel.
+Explique quais as hipóteses adequadas para a implementação do estimador \textbf{GLS} em um sistema de dados de painel.
+Explique como implementear esse estimador na prática (\textbf{FGLS}).
+Explique também como calular a matriz de covariância de $\mbs{\widehat{\beta}}_{FGLS}.$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo de equações lineares} 
+
+\vspace{-1.5 em}
+\begin{align*}
+	\mbs{y}_{i} &= X_{i} \mbs{\beta} + \mbs{u}_{i},
+\end{align*}
+
+\noindent
+com $i = 1, \dots, N$.
+Cada $i$ tem $G=T$ equações temporais.
+$G=T$ para dados em painel, onde $T$ é o número de equações temporais..
+
+
+\vspace{-1.5 em}
+\begin{align*}
+	y_{it} &= \mbs{x}^{\prime}_{it} \mbs{\beta} + u_{it}
+	\\
+	 &= x_{i1} \beta_{1} + \dots + x_{iK} \beta_{K} + u_{it}
+\end{align*}
+com	$i = 1, \dots, N$ e	$t = 1, \dots, T$.
+
+\vspace{1 em}
+Em notação matricial para um painel:
+
+\vspace{-1.5 em}
+\begin{align*}
+	X_{i} =
+	\begin{pmatrix}
+		x_{i1}, x_{i2}, \dots, x_{it}
+	\end{pmatrix}
+\end{align*}
+
+Um exemplo de equação com intercepto mais 3 variáveis num intervalo de tempo com $T=5$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\begin{bmatrix}
+y_{i 1} \\ y_{i 2} \\ y_{i 3} \\ y_{i 4} \\ y_{i 5}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	1 & x_{1i1} & x_{2i1} & x_{3i1}	\\
+	1 & x_{1i2} & x_{2i2} & x_{3i2} \\
+	1 & x_{1i3} & x_{2i3} & x_{3i3} \\
+	1 & x_{1i4} & x_{2i4} & x_{3i4} \\
+	1 & x_{1i5} & x_{2i5} & x_{3i5}
+\end{bmatrix}
+\begin{bmatrix}
+	\beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3}
+\end{bmatrix}
++
+\begin{bmatrix}
+	u_{1} \\ u_{2} \\ u_{3} \\ u_{4} \\ u_{5}
+\end{bmatrix}
+\end{align*}
+
+\noindent
+para $i = 1, \dots, N$.
+Podemos generalizar o modelo acima para $K$ variáveis e $T$ períodos de tempo.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hipóteses}
+
+Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipótese:
+
+\begin{enumerate}
+\item %1
+
+$E(X_{i} \otimes \mbs{u}_{i}) = 0$.
+
+Para SGLS ser consistente, precisamos que $\mbs{u}_{i}$ não seja correlacionada com nenhum elemento de $X_{i}$.
+
+\item %2
+
+$\Omega$ é positiva definida (para ter inversa).
+$E(X_{i}^{\prime} \Omega^{-1} X_{i})$ é \textbf{não} singular (para ter invesa).
+
+Onde, $\Omega$ é a seguinte matriz \textbf{simétrica}, positiva-definida:
+
+\vspace{-1.5 em}
+\begin{align*}
+\Omega = E(\mbs{u}_{i} \mbs{u}_{i}^{\prime}).
+\end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação}
+
+Agora, transformamos o sistema de equações ao realizarmos a pré-multiplicação do sistema por $\Omega^{-1/2}$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\Omega^{-1/2} \mbs{y}_{i} 
+&=
+\Omega^{-1/2} X_{i} \mbs{\beta}
++
+\Omega^{-1/2} \mbs{u}_{i}
+\\
+\mbs{y}_{i}^{*}
+&=
+X_{i}^{*} \mbs{\beta}
++
+\mbs{u}^{*}_{i}
+\end{align*}
+
+Estimando a equação acima por \textbf{SOLS}:
+
+\vspace{-1.5 em}
+\begin{align*}
+\beta^{SOLS}
+&=
+\left( \sum_{i=1} X_{i}^{*'} X_{i}^{*} \right)^{-1}
+\left( \sum_{i=1} X_{i}^{*'} \mbs{y}_{i}^{*} \right)
+\\
+&=
+\left( \sum_{i=1} X_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} X_{i} \right)^{-1}
+\left( \sum_{i=1} X_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} \mbs{y}_{i} \right)
+\\
+&=
+\left( \sum_{i=1} X_{i}^{'} \Omega^{-1} X_{i} \right)^{-1}
+\left( \sum_{i=1} X_{i}^{'} \Omega^{-1} \mbs{y}_{i} \right)
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{FSGLS: SGLS Factível}
+
+Para obtermos $\beta^{SGLS}$ precisamos conhecer $\Omega$, o que não ocorre na prática.
+Então, precisamos estimar $\Omega$ com um estimador consistente.
+Para tanto usamos um procedimento de dois passos:
+
+\begin{enumerate}
+\item  % Passo 1
+Estimar $\mbs{y}_{i} = X_{i} \mbs{\beta} + \mbs{u}_{i}$ via \textbf{SOLS} e guardar o resíduo estimado $\widehat{\mbs{u}_{i}}$.
+
+\item  %Passo 2
+Estimar $\Omega$ com o seguinte estimador $\widehat{\Omega}$:
+
+\vspace{-1.5 em}
+\begin{align*}
+	\widehat{\Omega} 
+	= 
+	N^{-1} \sum_{i=1}^{N} \mbs{u}_{i} \mbs{u}_{i}'
+\end{align*}
+\end{enumerate}
+
+Com a estimativa $\widehat{\Omega}$ feita, podemos obter $\beta^{FSGLS}$ pela fórmula do $\beta^{SGLS}$:
+
+\vspace{-1.5 em}
+\begin{align*}
+	\beta^{FGLS}
+	= 
+	\left[ 
+		\sum_{i} X_{i}' \widehat{\Omega}^{-1} X_{i}
+	\right]^{-1}
+	\left[ 
+		\sum_{i} X_{i}' \widehat{\Omega}^{-1} \mbs{y}_{i}
+	\right]
+\end{align*}
+
+Empilhando as $N$ observações:
+
+\vspace{-1.5 em}
+\begin{align*}
+\beta^{FGLS}
+= 
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \mbs{y} \right]
+\end{align*}
+
+Reescrevendo a equação acima:
+
+\vspace{-1.5 em}
+\begin{align*}
+\beta^{FGLS}
+&= 
+\left[  X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[  X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) (X \beta + u) \right]
+\\
+&= 
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left\{ 
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \beta \right]
+% \\
+% &
+\; +
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\right\}
+\\
+&= 
+\beta +
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Valor Esperado}
+
+\vspace{-1 em}
+\begin{align*}
+E(\beta^{FGLS})
+= 
+\beta +
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\end{align*}
+
+Concluímos que, se 
+$\widehat{\Omega} \xrightarrow{\enskip p \enskip} \Omega$,
+então,
+$\beta^{FSGLS} \xrightarrow{\enskip p \enskip} \beta$,
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância}
+
+\vspace{-1 em}
+\begin{align*}
+Var(\beta^{FGLS})
+&= 
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\left\{ 
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\right\}^{\prime}
+\\
+&=
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[
+X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) 
+u u'
+\left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X
+\right]
+\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\end{align*}
+
+Tirando o valor Esperado e supondo que:
+
+\vspace{-1.5 em}
+\begin{align*}
+E(X_{i} \Omega^{-1} u_{i} u_{i}' X_{i}) = E(X_{i} \Omega^{-1})
+\end{align*}
+temos:
+
+\vspace{-1.5 em}
+\begin{align*}
+E\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right)
+	u u'
+\left( I_{N} \otimes \widehat{\Omega}^{-1} \right)' X \right]
+=
+E(X' \Omega^{-1} X)
+\end{align*}
+e temos:
+
+\vspace{-1.5 em}
+\begin{align*}
+	Var(\beta^{FSGLS}) = \left[ E(X' \Omega^{-1} X \right]^{-1}.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{Endogeneity and GMM}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 2:}
+Explique o problema de endogeneidade.
+Ressalte quais características um bom instrumento deve possuir.
+A partir da explicação, motive e estabeleça o estimador \textbf{GMM} para dados em painel.
+Qual a variância assintótica desse estimador?
+Qual a escolha ótima de $W$?
+Indique quem é $W$ a fim de que o estimador de GMM coincida com o estimador de Variáveis Instrumentais.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+No seguinte modelo \textit{cross-section}:
+
+\vspace{-1 em}
+\begin{align} \label{mod1}
+	y_{i} = \beta_{0} + \beta_{1} x_{1i} + \beta_{2} x_{2i} + \err_{i}
+	\; ; \quad i = 1, \dots, N.
+\end{align}
+
+\noindent
+A variável explicativa $x_{k}$ é dita \textbf{endógena} se ela for correlacionada com erro.
+Se $x_{k}$ for não correlacionada com o erro, então $x_{k}$ é dita \textbf{exógena}.
+
+Endogeneidade surge, normalmente, de três maneiras diferentes:
+
+\begin{enumerate}\itemsep0pt
+	\item Variável Omitida;
+	\item Simultaneidade;
+	\item Erro de Medida.
+\end{enumerate}
+
+No modelo \eqref{mod1} vamos supor:
+
+\begin{itemize}\itemsep0pt
+	\item $x_{1}$ é exógena.
+	\item $x_{2}$ é endógena.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hipóteses}
+
+Assim, precisamos encontrar um instrumento $z_{i}$ para $x_{2}$, uma vez que queremos estimar $\beta_{0}$, $\beta_{1}$ e $\beta_{2}$ de maneira consistente.
+Para $z_{i}$ ser um bom instrumento precisamos que $z$ tenha:
+
+\begin{enumerate}\itemsep0pt
+\item $Cov(z, \err) = 0$ $\implies$  $z$ é exógena em \eqref{mod1}.
+\item $Cov(z, x_{2}) \neq 0$ $\implies$  correlação com $x_{2}$ após controlar para outras vaariáveis.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação}
+
+Indo para o problema de dados de painel, temos:
+
+\vspace{-1 em}
+\begin{align} \label{mod2}
+	\mbs{y}_{i} = X_{i} \mbs{\beta} + \mbs{u}_{i}
+	\; ; \quad i = 1, \dots, N.
+\end{align}
+
+\noindent
+onde 
+$\mbs{y}_{i}$ é um vetor $T \times 1$,
+$X_{i}$ é uma matriz $T \times K$,
+$\mbs{\beta}$ é o vetor de coeficientes $K \times 1$,
+$\mbs{u}_{i}$ é o vetor de erros $T \times 1$.
+
+Se é verdade que há endogeneidade em \eqref{mod2}, então:
+
+\vspace{-1 em}
+\begin{align*}
+	E(X_{i}^{\prime} \mbs{u}_{i}) \neq 0
+\end{align*}
+
+Definimos $Z_{i}$ como uma matriz $T \times L$ com $L \geq K$ de variáveis exógenas (incluindo o instrumento).
+Queremos acabar com a endogeneidade, ou seja:
+
+\vspace{-1 em}
+\begin{align*}
+	E(Z_{i}^{\prime} \mbs{u}_{i}) = 0
+\end{align*}
+
+Supondo $L = K$ (apenas substituímos a variável endógena por um instrumento).
+
+\vspace{-1 em}
+\begin{align*}
+E[ Z_{i}^{\prime} ( \mbs{y}_{i} - X_{i} \mbs{\beta} ) ] &= 0
+\\
+E( Z_{i}^{\prime} \mbs{y}_{i} ) - E( Z_{i}^{\prime} X_{i} ) \mbs{\beta} &= 0
+\\
+E( Z_{i}^{\prime} \mbs{y}_{i} ) &= E( Z_{i}^{\prime} X_{i} ) \mbs{\beta}
+\\
+\Aboxed{
+\mbs{\beta} &=
+\left[ E( Z_{i}^{\prime} X_{i} ) \right]^{-1}
+\left[ E( Z_{i}^{\prime} \mbs{y}_{i} ) \right]
+}
+\end{align*}
+
+Se Usarmos estimadores amostrais:
+
+\vspace{-1 em}
+\begin{align*}
+\mbs{\hat{\beta}} &=
+\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} X_{i} \right]^{-1}
+\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \mbs{y}_{i} \right]
+\\
+\Aboxed{
+\mbs{\hat{\beta}} &=
+( Z^{\prime} X )^{-1} ( Z^{\prime} \mbs{y} ) }
+\end{align*}
+
+\vspace{1 em}
+Se $L > K$, vamos considerar:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\mbs{\beta}}{\text{Min}} \;
+E( Z_{i}\mbs{u}_{i} )^2
+\end{align*}
+\noindent onde:
+
+\vspace{-1 em}
+\begin{align*}
+E( Z_{i}\mbs{u}_{i} )^2 
+&=
+E[ ( Z_{i}\mbs{u}_{i} )' ( Z_{i}\mbs{u}_{i} ) ]
+=
+( Z' \mbs{y} - Z' X \mbs{\beta} )' ( Z' \mbs{y} - Z' X \mbs{\beta} )
+\\
+&=
+\mbs{y}' ZZ' \mbs{y}
+-
+\mbs{y}' ZZ' X \mbs{\beta}
+-
+\mbs{\beta}' X' ZZ' \mbs{y}
++
+\mbs{\beta}' X' ZZ' X \mbs{\beta}
+\end{align*}
+
+Derivando em relação em $\mbs{\beta}$ e igualando a zero:
+
+\vspace{-1 em}
+\begin{align*}
+-2 \mbs{y}' ZZ' X + 2 \mbs{\beta}'X' ZZ' X &= 0
+\\
+\mbs{\beta}'X' ZZ' X &= \mbs{y}' ZZ' X 
+\\
+\mbs{\beta}' &= ( \mbs{y}' ZZ' X ) ( X' ZZ' X )^{-1}
+\\
+\Aboxed{
+\mbs{\beta} &= ( X' ZZ' X )^{-1} ( X' ZZ' \mbs{y} ) }
+\end{align*}
+
+Um estimador mais eficiente pode ser encontrado fazendo:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\mbs{\beta}}{\text{Min}} \;
+E[ ( Z_{i}' \mbs{y} - Z' X \mbs{\beta} )' W ( Z_{i}' \mbs{y} - Z' X \mbs{\beta} ) ].
+\end{align*}
+
+\noindent
+Escolhendo $\widehat{W}$, a priori, temos:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\mbs{\beta}}{\text{Min}} \;
+\left\{ 
+\mbs{y}' Z \widehat{W} Z' \mbs{y}
+-
+\mbs{y}' Z \widehat{W} Z' X \mbs{\beta}
+-
+\mbs{\beta}' X'  Z \widehat{W} Z' \mbs{y}
++
+\mbs{\beta}' X'  Z \widehat{W} Z' X \mbs{\beta}
+\right\}
+\end{align*}
+
+Derivando em relação em $\mbs{\beta}$ e igualando a zero:
+
+\vspace{-1 em}
+\begin{align*}
+-2 \mbs{y}' Z \widehat{W} Z' X + 2 \mbs{\beta}'X' Z \widehat{W} Z' X &= 0
+\\
+\mbs{\beta}'X' Z \widehat{W} Z' X &= \mbs{y}' Z \widehat{W} Z' X 
+\\
+\mbs{\beta}' &= ( \mbs{y}' Z \widehat{W} Z' X ) ( X' Z \widehat{W} Z' X )^{-1}
+\\
+\Aboxed{
+\mbs{\beta}^{GMM} &= ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \mbs{y} ) }
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Valor Esperado} 
+
+\vspace{-1 em}
+\begin{align*}
+\Aboxed{
+E( \mbs{\beta}^{GMM} ) &=
+\mbs{\beta} +
+E[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \mbs{u} ) ] }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância} 
+
+\vspace{-1 em}
+\begin{align*}
+Var( \mbs{\beta}^{GMM} ) &=
+E \left\{ 
+\left[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \mbs{u} ) \right]
+\left[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \mbs{u} ) \right]'
+\right\}
+\\ &=
+E \left\{ 
+( X' Z \widehat{W}' Z' X )^{-1}
+X' Z \widehat{W}' Z' \mbs{u} \mbs{u}' Z \widehat{W} Z' X 
+( X' Z \widehat{W} Z' X )^{-1}
+\right\}.
+\end{align*}
+
+\noindent
+Definindo $\Delta = E(Z' \mbs{u}\mbs{u}' Z)$ com $\Delta = W^{-1}$:
+
+\vspace{-1 em}
+\begin{align*}
+Var( \mbs{\beta}^{GMM} ) &=
+E \left\{ 
+( X' Z \widehat{W}' Z' X )^{-1}
+X' Z \widehat{W}' W^{-1} \widehat{W} Z' X 
+( X' Z \widehat{W} Z' X )^{-1}
+\right\}
+\\ &=
+E \left\{ 
+( X' Z \widehat{W}' Z' X )^{-1}
+( X' Z \widehat{W}' Z' X )
+( X' Z \widehat{W} Z' X )^{-1}
+\right\}.
+\\
+\Aboxed{
+Var( \mbs{\beta}^{GMM} ) &=
+E \left[
+( X' Z \widehat{W} Z' X )^{-1}
+\right] }.
+\end{align*}
+
+\noindent
+Se tivéssemos definido $W = (Z'Z)^{-1}$, teríamos $\beta^{2SLS}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{Random Effects (RE, EA)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 3:}
+Usando o problema de variável omitida como motivação (heterogeneidade não observada), explique o modelo de \textbf{Efeitos Aleatórios} para dados em painel.
+Explicite as hipóteses necessárias e indique o estimador apropriado para esse modelo, enfatizando as característica do estimador GLS.
+Como podemos fazer inferência nesse caso?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+O modelo linear de \textbf{efeitos não observados}:
+
+\vspace{-1 em}
+\begin{align} \label{mod1:EA}
+	y_{it} = \mbs{x}_{it} \mbs{\beta} + c_{i} + u_{it},
+\end{align}
+
+\noindent
+onde
+$t = 1, \dots, T$ e $i = 1, \dots, N$.
+
+O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
+Abordamos esse componente como parte do erro, não como parâmetro a ser estimado.
+Para a análise de \textbf{Efeitos Aleatórios, (EA) ou (RE)}, supomos que os regressões $\mbs{x}_{it}$ são \textbf{não correlacionados} com $c_{i}$, mas fazemos hipóteses mais restritas que o \textbf{POLS}; pois assim exploramos a presença de \textbf{correlação serial} do erro composto por GLS e garantimos a consitência do estimador de FGLS.
+
+Podemos reescrever \eqref{mod1:EA} como:
+
+\vspace{-1 em}
+\begin{align} \label{mod2:EA}
+	y_{it} = \mbs{x}_{it} \mbs{\beta} + v_{it},
+\end{align}
+
+\noindent
+onde
+$t = 1, \dots, T$, $i = 1, \dots, N$ e $\boxed{v_{it} = c_{i} + u_{it}}$ é o erro composto.
+
+Agora, vamos empilhar os $t$'s e reescrever \eqref{mod2:EA} como:
+
+\vspace{-1 em}
+\begin{align} \label{mod3:EA}
+	\mbs{y}_{i} = X_{i} \mbs{\beta} + \mbs{v}_{i},
+\end{align}
+
+\noindent
+onde
+$i = 1, \dots, N$ e $\boxed{\mbs{v}_{i} = c_{i} \mbs{1}_{T} + \mbs{u}_{i}}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hipóteses de $\mbs{\widehat{\beta}}^{RE}$}
+
+As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{RE}$ são:
+
+\begin{enumerate}
+\setlength\itemsep{.5 em}
+
+\item  
+	Usamos o modelo correto e $c_{i}$ não é endógeno.
+
+\begin{enumerate}[alph]
+\item 
+	$E( u_{it} \, | \,  x_{i1}, \dots, x_{iT}, c_{i} ) = 0$,
+	$i = 1, \dots, N$.
+\item        
+	$E( c_{it} \, | \, x_{i1}, \dots, x_{iT} ) = E( c_{i} ) = 0$,
+	$i = 1, \dots, N$.
+\end{enumerate}
+
+\item  Posto completo de $E( X_{i}' \Omega^{-1} X_{i} )$.
+
+Definindo a matriz $T \times T$, $\boxed{\Omega \equiv E(\mbs{v}_{i} \mbs{v}_{i}')}$, queremos que $E( X_{i} \Omega^{-1} X_{i} )$ tenha posto completo (posto = $K$).
+\end{enumerate}
+
+A matriz $\Omega$ é simétrica $\Omega' = \Omega$ e positiva definida $\det(\Omega) > 0$.
+Assim podemos achar $\Omega^{1/2}$ e $\Omega^{-1/2}$ com $\Omega = \Omega^{1/2} \Omega^{1/2}$ e $\Omega^{-1} = \Omega^{-1/2} \Omega^{-1/2}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação}
+
+Premultiplicando \eqref{mod3:EA} port $\Omega^{-1/2}$ do dois lados, temos:
+
+\vspace{-1 em}
+\begin{align} 
+\notag
+\Omega^{-1/2}\mbs{y}_{i} &= \Omega^{-1/2}X_{i} \mbs{\beta} + \Omega^{-1/2}\mbs{v}_{i}
+\\
+\label{mod4:EA}
+\mbs{y}_{i}^{*} &= X_{i}^{*} \mbs{\beta} + \mbs{v}_{i}^{*},
+\end{align}
+
+Estimando o modelo acima por POLS:
+
+\vspace{-1 em}
+\begin{align} 
+\notag
+\mbs{\beta}^{POLS} &= 
+\left( \sum_{i=1}^{N} X_{i}^{*}' X_{i}^{*} \right)^{-1}
+\left( \sum_{i=1}^{N} X_{i}^{*}' \mbs{y}_{i}^{*} \right)
+\\ \notag
+&=
+\left( \sum_{i=1}^{N} X_{i}' \Omega^{-1} X_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} X_{i}' \Omega^{-1} \mbs{y}_{i} \right)
+\\ \label{beta:RE:1}
+&=
+\left( X' (I_{N} \otimes \Omega^{-1}) X \right)^{-1}
+\left( X' (I_{N} \otimes \Omega^{-1}) \mbs{y} \right).
+\end{align}
+
+O problema, agora, é estimar $\Omega$.
+Supondo:
+\begin{itemize}\itemsep0pt
+\item $E(u_{it}u_{it}) = \sigma_{u}^{2}$;
+\item $E(u_{it}u_{is}) = 0$.
+\end{itemize}
+Como $\Omega = E(\mbs{v}_{i} \mbs{v}_{i}') = E[ ( c_{i} \mbs{1}_{T} + \mbs{u}_{i} ) ( c_{i} \mbs{1}_{T} + \mbs{u}_{i} )' ]$, temos que:
+
+\vspace{-1 em}
+\begin{align*} 
+E(v_{it}v_{it}) &=
+	E( c_{i}^{2} + 2c_{i} u_{it} + u_{it}^{2}) 
+	=
+	\sigma_{c}^{2} + \sigma_{u}^{2}
+\\
+E(v_{it}v_{is})	&=
+	E[ ( c_{i} + u_{it} ) ( c_{i} + u_{is} ) ]
+	=
+	E( c_{i}^{2} + c_{i} u_{is} + u_{it} c_{i} + u_{it} u_{is} )
+	=
+	\sigma_{c}^{2}.
+\end{align*}
+
+Assim, 
+
+\vspace{-1 em}
+\begin{align*}
+\Omega 
+= 
+E(\mbs{v}_{i} \mbs{v}_{i}') = \sigma^{2}_{u} I_{T} + \sigma_{c}^{2} \mbs{1}_{T} \mbs{1}_{T}'
+\end{align*}
+
+\noindent
+onde
+$\sigma^{2}_{u} I_{T}$ 
+é uma matriz diagonal, e 
+$\sigma_{c}^{2} \mbs{1}_{T} \mbs{1}_{T}'$ é uma matriz com todos os elementos iguais a $\sigma_{c}^{2}$.
+
+Agora, rodando POLS em \eqref{mod3:EA} e guardando os resíduos, temos:
+
+\vspace{-1 em}
+\begin{align*}
+\hat{v}_{it}^{POLS}
+= 
+\hat{y}_{it}^{POLS} - \mbs{x}_{it} \mbs{\hat{\beta}}^{POLS}
+\end{align*}
+
+\noindent
+e conseguimos estimar $\sigma_{v}^{2}$ e $\sigma_{c}^{2}$ por estimadores amostrais:
+
+\begin{itemize}\itemsep0pt
+\item 
+como $\sigma_{v}^{2} = E(v_{it}^{2})$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\hat{\sigma}_{v}^{2} =
+(NT - K)^{-1} 
+\sum_{i=1}^{N}
+\sum_{t=1}^{T}
+\hat{v}_{it}^2
+\end{align*}
+\vspace{-1.5 em}
+
+\item 
+como $\sigma_{c}^{2} = E(v_{it} v_{is})$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\hat{\sigma}_{c}^{2} =
+\left[ N \frac{T ( T-1 )}{2} - K  \right]^{-1}
+\sum_{i=1}^{N}
+\sum_{t=1}^{T-1}
+\sum_{s=t+1}^{T}
+\hat{v}_{it} \hat{v}_{is}
+\end{align*}
+\vspace{-1.5 em}
+
+\item $N$ indivíduos;
+
+\item $T$ elementos da diagonal principal de $\Omega$
+
+\item $\frac{T ( T - 1)}{2}$ elementos da matriz triangular superior dos elementos fora da diagonal.
+
+\item $K$ regressores.
+\end{itemize}
+
+Agora que temos $\hat{\sigma}^2_{v}$ e $\hat{\sigma}^2_{c}$ podemos achar $\hat{\sigma}^{2}_{u}$ pela equação $\boxed{\hat{\sigma}_{u}^{2} = \hat{\sigma}_{v}^{2} - \hat{\sigma}_{c}^{2}}$.
+Dessa forma, achamos os $T^2$ elementos de $\widehat{\Omega}$, e podemos escrever:
+
+\vspace{-1 em}
+\begin{align*}
+\widehat{\Omega}
+= 
+\hat{\sigma}^{2}_{u} I_{T} + \hat{\sigma}_{c}^{2} \mbs{1}_{T} \mbs{1}_{T}'
+\end{align*}
+
+Com $\widehat{\Omega}$ estimado, reescrevemos \eqref{beta:RE:1} como:
+
+\vspace{-1 em}
+\begin{align} \label{beta:RE:2}
+\mbs{\beta}^{RE} = 
+\left[ X' (I_{N} \otimes \widehat{\Omega}^{-1}) X \right]^{-1}
+\left[ X' (I_{N} \otimes \widehat{\Omega}^{-1}) \mbs{y} \right].
+\end{align}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Valor Esperado}
+
+\vspace{-1 em}
+\begin{align*}
+	\Aboxed{
+E( \mbs{\beta}^{RE} ) = 
+\mbs{\beta} +
+\left[ X' (I_{N} \otimes \widehat{\Omega}^{-1}) X \right]^{-1}
+\left[ X' (I_{N} \otimes \widehat{\Omega}^{-1}) \mbs{v} \right] }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância}
+
+\vspace{-1 em}
+\begin{align*} 
+Var( \mbs{\beta}^{RE} ) = 
+E
+\left\{ 
+\left[ X' ( I_{N} \otimes \widehat{\Omega}^{-1} ) X \right]^{-1}
+\left[
+X' ( I_{N} \otimes \widehat{\Omega}^{-1} )
+\mbs{v} \mbs{v}'
+( I_{N} \otimes \widehat{\Omega}^{-1} )' X
+\right]
+\left[ X' ( I_{N} \otimes \widehat{\Omega}^{-1} ) X \right]
+\right\},
+\end{align*}
+
+\noindent
+como $E( \mbs{v}_{i} \mbs{v}_{i}' ) =\Omega$,
+
+\vspace{-1 em}
+\begin{align*} 
+	\Aboxed{
+Var( \mbs{\beta}^{RE} ) = 
+E
+\left[ X' ( I_{N} \otimes \widehat{\Omega}^{-1} ) X \right] }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{Fixed Effects (EF, FE)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 4:}
+Usando o problema de variável omitida como motivação (heterogeneidade não observada), explique o modelo de \textbf{Efeitos Fixos} para dados em painel.
+Explicite as hipóteses necessárias e indique o estimador apropriado para esse modelo.
+Como podemos fazer inferência nesse caso?
+Como podemos fazer inferência robusta nesse caso?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+O modelo linear de \textbf{efeitos não observados}:
+
+\vspace{-1 em}
+\begin{align} \label{mod1:FE}
+	y_{it} = \mbs{x}_{it} \mbs{\beta} + c_{i} + u_{it},
+\end{align}
+
+\noindent
+onde
+$t = 1, \dots, T$ e $i = 1, \dots, N$.
+
+O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
+Abordamos esse componente como parte do erro, não como parâmetro a não observado.
+No caso da análise de \textbf{Efeitos Fixos (EF, FE)}, permitimos que esse componente $c_{i}$ seja correlacionado com $\mbs{x}_{it}$.
+Assim, se decidíssemos estimar o modelo \eqref{mod1:FE} por POLS, ignorando $c_{i}$, teríamos problemas de inconsistência devido a \textbf{endogeneidade}.
+
+As $T$ equações do modelo \eqref{mod1:FE} podem ser reescritas como:
+
+\vspace{-1 em}
+\begin{align} \label{mod2:FE}
+	\mbs{y}_{i} = X_{i} \mbs{\beta} + c_{1} \mbs{1}_{T} + \mbs{u}_{i},
+\end{align}
+
+\noindent
+com
+$\mbs{v}_{i} = c_{i} \mbs{1}_{T} + \mbs{u}_{i}$ sendo os erros compostos.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Matriz $M^{0}$}
+
+Definimos a matriz $M^{0}$ como:
+
+\vspace{-1 em}
+\begin{align*}
+	M^{0} &=
+	I_{T} - T^{-1} \mbs{1}_{T} \mbs{1}_{T}'
+	=
+	I_{T} - \mbs{1}_{T} (\mbs{1}_{T}' \mbs{1}_{T})^{-1} \mbs{1}_{T}'.
+\end{align*}
+
+\noindent
+A matriz $M^{0}$ é idempotente e simétrica.
+
+\begin{align*}
+	M^{0} \mbs{x} &= \mbs{x} - \overline{\mbs{x}} \mbs{1}_{T}
+	= \ddot{\mbs{x}}.
+\end{align*}
+
+Podemos transformar o modelo \eqref{mod2:FE} ao premultiplicarmos todo o modelo por $M^{0}$.
+
+\vspace{-1 em}
+\begin{align*} 
+M^{0} \mbs{y}_{i} &= M^{0} X_{i} \mbs{\beta} + M^{0} ( c_{1} \mbs{1}_{T} ) + M^{0} \mbs{u}_{i},
+\quad i = 1, \dots, N.
+\end{align*}
+
+\vspace{-1 em}
+\begin{align*} 
+M^{0} ( c_{1} \mbs{1}_{T} ) = 
+( I_{T} - T^{-1} \mbs{1}_{T} \mbs{1}_{T}' ) c_{i} \mbs{1}_{T} 
+=
+c_{i} \mbs{1}_{T} - T^{-1} c_{i} \mbs{1}_{T} \mbs{1}_{T}' \mbs{1}_{T} 
+=
+c_{i} \mbs{1}_{T} - c_{i} \mbs{1}_{T} 
+\implies
+\boxed{ M^{0} ( c_{1} \mbs{1}_{T} ) = 0 }
+\end{align*}
+
+\vspace{-1 em}
+\begin{align} \label{mod2:FE}
+\ddot{\mbs{y}}_{i} &= \ddot{X}_{i} \mbs{\beta} + \ddot{\mbs{u}_{i}},
+\quad i = 1, \dots, N.
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação POLS}
+
+Aplicando POLS no modelo \eqref{mod2:FE}
+
+\vspace{-1 em}
+\begin{align} \label{beta:pols:FE}
+\Aboxed{
+\mbs{\beta}^{FE} =
+\left[ \sum_{i=1}^{N} \ddot{X}_{i}' \ddot{X}_{i} \right]^{-1}
+\left[ \sum_{i=1}^{N} \ddot{X}_{i}' \ddot{\mbs{y}}_{i} \right]
+}
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hipóteses}
+
+As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{FE}$ são:
+
+\begin{description}
+\setlength\itemsep{.5 em}
+
+\item [FE.1:] Exogeneidade Estrita:
+$E( u _{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
+
+\item  [FE.2:] Posto completo de $E( X_{i}' \Omega^{-1} X_{i} )$ (para inverter a matriz).
+$posto[ E( X_{i} \Omega^{-1} X_{i} ) ]  = K$.
+
+\item [FE.3:] Homoscedasticidade:
+	$E(\mbs{u}_{i} \mbs{u}_{i}' \,|\, X_{i}, c_{i}) = \sigma_{u}^{2} I_{T}$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Valor Esperado}
+Usando \textbf{FE.1} e \textbf{FE.2}, apenas.
+
+\vspace{-1 em}
+\begin{align*}
+E( \mbs{\beta}^{FE} ) &=
+\mbs{\beta} +
+E\left[
+\left( \sum_{i=1}^{N} \ddot{X}_{i}' \ddot{X}_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \ddot{X}_{i}' \ddot{\mbs{u}}_{i} \right)
+\right]
+\\
+\Aboxed{
+E( \mbs{\beta}^{FE} ) &=
+\mbs{\beta} +
+E \left[ ( \ddot{X}' \ddot{X} )^{-1} (\ddot{X}' \ddot{\mbs{u}}) \right]
+}
+\end{align*}
+
+\noindent
+Sabendo que 
+$\ddot{X} = ( I_{N} \otimes M^{0} ) X$
+e
+$\ddot{\mbs{u}} = ( I_{N} \otimes M^{0} ) \mbs{u}$,
+definimos:
+
+\vspace{-1 em}
+\begin{align*}
+E( \mbs{\beta}^{FE} ) &=
+\mbs{\beta} +
+E \left\{
+\left[  
+X' ( I_{N} \otimes M^{0} )( I_{N} \otimes M^{0} ) X 
+\right]^{-1}
+\left[ 
+X' ( I_{N} \otimes M^{0} )( I_{N} \otimes M^{0} ) \mbs{u}
+\right]
+\right\}
+\\
+\Aboxed{
+E( \mbs{\beta}^{FE} ) &=
+\mbs{\beta} +
+E \left\{
+\left[  
+X' ( I_{N} \otimes M^{0} ) X 
+\right]^{-1}
+\left[ 
+X' ( I_{N} \otimes M^{0} ) \mbs{u}
+\right]
+\right\} }
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância}
+
+Usamos a variância do estimador para inferência.
+Usando \textbf{FE.1} e \textbf{FE.2}, apenas:
+
+\vspace{-1 em}
+\begin{align*} 
+	\Aboxed{
+Var( \mbs{\beta}^{FE} ) = 
+E \left[
+( \ddot{X}' \ddot{X} )^{-1}
+(\ddot{X}' \ddot{\mbs{u}}) (\ddot{\mbs{u}}' \ddot{X} )
+( \ddot{X}' \ddot{X} )^{-1} 
+\right]}
+\end{align*}
+
+
+\begin{description}
+\item [Pão:]
+\begin{align*}
+E\left[ ( \ddot{X}' \ddot{X} )^{-1} \right] &=
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+\\ &=
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+\end{align*}
+
+\item [Recheio:]
+\begin{align*}
+E\left[
+(\ddot{X}' \ddot{\mbs{u}}) (\ddot{\mbs{u}}' \ddot{X} ) 
+\right] 
+&=
+E \left[
+X' ( I_{N} \otimes M^{0} ) ( I_{N} \otimes M^{0} ) 
+\mbs{u} \mbs{u}'
+( I_{N} \otimes M^{0} ) ( I_{N} \otimes M^{0} ) X
+\right]
+\\ &=
+E \left[
+X' ( I_{N} \otimes M^{0} ) \mbs{u} \mbs{u}' ( I_{N} \otimes M^{0} ) X
+\right]
+\end{align*}
+\end{description}
+
+\vspace{-1 em}
+\begin{align*} 
+Var( \mbs{\beta}^{FE} ) &= \text{Pão Recheio Pão}
+\\ 
+\Aboxed{
+Var( \mbs{\beta}^{FE} ) &= 
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+E \left[
+X' ( I_{N} \otimes M^{0} ) \mbs{u} \mbs{u}' ( I_{N} \otimes M^{0} ) X
+\right]
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância sob Homocedasticidade}
+
+Usando \textbf{FE.3}, temos
+
+\begin{description}
+\item [Recheio':]
+\begin{align*}
+E \left[ X' ( I_{N} \otimes M^{0} ) \right]
+\sigma^2_{u} I_{NT}
+E \left[ ( I_{N} \otimes M^{0} ) X \right]
+=
+\sigma^2_{u}
+E \left[ X' ( I_{N} \otimes M^{0} ) X \right]
+\end{align*}
+\end{description}
+
+\noindent
+\red{ $( I_{N} \otimes M^{0} )$ é uma matrix de dimensão $NT \times NT$, visto que $I_{N}$ é $N\times N$ e $M^{0}$ é $T \times T$.}
+
+\vspace{-2 em}
+\begin{align*}
+Var( \mbs{\beta}^{FE} ) &= \text{Pão Recheio' Pão} 
+\\ &=
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+\sigma_{u}^{2} E\left[ X' ( I_{N} \otimes M^{0} ) X \right]
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+\\  &=
+E \left\{ \left[
+X' ( I_{N} \otimes M^{0} ) X
+\right]^{-1} \right\}
+\sigma_{u}^{2} I_{NT}
+\\
+\Aboxed{ Var( \mbs{\beta}^{FE} ) &= \sigma_{u}^{2} \cdot  E\left[ X' ( I_{N} \otimes M^{0} ) X \right] }
+\end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{First Difference (FD, PD)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 5:}
+Usando o problema de variável omitida como motivação (heterogeneidade não observada), explique o modelo de \textbf{Primeira Diferença} para dados em painel.
+Explicite as hipóteses necessárias e indique o estimador apropriado para esse modelo.
+Como podemos fazer inferência nesse caso?
+Como podemos fazer inferência robusta nesse caso?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{Strict Exogeneity, IV}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 6:}
+Explique a hipótese de exogeneidade estrita dos regressores.
+Em seguida, argumente mostrando que a hipótese de exogeneidade estrita não se sustenta no seguinte modelo:
+
+\vspace{-1.5 em}
+\begin{align*}
+y_{it} 
+=
+\mbs{z}_{it} \mbs{\gamma}
++
+\rho y_{i t - 1}
++ 
+c_{i} + u_{i t}.
+\end{align*}
+\vspace{-1.5 em}
+
+Explique detalhadamente como esse modelo pode ser estimado a partir da combinação entre Variáveis Instrumentais e método da Primeira Diferença.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{Latent Variables, Probit and Logit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 7:}
+Usando a motivação de uma \textbf{variável latente}, motive a construção do estimador \textbf{LOGIT/PROBIT}.
+Explique o procedimento de estimação de verossimilhança que caracteriza o estimador.
+Inclua em sua explicação o resultado da distribuição assintótica de 
+$\sqrt{n}(\mbs{ \theta } - \mbs{\theta}_{0})$.
+Ressalte a forma mais simples da variância assintótica desse estimador, devido ao fato de ser um estimador de máxima verossimilhança.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section{ATT, ATE, Propensity Score}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{Questão 8:}
+Explique como estimar o efeito médio do tratamente ($\tau_{ATE}$) e o efeito médio do tratamento sobre o tratado ($\tau_{ATT}$), considerando a hipótese de Ignorabilidade do Tratamento condicional a um conjunto de covariáveis.
+Aborde o método \textit{Propensity Score}.
+Discuta a importância do hipótese \textit{Overlap} para a aplicabilidae desse estimador.
+Explique resumidamente como o \textit{Propensity Score} pode ser estimado.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{equation}{0}
+\section*{Appêndice}
+
+\begin{align*}
+\mbs{1}_{N}' \mbs{1}_{N} = N
+\quad ; \qquad
+\mbs{1}_{N} \mbs{1}_{N}' =
+\begin{bmatrix}
+	1 & \dots & 1	 \\
+	\vdots & \ddots & \vdots \\
+	1 & \dots & 1	
+\end{bmatrix}_{N \times N}
+\end{align*}
+
+Defining $\mbs{x}$ with dimension $1 \times N$:
+
+\begin{align*}
+\mbs{x} = 
+\begin{bmatrix}
+x_{1} \\ \vdots \\ x_{N}	
+\end{bmatrix}
+\end{align*}
+
+% SUM
+\begin{align*}
+\mbs{x}' \mbs{1}_{N} = 
+\mbs{1}_{N}' \mbs{x} = 
+(\mbs{x}' \mbs{1}_{N})' = 
+\sum_{i=1}^{N} x_{i}
+\end{align*}
+
+% Matrix
+\begin{align*}
+\mbs{1}_{N} \mbs{x}' =
+\begin{bmatrix}
+	x_{1} & \dots & x_{N} \\
+	\vdots & \ddots & \vdots \\
+	x_{1} & \dots & x_{N}	
+\end{bmatrix}_{N \times N}
+\; ; \qquad
+\mbs{x} \mbs{1}_{N}' =
+\begin{bmatrix}
+	x_{1} & \dots & x_{1} \\
+	\vdots & \ddots & \vdots \\
+	x_{N} & \dots & x_{N}	
+\end{bmatrix}_{N \times N}
+\end{align*}
+
+\begin{align*}
+E( \mbs{x} ) = \overline{\mbs{x}} = N^{-1} \sum_{i=1}^{N} x_{i} = N^{-1} \mbs{x}'\mbs{1}_{N}
+\end{align*}
+
+\subsection*{Important Idempotent Matrices}
+\begin{align*}
+	M^{0} &= 
+	I_{N} - \mbs{1}_{N} ( \mbs{1}_{N}' \mbs{1}_{N} )^{-1} \mbs{1}_{N}'
+	= 
+	I_{N} - N^{-1} \mbs{1}_{N} \mbs{1}_{N}' 
+\end{align*}
+
+A Matriz $M^{0}$ é \textbf{idempotente} e \textbf{simétrica}.
+
+\begin{description}\itemsep0pt
+\item [Idempotência:] $AA = A$
+\item [Simetria:] $A'=A$
+\end{description}
+
+
+\begin{align*}
+M^{0} \mbs{x} &= 
+( I_{N} - N^{-1} \mbs{1}_{N} \mbs{1}_{N}' ) \mbs{x} 
+= 
+\mbs{x} - N^{-1} \mbs{1}_{N} (\mbs{1}_{N}' \mbs{x}) 
+=
+\mbs{1}_{N} \overline{\mbs{x}}
+=
+\begin{bmatrix}
+\overline{\mbs{x}} \\ \vdots \\ \overline{\mbs{x}}
+\end{bmatrix}
+\end{align*}
+
+%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  %   Bibliografia
+%  \clearpage
+%  \bibliographystyle{authordate3} % bibliography style
+%  \renewcommand\bibname{REFERENCES} 
+%  \bibliography{../refs.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+
