@@ -51,6 +51,8 @@
 \input{../macros.tex}
 % \pagestyle{headings}
 \pagestyle{fancy}
+\numberwithin{equation}{section}
+% \setcounter{equation}{0}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Begin
@@ -364,7 +366,6 @@ e temos:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section{Endogeneity and GMM}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -621,7 +622,6 @@ Se tivéssemos definido $W = (Z'Z)^{-1}$, teríamos $\beta^{2SLS}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section{Random Effects (RE, EA)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -881,7 +881,6 @@ E
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section{Fixed Effects (EF, FE)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -995,7 +994,7 @@ As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{FE}$ são:
 $E( u _{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
 
 \item  [FE.2:] Posto completo de $E( X_{i}' \Omega^{-1} X_{i} )$ (para inverter a matriz).
-$posto[ E( X_{i} \Omega^{-1} X_{i} ) ]  = K$.
+$posto[ E( X_{i}' \Omega^{-1} X_{i} ) ]  = K$.
 
 \item [FE.3:] Homoscedasticidade:
 	$E(\mbs{u}_{i} \mbs{u}_{i}' \,|\, X_{i}, c_{i}) = \sigma_{u}^{2} I_{T}$.
@@ -1164,7 +1163,6 @@ X' ( I_{N} \otimes M^{0} ) X
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section{First Difference (FD, PD)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1176,9 +1174,191 @@ Como podemos fazer inferência nesse caso?
 Como podemos fazer inferência robusta nesse caso?
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+O modelo linear de \textbf{efeitos não observados}:
+
+\vspace{-1 em}
+\begin{align} \label{mod1:FD}
+	y_{it} = \mbs{x}_{it} \mbs{\beta} + c_{i} + u_{it},
+\end{align}
+
+\noindent
+para
+$t = 1, \dots, T$ e $i = 1, \dots, N$.
+
+O modelo contém explicitamente um componente não observado, $c_{i}$, que não varia no tempo.
+Tratamos o componente não observado como parte do erro, não como parâmetro a ser estimado.
+Aqui permitimos que $c_{i}$ seja correlacionado com $\mbs{x}_{it}$.
+Deste modo, \textbf{não} podemos ignorar a sua presença e estimar \eqref{mod1:FD} por POLS, visto que isso resultaria num estimador inconsistente devido a \textbf{endogeneidade}.
+
+Assim, transformamos o modelo para eliminar $c_{i}$ e conseguirmos fazer uma estimação consistente de $\mbs{\beta}$.
+A trasnformação a ser feita é a primeira diferença.
+Para tanto, seguimos os seguintes passos:
+
+\begin{itemize}\itemsep0pt
+\item Reescrevemos \eqref{mod1:FD} defasado:
+
+\vspace{-1 em}
+\begin{align}  \label{mod2:FD}
+	y_{it-1} = \mbs{x}_{it-1} \mbs{\beta} + c_{i} + u_{it-1}
+\end{align}
+
+\item Tiramos a diferença entre \eqref{mod2:FD} e \eqref{mod1:FD}:
+
+\vspace{-1 em}
+\begin{align}
+\nonumber
+y_{it} - y_{it-1} &=
+(\mbs{x}_{it} - \mbs{x}_{it-1}) \mbs{\beta} +
+c_{i} - c_{i} +
+u_{it} - u_{it-1}
+\\
+\label{mod3:FD}
+\Delta y_{it} &=
+\Delta \mbs{x}_{it} \mbs{\beta} +
+\Delta u_{it}. 
+\end{align}
+
+\noindent
+para
+$t = 2, \dots, T$ e $i = 1, \dots, N$.
+\end{itemize}
+
+Reescrevendo \eqref{mod3:FD} no formato matricial empilhando $T$:
+
+\vspace{-1 em}
+\begin{align} \label{mod4:FD}
+	\Delta \mbs{y}_{i} = \Delta X_{i} \mbs{\beta} + \mbs{e}_{i}
+\end{align}
+
+\noindent
+com 
+$\boxed{e_{it} = \Delta u_{it}}$.
+
+\begin{itemize}\itemsep0pt
+\item
+$\Delta \mbs{y}_{i}$ vetor $( T - 1 ) \times 1$ 
+\item
+$\Delta X_{i}$  matriz  $( T - 1 ) \times K$
+\item
+$\mbs{\beta}$ vetor $K \times 1$
+\item
+$\mbs{e}_{i}$ vetor $(T - 1 ) \times 1$
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação POLS}
+
+O estimador $\widehat{\mbs{\beta}}^{FD}$ é o POLS da regressão no modelo \eqref{mod4:FD}, assim:
+
+\vspace{-1 em}
+\begin{align} \label{beta:pols:FD}
+\Aboxed{
+\mbs{\beta}^{FD} =
+\left[ \sum_{i=1}^{N} \Delta X_{i}' \Delta X_{i} \right]^{-1}
+\left[ \sum_{i=1}^{N} \Delta X_{i}' \Delta \mbs{y}_{i} \right]
+}
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hipóteses}
+
+As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{FD}$ são:
+
+\begin{description}
+\setlength\itemsep{.5 em}
+
+\item [FD.1:] Exogeneidade Estrita:
+$E( u _{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
+
+\item  [FD.2:] Posto completo de $E( \Delta X_{i}' \Delta X_{i} )$ (para inverter a matriz).
+$posto[ E( \Delta X_{i} ' \Delta X_{i} ) ]  = K$.
+
+\item [FD.3:] Homoscedasticidade:
+	$E(\mbs{e}_{i} \mbs{e}_{i}' \,|\, X_{i}, c_{i}) = \sigma_{e}^{2} I_{T-1}$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Valor Esperado}
+Usando apenas \textbf{FD.1} e \textbf{FD.2}:
+
+\vspace{-1 em}
+\begin{align*}
+E( \mbs{\beta}^{FD} ) &=
+\mbs{\beta} +
+E\left[
+\left( \sum_{i=1}^{N} \Delta X_{i}' \Delta X_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Delta X_{i}' \mbs{e}_{i} \right)
+\right]
+\\
+\Aboxed{
+E( \mbs{\beta}^{FD} ) &=
+\mbs{\beta} +
+E \left[ ( \Delta X' \Delta X )^{-1} ( \Delta X' \mbs{e} \right]
+}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância}
+
+Usando apenas \textbf{FD.1} e \textbf{FD.2}:
+
+\vspace{-1 em}
+\begin{align*} 
+\Aboxed{
+Var( \mbs{\beta}^{FD} ) = 
+E \left[
+( \Delta X' \Delta X )^{-1}
+( \Delta X' \mbs{e}  \mbs{e}' \Delta X )
+( \Delta X' \Delta X )^{-1} 
+\right]}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância sob Homocedasticidade}
+
+Usando \textbf{FD.3}, temos
+
+\vspace{-1 em}
+\begin{align*} 
+Var( \mbs{\beta}^{FD} ) &= 
+\sigma_{e}^{2}
+E \left[
+( \Delta X' \Delta X )^{-1}
+( \Delta X' \Delta X )
+( \Delta X' \Delta X )^{-1} 
+\right]
+\\
+\Aboxed{
+Var( \mbs{\beta}^{FD} ) &= 
+\sigma^2_{e}
+E \left[
+( \Delta X' \Delta X )^{-1} 
+\right]}
+\end{align*}
+
+\noindent 
+com
+
+\vspace{-1 em}
+\begin{align*} 
+\sigma^2_{e} = 
+\left[ N ( T - 1 ) - K \right]^{-1}
+\left[  
+\sum_{i=1}^{N} 
+\sum_{t=1}^{T}
+\hat{e}_{it}^{2}
+\right],
+\end{align*}
+
+\noindent
+que é a média de todos $\hat{e}^{2}_{it}$ contando $K$ regressores.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
-\section{Strict Exogeneity, IV}
+\section{Exogeneidade Estrita e FDIV}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent
@@ -1201,8 +1381,247 @@ c_{i} + u_{i t}.
 Explique detalhadamente como esse modelo pode ser estimado a partir da combinação entre Variáveis Instrumentais e método da Primeira Diferença.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+No seguinte modelo
+
+\vspace{-1 em}
+\begin{align*} 
+	y_{it} = \mbs{x}_{it} \mbs{\beta} + u_{it},
+\end{align*}
+
+\noindent
+para
+$t = 1, \dots, T$ e $i = 1, \dots, N$.
+
+\begin{itemize}\itemsep0pt
+\item
+$y_{it}$ escalar;
+
+\item
+$\mbs{x}_{it}$  vetor $1 \times K$;
+
+\item
+$\mbs{\beta}$ vetor $K \times 1$;
+
+\item
+$u_{it}$ escalar.
+\end{itemize}
+
+\noindent
+$\{x_{it}\}$ é estritamente \textbf{exógeno} se valer:
+
+\vspace{-1 em}
+\begin{align*}
+	E( u_{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT} ) = 0 \; , \qquad t = 1, \dots, T
+\end{align*}
+
+\noindent
+ou seja:
+
+\vspace{-1 em}
+\begin{align*}
+E( y_{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT} ) = \mbs{x}_{it} \mbs{\beta} 
+\; , \qquad t = 1, \dots, T
+\end{align*}
+
+\noindent
+o que é equivalente a hipótese de que utilizamos o modelo linear correto.
+
+Para o seguinte modelo:
+
+\vspace{-1.5 em}
+\begin{align*}
+y_{it} = \mbs{z}_{it} \mbs{\gamma} + \rho y_{i t - 1} + c_{i} + u_{it}.
+\; , \qquad t = 2, \dots, T
+\end{align*}
+
+\noindent
+é \textbf{impossível} termos exogeneidade estrita.
+Isso porque, nesse modelo, de efeitos não observados temos:
+
+\vspace{-1.5 em}
+\begin{align*}
+	E( y_{it} \, | \, \mbs{z}_{i1}, \dots, \mbs{z}_{iT}, y_{it-1}, c_{i}) \neq 0.
+\end{align*}
+
+\noindent
+Isso ocorre porque, $y_{it}$ é afetado por $y_{it-1}$ que contribui para $y_{it}$ com, pelo menos, $\rho c_{i}$.
+
+\begin{equation*}
+\left.
+\begin{aligned}
+y_{it} &= \mbs{z}_{it} \mbs{\gamma} + \rho y_{i t - 1} + c_{i} + u_{it}
+\\
+y_{it-1} &= \mbs{z}_{it-1} \mbs{\gamma} + \rho y_{i t - 2} + c_{i} + u_{it-1}
+\end{aligned}
+\right\} 
+\implies
+y_{it} = \mbs{z}_{it} \mbs{\gamma} +
+\rho (\mbs{z}_{it-1} \mbs{\gamma} + \rho y_{i t - 2} + c_{i} + u_{it-1})
++ c_{i} + u_{it}.
+\end{equation*}
+
+Para eliminarmos este efeito, podemos tirar a primeira diferença do modelo:
+
+\vspace{-1 em}
+\begin{align}
+\nonumber
+y_{it} - y_{it-1} &= 
+(\mbs{z}_{it} - \mbs{z}_{it-1}) \mbs{\gamma} +
+\rho (y_{i t - 1} -  y_{i t - 2} ) +
+(c_{i} - c_{i}) + (u_{it} - u_{it-1})
+\\
+\label{mod1:FDIV}
+\Aboxed{
+\Delta y_{it} &= 
+\Delta \mbs{z}_{it} \mbs{\gamma} + \rho \Delta y_{i t - 1} + \Delta u_{it}
+\, , \qquad t=3, \dots, T}
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação}
+
+Não podemos estimar o modelo \eqref{mod1:FDIV} por POLS, uma vez que $Cov(\Delta y_{it-1}, \Delta u_{it} ) \neq 0$.
+Como saída, podemos estimar por P2SLS, usando instrumentos para $\Delta y_{it-1}$ (alguns intrumentos para $\Delta y_{it-1}$ são $y_{it-2}, y_{it-3}, \dots, y_{i1}$).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{P2SLS}
+
+\vspace{-1 em}
+\begin{align*}
+	y_{it} = \mbs{x}_{it}' \mbs{\beta} + u_{it}
+\end{align*}
+
+\begin{itemize}\itemsep0pt
+\item $i = 1, \dots, N$
+\item $t = 1, \dots, T$
+\item $y_{it}$ escalar;
+\item $\mbs{x}_{it}$  vetor $K \times 1$;
+\item $\mbs{\beta}$ vetor $K \times 1$;
+\item $u_{it}$ escalar.
+\end{itemize}
+
+\vspace{-1 em}
+\begin{align*}
+\boxed{
+\mbs{\beta}^{P2SLS} =  ( X' P_{Z} X )^{-1} ( X' P_{Z} \mbs{y} ) }
+\end{align*}
+
+\noindent
+com
+
+\vspace{-1 em}
+\begin{align*}
+\boxed{P_{Z} = Z'(Z'Z)^{-1}Z }
+\end{align*}
+
+\noindent
+onde
+$P_{Z}$ é a matriz de projeção em $Z$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{FDIV}
+
+\vspace{-1 em}
+\begin{align*}
+y_{it} &= \mbs{x}_{it}' \mbs{\beta} + c_{i} + u_{it}
+\; , \quad i = 1, \dots, N
+\; , \quad t = 1, \dots, T
+\\
+\Delta y_{it} &= \Delta \mbs{x}_{it}' \mbs{\beta} + \Delta u_{it}
+\; , \quad i = 1, \dots, N
+\; , \quad t = 2, \dots, T
+\end{align*}
+
+Vamos supor $\Delta x_{it}'$ tem variável endógena ($y_{it}$, no caso).
+$\mbs{w}_{it}$ é um vetor $1 \times L_{t}$ de instrumentos, onde $L_{t} \geq K$.
+Se os instrumentos forem diferentes:
+
+\vspace{-1 em}
+\begin{align*}
+	W_{i} = diag( \mbs{w}_{i2}', \mbs{w}_{i3}', \dots, \mbs{w}_{iT}')
+\end{align*}
+
+\noindent
+onde $W_{i}$ é uma matriz $( T - 1 ) \times L$
+
+\vspace{-1 em}
+\begin{align*}
+	L = L_{2} + L_{3} + \dots + L_{T}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hipóteses}
+
+\begin{description}
+\item[FDIV.1:] $E( \mbs{w}_{it} \Delta u_{it}')$ para $i = 1, \dots, N$, $t = 2, \dots, T$.
+\item[FDIV.2:] $Posto\left[ E( W_{i}' W_{i} ) \right] = L$
+\item[FDIV.3:] $Posto\left[ E( W_{i}' \Delta X_{i} ) \right] = K$
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Estimação FDIV}
+
+\vspace{-1 em}
+\begin{align*}
+\boxed{
+\mbs{\beta}^{FDIV} =  
+\left(
+\Delta X' P_{W} \Delta X 
+\right)^{-1}
+\left(
+\Delta X' P_{W} \Delta \mbs{y}
+\right)
+}
+\qquad
+\boxed{
+P_{W} = W(W'W)^{-1}W'}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Valor Esperado}
+
+\vspace{-1 em}
+\begin{align*}
+E( \mbs{\beta}^{FDIV} ) =  
+\beta + 
+\left( \Delta X' P_{W} \Delta X \right)^{-1}
+\left( \Delta X' P_{W} \mbs{e} \right)
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variância}
+
+\vspace{-1 em}
+\begin{align*}
+Var( \mbs{\beta}^{FDIV} ) &=
+E\left\{  
+\left[ E( \mbs{\beta}^{FDIV} ) - \beta \right] 
+\left[ E( \mbs{\beta}^{FDIV} ) - \beta \right]'
+\right\}
+\\
+&=
+E\left\{  
+\left[ \Delta X' P_{W} \Delta X \right]^{-1}
+\left[ \Delta X' P_{W} \mbs{e} \right]
+\left[ \Delta X' P_{W} \mbs{e} \right]'
+\left[ \Delta X' P_{W} \Delta X \right]^{-1}
+\right\}
+\\
+&=
+E\left[
+\left( \Delta X' P_{W} \Delta X \right)^{-1}
+\left( \Delta X' P_{W} \mbs{e} \mbs{e}' P_{W} \Delta X \right)
+\left( \Delta X' P_{W} \Delta X \right)^{-1}
+\right]
+\end{align*}
+
+\noindent
+$e_{i} = \Delta u_{it}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section{Latent Variables, Probit and Logit}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1216,7 +1635,6 @@ Ressalte a forma mais simples da variância assintótica desse estimador, devido
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section{ATT, ATE, Propensity Score}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1229,7 +1647,6 @@ Explique resumidamente como o \textit{Propensity Score} pode ser estimado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\setcounter{equation}{0}
 \section*{Appêndice}
 
 \begin{align*}
