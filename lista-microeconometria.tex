@@ -676,13 +676,11 @@ $i = 1, \dots, N$ e $\boxed{\mbs{v}_{i} = c_{i} \mbs{1}_{T} + \mbs{u}_{i}}$.
 
 As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{RE}$ são:
 
-\begin{enumerate}
-\setlength\itemsep{.5 em}
-
+\begin{enumerate} \itemsep0pt
 \item  
-	Usamos o modelo correto e $c_{i}$ não é endógeno.
+Usamos o modelo correto e $c_{i}$ não é endógeno.
 
-\begin{enumerate}[alph]
+\begin{enumerate}[label =\alph*)]
 \item 
 	$E( u_{it} \, | \,  x_{i1}, \dots, x_{iT}, c_{i} ) = 0$,
 	$i = 1, \dots, N$.
@@ -1634,6 +1632,257 @@ $\sqrt{n}(\mbs{ \theta } - \mbs{\theta}_{0})$.
 Ressalte a forma mais simples da variância assintótica desse estimador, devido ao fato de ser um estimador de máxima verossimilhança.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+Suponha $y^{*}$ não observável (\textbf{latente}) seguindo o seguinte modelo:
+
+\vspace{-1 em}
+\begin{align} \label{mod1:probit}
+	y_{i}^{*} = \mbs{x}_{i}' \mbs{\beta} + \err_{i}.
+\end{align}
+
+\noindent
+Defina $y$ como:
+
+\vspace{-1 em}
+\begin{align*}
+y_{i} =
+\begin{cases}
+	1 \, , \quad y^{*}_{i} \geq 0
+\\
+	0 \, , \quad y^{*}_{i} < 0
+\end{cases}
+\end{align*}
+
+\noindent
+temos que:
+
+\vspace{-1 em}
+\begin{align*}
+	P( y_{i} = 1 | \mbs{x} ) &= p( \mbs{x} )
+	\\
+	P( y_{i} = 0 | \mbs{x} ) &= 1 - p( \mbs{x} ).
+\end{align*}
+
+Além disso, pela definição de $y_{i}$, equação \eqref{mod1:probit}, temos:
+
+\vspace{-1 em}
+\begin{align*}
+	P( y_{i} = 1 | \mbs{x} ) &= P(y_{i}^{*} \geq 0 \, | \mbs{x} )
+\\
+&= P( \mbs{x}_{i}' \mbs{\beta} + \err_{i} \geq 0 \, | \mbs{x} )
+\\
+&= P( \err_{i} \geq - \mbs{x}_{i}' \mbs{\beta}  \, | \mbs{x} ).
+\end{align*}
+
+\noindent
+Agora, supondo que $\err_{i}$ tem FDA, $G$, tal que $G'=g$ é simétrica ao redor de zero:
+
+\vspace{-1 em}
+\begin{align*}
+P( y_{i} = 1 | \mbs{x} ) 
+&= 1 - P( \err_{i} < - \mbs{x}_{i}' \mbs{\beta}  \, | \mbs{x} )
+\\
+&= 1 - G( - \mbs{x}_{i}' \mbs{\beta}  \, | \mbs{x} )
+\\
+&= G( \mbs{x}_{i}' \mbs{\beta} ).
+\end{align*}
+
+Se $G(\cdot)$ for uma distribuição:
+
+\begin{description}
+	\item [Normal Padrão:] $\hat{\mbs{\beta}}$ é o estimador \textbf{probit}.
+	\item [Logística:] $\hat{\mbs{\beta}}$ é o estimador \textbf{logit}.
+\end{description}
+
+Supondo $\mbs{y}_{i} \, | \, \mbs{x} \sim Bernoulli(p(\mbs{x}))$, sua fmp é dada por:
+
+\vspace{-1 em}
+\begin{align*}
+f( y_{i} \, | \, \mbs{x}_{i} ; \mbs{\beta} ) 
+&= 
+\left[ G(\mbs{x}_{i}' \mbs{\beta} )  \right]^{y_{i}}
+\left[ 1 - G(\mbs{x}_{i}' \mbs{\beta} )  \right]^{1 - y_{i}}
+\; , \quad y=0,1.
+\end{align*}
+
+Para estimarmos $\hat{\mbs{\beta}}$ por máxima verossimilhança, temos de encontrar $\mbs{\beta} \in B$, onde $B$ é o espaço paramétrico, tal que $\mbs{\beta}$ maximize o valor da distribuição conjunta de $\mbs{y}$, ou seja:
+
+\vspace{-1 em}
+\begin{align*}
+	\underset{\mbs{\beta} \in B}{\text{Max }} 
+	\prod_{i=1}^{N}
+	f( y_{i} \, | \, \mbs{x}_{i} ; \mbs{\beta} ).
+\end{align*}
+
+\noindent
+
+Tirando o logaritmo e dividindo tudo por $N$ (podemos fazer isso pois são transformações monotônicas e não alteram o lugar onde $\mbs{\beta}$ ótimo irá parar):
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\mbs{\beta} \in B}{\text{Max }} 
+\left\{ 
+N^{-1} \sum_{i=1}^{N}
+\ln \left[ f( y_{i} \, | \, \mbs{x}_{i} ; \mbs{\beta} ) \right]
+\right\}.
+\end{align*}
+
+\noindent
+Podemos definir
+$\ell_{i}( \mbs{\beta} ) = \ln[ f( y_{i} \, | \, \mbs{x}_{i} ; \mbs{\beta} ) ]$
+como sendo a verossimilhança condicional da observação $i$:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\mbs{\beta} \in B}{\text{Max }} 
+\left\{ 
+N^{-1} \sum_{i=1}^{N} \ell_{i} (\mbs{\beta})
+\right\}.
+\end{align*}
+
+Dessa forma, podemos ver que o problema acima é a analogia amostral de:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\mbs{\beta} \in B}{\text{Max }} 
+E \left[ 
+\ell_{i} ( \mbs{\beta} )
+\right].
+\end{align*}
+
+Definindo o \textit{vector score} da observação $i$:
+
+\vspace{-1 em}
+\begin{align*}
+s_{i} (\mbs{\beta}) = 
+\left[ \nabla_{\mbs{\beta}} \ell_{i} (\mbs{\beta}) \right]'
+=
+\begin{bmatrix}
+	\dfrac{\partial{\ell_{i} (\mbs{\beta})}}{\partial{\beta_{1}}},
+	\dots,
+	\dfrac{\partial{\ell_{i} (\mbs{\beta})}}{\partial{\beta_{K}}}
+\end{bmatrix}
+\end{align*}
+
+Definindo a \textbf{Matriz Hessiana} da observação $i$:
+
+\vspace{-1 em}
+\begin{align*}
+H_{i} (\mbs{\beta}) = 
+\nabla_{\mbs{\beta}} s_{i} (\mbs{\beta}) = 
+\nabla_{\mbs{\beta}}^2 \ell_{i} (\mbs{\beta})
+\end{align*}
+
+Tendo essas definições, o \textbf{Teorema do Valor Médio} (TVM) nos diz que no intervalo $[a, b]$, existe um número, $c$, tal que:
+
+\vspace{-1 em}
+\begin{align*}
+	f'(c) = \frac{f(b) - f(a)}{b - a}.
+\end{align*}
+
+\begin{center}
+\red{FAZER DESENHO}
+\end{center}
+
+Trocando 
+$f(\cdot)$ por $s_{i}(\cdot)$, 
+$a$ por $\mbs{\beta}_{0}$, 
+$b$ por $\widehat{\mbs{\beta}}$ e
+$c$ por $\bar{\mbs{\beta}}$,
+temos:
+
+\vspace{-1 em}
+\begin{align*}
+H_{i} ( \bar{\mbs{\beta}} ) =
+\frac{s_{i}( \widehat{\mbs{\beta}} ) - s_{i}( \mbs{\beta}_{0} )}{\widehat{\mbs{\beta}} - \mbs{\beta}_{0}},
+\end{align*}
+
+\noindent
+tirando médias dos dois lados:
+
+\vspace{-1 em}
+\begin{align*}
+N^{-1} \sum_{i=1}^{N} 
+H_{i} ( \bar{\mbs{\beta}} ) 
+=
+\frac{1}{\widehat{\mbs{\beta}} - \mbs{\beta}_{0}}
+N^{-1} \sum_{i=1}^{N} 
+\left[ 
+s_{i}( \widehat{\mbs{\beta}} ) - s_{i}( \mbs{\beta}_{0} )
+\right]
+\end{align*}
+
+Supondo que
+$\widehat{\mbs{\beta}}$
+maximiza
+$\ell (\mbs{\beta} \, | \, \mbs{y}, \mbs{x})$,
+temos que:
+$N^{-1} \sum_{i=1}^{N} s_{i}(\widehat{\mbs{\beta}}) = 0$.
+E podemos reescrever a equação anterior como:
+
+\vspace{-1 em}
+\begin{align*}
+\widehat{\mbs{\beta}} - \mbs{\beta}_{0}
+&=
+(-1)
+\left[ N^{-1} \sum_{i=1}^{N} H_{i} ( \bar{\mbs{\beta}} ) \right]^{-1}
+N^{-1} \sum_{i=1}^{N} s_{i}( \mbs{\beta}_{0} ) 
+\\
+\sqrt{N} ( \widehat{\mbs{\beta}} - \mbs{\beta}_{0} )
+&=
+\left[
+- N^{-1} \sum_{i=1}^{N} H_{i} ( \bar{\mbs{\beta}} )
+\right]^{-1}
+\sqrt{N} \cdot N^{-1} \sum_{i=1}^{N} s_{i}( \mbs{\beta}_{0} ) 
+\\
+\Aboxed{
+\sqrt{N} ( \widehat{\mbs{\beta}} - \mbs{\beta}_{0} )
+&=
+\left[
+- N^{-1} \sum_{i=1}^{N} H_{i} ( \bar{\mbs{\beta}} )
+\right]^{-1}
+N^{-1/2} \sum_{i=1}^{N} s_{i}( \mbs{\beta}_{0} ) }.
+\end{align*}
+
+\noindent
+Onde
+
+\vspace{-1 em}
+\begin{align*}
+\left[ 
+- N^{-1} \sum_{i=1}^{N}
+H_{i} ( \bar{\mbs{\beta}} ) \right]^{-1}
+\xrightarrow{p}
+A_{0}^{-1} \, ,
+&&
+N^{-1/2} \sum_{i=1}^{N} s_{i}( \mbs{\beta}_{0} ) 
+\xrightarrow{d}
+N( 0, B_{0} ).
+\end{align*}
+
+\noindent
+Assim, temos que:
+
+\vspace{-1 em}
+\begin{align*}
+\Aboxed{
+\sqrt{N} ( \widehat{\mbs{\beta}} - \mbs{\beta}_{0} )
+\to
+N ( 0, A_{0}^{-1} B_{0} A_{0}^{-1} )}.
+\end{align*}
+
+A forma mais simples de achar $Var ( {\widehat{\mbs{\beta}}} )$ é:
+
+\vspace{-1 em}
+\begin{align*}
+	\Aboxed{
+Var( \widehat{\mbs{\beta}} )
+&=
+- E[ H_{i} ( \widehat{\mbs{\beta}} ) ]^{-1} }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \section{ATT, ATE, Propensity Score}
 
@@ -1644,6 +1893,127 @@ Explique como estimar o efeito médio do tratamente ($\tau_{ATE}$) e o efeito m�
 Aborde o método \textit{Propensity Score}.
 Discuta a importância do hipótese \textit{Overlap} para a aplicabilidae desse estimador.
 Explique resumidamente como o \textit{Propensity Score} pode ser estimado.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modelo}
+
+\begin{itemize}\itemsep0pt
+\item
+$y_{1}$ $\rightarrow$ variável de interesse com tratamento
+
+\item
+$y_{0}$ $\rightarrow$ variável de interesse sem tratamento
+\end{itemize}
+
+\vspace{-1 em}
+\begin{align*}
+w = 
+\begin{cases}
+1 & \text{se tratam}
+\\
+0 & \text{se não tratam}
+\end{cases}
+\end{align*}
+ 
+Idealmente, para isolarmos completamente o efeito de $w=1$, gostaríamos de pode calcular:
+
+\vspace{-1 em}
+\begin{align*}
+	N^{-1} \sum_{i=1}^{N}
+	\left( y_{i1} - y_{i0} \right).
+\end{align*}
+
+Ou seja, o efeito que o tratamento causa sobre um indivíduo com todo o resto permanecendo constante.
+Em outras palavras, queríamos que houvesse dois mundos paralelos observáveis onde seria possível observar o que acontece com $y_{i}$ com e sem tratamento.
+Infelizmente, para ccada indivíduo $i$, observamos apenas $y_{i1}$ ou $y_{i0}$, nunca ambos.
+
+Antes de continuarmos, faremos as seguintes definições:
+
+\begin{description}
+	\item[ATE:]  $E( y_{1} - y_{0} )$
+	\item[ATT:]  $E( y_{1} - y_{0} \, | \, w = 1 )$ (ATE no tratado).
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{$ATE$ e $ATT$ condicional a variáveis $\mbs{x}$ }
+
+\vspace{-1 em}
+\begin{align*}
+ATE( \mbs{x} ) &= E( y_1 - y_0 \, | \mbs{x})
+\\
+ATT( \mbs{x} ) &= E( y_1 - y_0 \, | \mbs{x}, w = 1)
+\end{align*}
+
+\noindent
+\underline{OBS:}
+
+\vspace{-1 em}
+\begin{align*}
+E( y_1 - y_0 ) &= E \left[ E( y_1 - y_0 \, | w) \right]
+\\
+E( y_1 - y_0 \, | w ) &=
+E( y_1 - y_0 \, | w = 0 ) \cdot P(w=0)
++
+E( y_1 - y_0 \, | w = 1 ) \cdot P(w=1).
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Métodos Assumindo Ignorabilidade do Tratamento}
+
+\begin{description}
+\item[ATE.1:] Ignorabilidade. 
+\\
+$w$ e $(y_{1}, y_{0})$ são independentes condicionais a $\mbs{x}$.
+
+\item[ATE.1':] Ignorabilidade da Média. 
+
+\vspace{-.75 em}
+\begin{enumerate}[label =\alph*)] \itemsep0pt
+\item $E( y_{0} \, | \, w, \mbs{x} ) = E( y_{0} \, | \, \mbs{x} )$
+\item $E( y_{1} \, | \, w, \mbs{x} ) = E( y_{1} \, | \, \mbs{x} )$
+\end{enumerate}
+
+\end{description}
+
+Vamos definir
+
+\vspace{-1 em}
+\begin{align*}
+E( y_{0} \, | \, \mbs{x} ) &= \mu_{0}( \mbs{x} )
+\\
+E( y_{1} \, | \, \mbs{x} ) &= \mu_{1}( \mbs{x} ).
+\end{align*}
+
+Sob \textbf{ATE.1} e \textbf{ATE.1'}:
+
+\vspace{-1 em}
+\begin{align*}
+	ATE( \mbs{x} ) &= E( y_{1} - y_{0} \, | \mbs{x} ) = \mu_{1}(\mbs{x}) - \mu_{0}(\mbs{x}) 
+	\\
+	ATT( \mbs{x} ) &= E( y_{1} - y_{0} \, | \mbs{x}, w=1 ) = \mu_{1}(\mbs{x}) - \mu_{0}(\mbs{x}) 
+\end{align*}
+
+\begin{description}
+\item[ATE.2:] \textit{Overlap} \\
+Para todo $\mbs{x}$, $P(w=1 \, | \, \mbs{x} ) \in ( 0, 1 )$, 
+$p(\mbs{x}) = p(w=1 | \mbs{x})$.
+\end{description}
+
+$p(\mbs{x})$ é o \textit{Propensity Score}, ele representa a probabilidade de $y_{i}$ ser tratado dado o valor das covariáveis $\mbs{x}$.
+Essa hipótese é importante visto que podemos expressar o $ATE$ em função de $p(\mbs{x})$.
+
+\vspace{1 em}
+Para o $ATT$ vamos supor:
+
+\begin{description}
+\item[ATT.1':] 
+	$E( y_{0} \, | \mbs{x}, w ) = E( y_{0} \, | \, \mbs{x} )$
+
+\item[ATT.2:] \textit{Overlap:} Para todo $\mbs{x}$, $P(w=1 | \mbs{x} ) < 1$.
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Propensity Score}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
