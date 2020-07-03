@@ -15,6 +15,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pacotes de citações
 \usepackage{natbib}	% Citações}
+% \usepackage{biblatex}	% Citações}
+\usepackage{bibentry}	% Citações}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
@@ -37,7 +39,8 @@
 % \usepackage{setspace}         % Espaçamento
 \usepackage{pdfpages}           % inclui páginas de pdfs (*FICHA CATALOGRAFICA*)
 \usepackage[flushleft]{threeparttable} % notas nas tabelas
-\usepackage{enumitem}
+% \usepackage{enumitem}
+% \usepackage{enumerate}
 \usepackage[sharp]{easylist}
 \usepackage{titling}          % personalized other things
 \usepackage{fancyhdr}         % personalized page style
@@ -343,7 +346,7 @@ Var ( \widehat{\mbs{\beta}} | X)
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\clearpage
+% \clearpage
 \subsection*{Ausência de Exogeneidade Estrita}
 Nem sempre poderemos supor \textbf{exogeneidade estrita}.
 Por exemplo, no modelo com variável defasada mostrado abaixo,
@@ -363,7 +366,7 @@ y_{t} &= \beta_{0} +
 
 \noindent
 o erro é correlacionado com o regressor $y_{t-1}$.
-Nesse caso, tentaremos obter apenas consistência e variância assintótica do estimador.
+Nesse caso, tentaremos obter apenas \textbf{consistência} e \textbf{variância assintótica} do estimador.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Estimação}
@@ -382,8 +385,8 @@ onde usamos o modelo
 	y_{i} = \mbs{x}_{i} \mbs{\beta} + u_{i},
 \end{align*}
 
+\noindent
 e definimos as variáveis
-
 
 \vspace{-1 em}
 \begin{align*}
@@ -414,7 +417,8 @@ temos
 \left( X'\mbs{y} \right) = \sum_{i=1}^{N} \mbs{x}_{i}' y_{i}.
 \end{align*}
 
-Então,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Valor Esperado e Viés}
 
 \begin{align*}
 \betahatbold &= 
@@ -440,10 +444,9 @@ Então,
 Usando \textbf{LGN matricial} (lembrar que as dimensões dos vetores estão invertidas: $1 \times K$ e \textbf{não} $K \times 1$), temos:
 
 \vspace{-1 em}
-\begin{align*}
-	N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i}
-	\arrowp Q.
-\end{align*}
+\begin{align} \label{eq:Q}
+	\Aboxed{N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp Q }.
+\end{align}
 
 \noindent
 Supondo $E(\mbs{x}_{i}' \mbs{x}_{i}) = Q_{K \times K}$, finita e positiva definida, $posto(Q) = K$.
@@ -468,134 +471,204 @@ Logo
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)}_{\arrowp 0}
 \end{align*}
 
-Então, $(\betahatbold - \betabold) \arrowp 0$ que é equivalente a $\betahatbold \arrowp \betabold$.
+Então, 
+$(\betahatbold - \betabold) \arrowp 0$ 
+que é equivalente a 
+$\boxed{\betahatbold \arrowp \betabold}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
+% \subsection*{Normalidade Assintótica do $\betahatbold^{OLS}$}
+\paragraph{Normalidade Assintótica do $\betahatbold^{OLS}$}
+
 \begin{align*}
-P( | X_{n} - X | > \err ) & \to 0
+\betahatbold 
+&= 
+\betabold +
+\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\
-X_{n} - X & \arrowp 0
+(\betahatbold - \betabold)
+&=
+\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\
-X_{n} & \arrowp X
+\sqrt{N} (\betahatbold - \betabold) &=
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \end{align*}
-\end{def1}
+
+\noindent
+Supondo
+
+\vspace{-1 em}
+\begin{align*}
+	E( x_{ik}^{2} u_{i}^{2} ) < + \infty \, , \quad k=1, \dots, K, 
+\end{align*}
+
+\noindent
+temos, pelo \textbf{TCL}, que
+
+\vspace{-1 em}
+\begin{align} \label{eq:limxu}
+\Aboxed{ N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \arrowd N(0, B) }
+\end{align}
+
+\noindent
+onde 
+
+\vspace{-1 em}
+\begin{align*}
+B =
+E[\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i}] =
+E[ u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} ].
+\end{align*}
+
+E temos que $\boxed{N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} = O_{p}(1)}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[$o_{p}$]
+\vspace{1 em}
+Além disso, vamos utilizar a matriz \textbf{simétrica} e \textbf{não singular} $Q$ da equação \eqref{eq:Q}
+Assim, temos 
+
+\vspace{-1 em}
 \begin{align*}
-X_{n} = o_{p}(1) & \implies X_{n} \arrowp 0
+\sqrt{N} (\betahatbold - \betabold) &=
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
+\\ &=
+\left[ 
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
++ Q^{-1} - Q^{-1}
+\right]
+\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
+\\ &=
+\left[ 
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
+- Q^{-1}
+\right]
+\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
++ Q^{-1} 
+\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
+\end{align*}
+
+\noident
+Podemos inverter $Q$ porque ela tem posto completo (não singular).
+Pelas propriedades de $Q$, temos:
+
+\vspace{-1 em}
+\begin{align*}
+N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp Q
+\implies
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}  - Q^{-1} = o_{p}(1).
+\end{align*}
+
+Então,
+
+\vspace{-1 em}
+\begin{align*}
+\sqrt{N} (\betahatbold - \betabold) &=
+0_{p}(1) O_{p}(1)
++ Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
+\end{align*}
+
+Usando \eqref{eq:limxu} e a definição \red{XX}
+
+\begin{align*}
+Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
+\arrowd 
+N(\mbs{0}, Q^{-1} B Q^{-1}).
+\end{align*}
+
+Lembrando que $o_{p}(1) O_{p}(1) = o_{p}(1)$, temos:
+
+\vspace{-1 em}
+\begin{align*}
+	\Aboxed{\sqrt{N} (\betahatbold - \betabold) \arrowd N(\mbs{0}, Q^{-1} B Q^{-1})}.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Variância}
+
+Vamos definir $\boxed{V = Q^{-1} B Q^{-1} }$:
+
+\begin{align*}
+V =
+E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
+E[ (\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i} ) ]
+E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
 \\
-X_{n} = o_{p}(Y_{n}) & \implies
-\frac{X_{n}}{Y_{n}} = o_{p}(1) \implies
-\frac{X_{n}}{Y_{n}} \arrowp 0
+\Aboxed{
+V =
+E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
+E[ (u_{i}^{2} \mbs{x}_{i}' \mbs{x}_{i} ) ]
+E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
+\end{align*}
+
+\noindent
+Sob \textbf{Homocedasticidade}: 
+$B = E(u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i}) &= \sigma^2 E(\mbs{x}_{i}' \mbs{x}_{i})$
+
+\begin{align*}
+\Aboxed{
+V &= \sigma^{2} E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Estimador Amostral}
+
+\begin{align*}
+\widehat{V} &=
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\\ &=
+N
+\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
+\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \\
-X_{n} = W_{n} + o_{p}(1) & \implies
-(X_{n} - W_{n}) = o_{p}(1) \implies
-(X_{n} - W_{n}) \arrowp 0
+\Aboxed{
+\widehat{V} &=
+N
+\left( X'X \right)^{-1}
+\left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
+\left( X'X \right)^{-1} }.
 \end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Limitação em Probabilidade: $O_{p}$]
-Dizemos que $X_{n}$ é \textbf{limitado em probabilidade} e denotado por 
-$X_{n} = O_{p}(1)$,
-se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n} | > 0) < \err$.
+\noindent
+$Var(\betahatbold)$ 
 
 \vspace{-1 em}
 \begin{align*}
-X_{n} = O_{p}(1) \implies \exists M > 0 \, ; \;
-\forall \err > 0 \, , \;
-P( | X_{n} | > 0) < \err.
+Var(\sqrt{N} \betahatbold) &= V
+\\
+Var(\betahatbold) &= N^{-1} V
+\\
+\Aboxed{
+Var(\betahatbold) &= 
+\left( X'X \right)^{-1}
+\left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
+\left( X'X \right)^{-1} }.
 \end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-Dizemos que
-$X_{n} = O_{p}(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
+A variância \textbf{Robusta} é:
 
 \vspace{-1 em}
 \begin{align*}
-X_{n} = O_{p}(Y_{n}) \implies \exists M > 0 \, ; \;
-\forall \err > 0 \, , \;
-P( | X_{n}/Y_{n} | > 0) < \err.
+\Aboxed{
+\widehat{Var}(\betahatbold) &= 
+(X'X)^{-1} 
+\left( \sum_{i=1}^{N} \widehat{u}_{i}^{2} \mbs{x}_{i}' \mbs{x}_{i} \right)
+(X'X)^{-1} }.
 \end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-Se
-$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
+A variância sob \textbf{Homocedasticidade} é:
 
 \vspace{-1 em}
 \begin{align*}
-	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
+	\Aboxed{\widehat{Var}(\betahatbold) &= \widehat{\sigma}^{2} (X' X)^{-1}} .
 \end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Equivalência Assintótica]
-Seja
-$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
-
-\vspace{-1 em}
-\begin{align*}
-	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição]
-Seja
-$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
-
-\vspace{-1 em}
-\begin{align*}
-	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Teorema Central do Limite]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Caso Vetorial]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Normalidade Assintótica do $\betahatbold^{OLS}$]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
@@ -742,6 +815,163 @@ AB = \sum_{i=1}^{2} a_{i}b_{i}
 onde
 $a_{i}$ é a $i$-ésima \textbf{coluna} da matriz $A$.
 $b_{i}$ é a $i$-ésima \textbf{linha} da matriz $B$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}
+\begin{align*}
+P( | X_{n} - X | > \err ) & \to 0
+\\
+X_{n} - X & \arrowp 0
+\\
+X_{n} & \arrowp X
+\end{align*}
+\end{def1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[$o_{p}$]
+\begin{align*}
+X_{n} = o_{p}(1) & \implies X_{n} \arrowp 0
+\\
+X_{n} = o_{p}(Y_{n}) & \implies
+\frac{X_{n}}{Y_{n}} = o_{p}(1) \implies
+\frac{X_{n}}{Y_{n}} \arrowp 0
+\\
+X_{n} = W_{n} + o_{p}(1) & \implies
+(X_{n} - W_{n}) = o_{p}(1) \implies
+(X_{n} - W_{n}) \arrowp 0
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Limitação em Probabilidade: $O_{p}$]
+Dizemos que $X_{n}$ é \textbf{limitado em probabilidade} e denotado por 
+$X_{n} = O_{p}(1)$,
+se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n} | > 0) < \err$.
+
+\vspace{-1 em}
+\begin{align*}
+X_{n} = O_{p}(1) \implies \exists M > 0 \, ; \;
+\forall \err > 0 \, , \;
+P( | X_{n} | > 0) < \err.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}
+Dizemos que
+$X_{n} = O_{p}(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
+
+\vspace{-1 em}
+\begin{align*}
+X_{n} = O_{p}(Y_{n}) \implies \exists M > 0 \, ; \;
+\forall \err > 0 \, , \;
+P( | X_{n}/Y_{n} | > 0) < \err.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}
+Se
+$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
+
+\vspace{-1 em}
+\begin{align*}
+	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Equivalência Assintótica]
+Seja
+$\seq{\mbs{x}_{n}}$ e $\seq{\mbs{z}_{n}}$
+sequências de vetores aleatórios $K \times 1$.
+Se $\mbs{z}_{n} \arrowd \mbs{z}$ e 
+$\mbs{x}_{n} - \mbs{z}_{n} \arrowp \mbs{0}_{K}$.
+Então, 
+
+\vspace{-1 em}
+\begin{align*}
+\mbs{x}_{n} \arrowd \mbs{z}.
+\end{align*}
+
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Convergência em Distribuição]
+Seja
+$\seq{X_{n}}_{n \geq 1}$  uma sequência de variáveis aleatórias e $X$ uma variável aleatória com $F_{n}$ e $F$ suas respectivas FDAs, então
+
+\begin{align*}
+	X_{n} \arrowd X, \text{ se } F_{n}(X) \to F(X)
+\end{align*}
+\noindent
+para todo $X$ onde $F$ é contínuo.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Convergência em Distribuição e Limitação em Probabilidade]
+Se $X_{n} \arrowd X$, $X$ um variável aleatória qualquer; então $X_{n} = O_{p}(1)$.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[TCL -- Teorema Central do Limite]
+Seja $\seq{X_{n}}_{n = 1}^{N}$ $iid$ com $E(X_{n}) = \mu$ e $Var(X_{n}) = \sigma^{2} < + \infty$.
+Então, para $S_{N} = \sum_{n=1}^{N} X_{n}$:
+
+\begin{align*}
+\frac{S_{N} - N \mu }{ \sqrt{N} \sigma}
+=
+\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
+=
+\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
+=
+\boxed{
+\frac{\sqrt{N} ( \overline{X} - \mu ) }{\sigma}
+\arrowd Z \sim N(0,1)}.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[TCL -- Caso Vetorial]
+Seja $\seq{\mbs{w}_{i}}_{i=1}^{n}$ uma sequência $iid$ de vetores aleatórios $K \times 1$ com
+$E( w_{ik}^{2} ) < + \infty$, $k= 1, \dots K$ e $E( \mbs{w}_{i} ) = \mbs{0}_{K}$.
+Então,
+
+\vspace{-1 em}
+\begin{align*}
+	N^{-1/2} \sum_{i=1}^{N} \mbs{w}_{i} \arrowd N(\mbs{0}, B),
+\end{align*}
+
+\noindent
+onde, $B=Var(\mbs{w}_{i}) = E( \mbs{w}_{i} \mbs{w}_{i}')$.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[]
+Seja $\seq{\mbs{z}_{n}}$ uma sequência de vetores $K \times 1$ aleatórios com 
+
+\vspace{-1 em}
+\begin{align*}
+	\mbs{z}_{n} \arrowd N(\mbs{0}, V).
+\end{align*}
+
+Então, para qualquer matriz $A$ de dimensão $K \times M$ \textbf{não} estocástica,
+
+\vspace{-1 em}
+\begin{align*}
+	A' \mbs{z}_{n} \arrowd N(\mbs{0}, A'VA).
+\end{align*}
+\end{def1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2804,6 +3034,68 @@ M^{0} \mbs{1} &=
 =
 \mbs{0}_{N} 
 \end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\clearpage
+
+\begin{center}
+\bibentry{wool-2010}
+\end{center}
+
+% \begin{center}
+% \cite{wool-2010}
+% \end{center}
+
+
+\renewcommand{\labelenumi}{\Roman{enumi}}
+\renewcommand{\labelenumii}{\arabic{enumii}}
+\begin{enumerate}
+\item Introduction and Background
+
+\begin{enumerate}
+\item  Introduction
+\item  Conditional Expectations and Related Concepts
+\item  Basic Asymptotic Theory
+\end{enumerate}
+
+\item Linear Models
+
+\begin{enumerate}
+\addtocounter{enumii}{3}
+\item  The Single-Equation Linear Model and OLS Estimation
+\item  Instrumental Variables Estimation of Single-Equation Linear Models
+\item  Additional Single-Equation Topics
+\item  Estimating Systems of Equations by OLS and GLS
+\item  System Estimation by Instrumental Variables
+\item  Simulteneous Equations Models
+\item  Basic Linear Unobserved Effects Panel Data Models
+\item  More Topics in Linear Unobserved Effects Models
+\end{enumerate}
+
+\item General Approaches to Nonlinear Estimation
+
+\begin{enumerate}
+\addtocounter{enumii}{11}
+\item  M-Estimation
+\item  Maximum Likelihood Methods
+\item  Generalized Method of Moments and Minimum Distance Estimation
+\end{enumerate}
+
+\item Nonlinear Models and Related Topics
+
+\begin{enumerate}
+\addtocounter{enumii}{14}
+\item  Discrete Response Models
+\item  Corner Solution Outcomes and Censored Regression Molds
+\item  Sample Selection, Attrition, and Stratified Sampling
+\item  Estimating Average Treatment Effects
+\item  Count Data and Related Models
+\item  Duration Analysis
+\end{enumerate}
+
+\end{enumerate}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
