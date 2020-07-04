@@ -95,316 +95,218 @@
 \pagenumbering{arabic}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \clearpage
-\section{Conceitos Básicos de Convergência Estatística}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Estimador Consistente}]
-Um estimador $\hat{\theta}$ é \textbf{consistente} para um parâmetro $\theta$ se 
+\begin{center}
+\textbf{Wooldridge, Jeffrey M. 2010. \textit{Econometric Analysis of Cross Section and Panel Data.} 2ED. Boston, Massachussetts: MIT Press.}
+\end{center}
 
-\vspace{-1 em}
-\begin{align*}
-\hat{\theta} \overset{p}{\longrightarrow} \theta.
- %  \\
- %  \hat{\theta} \arrowp \theta.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \renewcommand{\labelenumi}{\Roman{enumi}}
+% \renewcommand{\labelenumii}{\arabic{enumii}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Convergência em Probabilidade}]
-Uma sequência de variáveis aleatórias:
-$\{ X_{n} \}_{n \geq 1}$ 
-\textbf{converge em probabilidade} para uma variável aleatória $X$ se, dado $\err > 0$, 
+\begin{enumerate}[noitemsep, label=\Roman* ]
 
-\vspace{-1 em}
-\begin{align*}
-	P(| X_{n} - X | > \err ) \to 0,
-\end{align*}
+\item Introduction and Background
+\begin{enumerate}[noitemsep, leftmargin = 1em, label=\arabic*.]
+\item  Introduction
+\item  Conditional Expectations and Related Concepts
+\item  Basic Asymptotic Theory
+\end{enumerate}
 
-\noindent
-quando $n \to + \infty$.
-E denotamos
+\item Linear Models
+\begin{enumerate}[noitemsep, leftmargin = 1em, label=\arabic*.]
+\addtocounter{enumii}{3}
+\item  The Single-Equation Linear Model and OLS Estimation
+\item  Instrumental Variables Estimation of Single-Equation Linear Models
+\item  Additional Single-Equation Topics
+\item  Estimating Systems of Equations by OLS and GLS
+\item  System Estimation by Instrumental Variables
+\item  Simulteneous Equations Models
+\item  Basic Linear Unobserved Effects Panel Data Models
+\item  More Topics in Linear Unobserved Effects Models
+\end{enumerate}
 
-\vspace{-1 em}
-\begin{align*}
-	X_{n} \arrowp X.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item General Approaches to Nonlinear Estimation
+\begin{enumerate}[noitemsep, leftmargin = 1em, label=\arabic*.]
+\addtocounter{enumii}{11}
+\item  M-Estimation
+\item  Maximum Likelihood Methods
+\item  Generalized Method of Moments and Minimum Distance Estimation
+\end{enumerate}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Desigualdade de Markov}]
-Seja
-$\{ X_{n} \}_{n \geq 1}$ 
-uma sequência de variáveis aleatórias com
-$E|X_{n}|^{K} < +\infty$, $K>0$. 
-Então, dado $\err >0$
-
-\vspace{-1 em}
-\begin{align*}
-	P(| X_{n} | > \err ) \leq \frac{E|X_{n}|^{K}}{\err^{K}}
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1} %[\textbf{}]
-\begin{align*}
-0 \leq P(| \thetahat - \theta | > \err ) \leq \frac{E|X_{n}|^{2}}{\err^{2}}
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Erro Quadrático Médio}]
-\begin{align*}
-EQM(\thetahat) 
-=
-\E\left[ \left( \thetahat - \theta \right)^2 \right] 
-=
-\left[ Bias(\thetahat)^{2} + \Var(\thetahat) \right]
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Então, se $Bias(\thetahat) \to 0$ e $\Var(\thetahat) \to 0$, temos que $EQM(\thetahat) \to 0$.
-Pelo \textbf{Teorema do Sanduíche}, $P(|\thetahat - \theta| > \err) \to 0$; logo, $\thetahat \arrowp \theta$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{LGN -- Lei dos Grandes Números}]
-Seja $\seq{X_{i}}_{i \geq 1}$ uma sequência de variáveis aleatórias $iid$ com $\E(X_{i}) = \mu$.
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-	N^{-1} \sum_{i=1}^{N} X_{i} \arrowp \mu.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{LGN -- Caso Matricial}]
-Seja $\seq{\mbs{x}_{i}}_{i=1}^{N}$, uma sequência $iid$ de vetores aleatórios $K \times 1$ com $\E(\mbs{x}_{i} \mbs{x}_{i}') = Q_{K \times K}$ finita.
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-N^{-1} \sum_{i=1}^{N}
-\mbs{x}_{i} \mbs{x}_{i}'
-\arrowp Q.
-\end{align*}
-
-Se $Q$ for positiva definida, $Q$ terá inversa.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Multiplicação de Matriz}
-
-\begin{align*}
-A_{2 \times 2} =
-\begin{bmatrix}
-	a_{11} & a_{12} \\
-	a_{21} & a_{22}		
-\end{bmatrix}
-\quad
-B_{2 \times 3} =
-\begin{bmatrix}
-	b_{11} & b_{12} & b_{13} \\
-	b_{21} & b_{22} & b_{23}		
-\end{bmatrix}
-\end{align*}
-
-\begin{align*}
-[AB]_{2 \times 3} &=
-\begin{bmatrix}
-	a_{11} \\ a_{21}
-\end{bmatrix}
-\begin{bmatrix}
-	b_{11} & b_{12} & b_{13}
-\end{bmatrix}
-+
-\begin{bmatrix}
-	a_{12} \\ a_{22}
-\end{bmatrix}
-\begin{bmatrix}
-	b_{21} & b_{22} & b_{23}
-\end{bmatrix}
-\implies
-AB = \sum_{i=1}^{2} a_{i}b_{i}
-\end{align*}
-
-\noindent
-onde
-$a_{i}$ é a $i$-ésima \textbf{coluna} da matriz $A$.
-$b_{i}$ é a $i$-ésima \textbf{linha} da matriz $B$.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-\begin{align*}
-P( | X_{n} - X | > \err ) & \to 0
-\\
-X_{n} - X & \arrowp 0
-\\
-X_{n} & \arrowp X
-\end{align*}
-\end{def1}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[$o_{p}$]
-\begin{align*}
-X_{n} = o_{p}(1) & \implies X_{n} \arrowp 0
-\\
-X_{n} = o_{p}(Y_{n}) & \implies
-\frac{X_{n}}{Y_{n}} = o_{p}(1) \implies
-\frac{X_{n}}{Y_{n}} \arrowp 0
-\\
-X_{n} = W_{n} + o_{p}(1) & \implies
-(X_{n} - W_{n}) = o_{p}(1) \implies
-(X_{n} - W_{n}) \arrowp 0
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Limitação em Probabilidade: $O_{p}$]
-Dizemos que $X_{n}$ é \textbf{limitado em probabilidade} e denotado por 
-$X_{n} = O_{p}(1)$,
-se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n} | > 0) < \err$.
-
-\vspace{-1 em}
-\begin{align*}
-X_{n} = O_{p}(1) \implies \exists M > 0 \, ; \;
-\forall \err > 0 \, , \;
-P( | X_{n} | > 0) < \err.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-Dizemos que
-$X_{n} = O_{p}(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
-
-\vspace{-1 em}
-\begin{align*}
-X_{n} = O_{p}(Y_{n}) \implies \exists M > 0 \, ; \;
-\forall \err > 0 \, , \;
-P( | X_{n}/Y_{n} | > 0) < \err.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-Se
-$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
-
-\vspace{-1 em}
-\begin{align*}
-	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Equivalência Assintótica]
-Seja
-$\seq{\mbs{x}_{n}}$ e $\seq{\mbs{z}_{n}}$
-sequências de vetores aleatórios $K \times 1$.
-Se $\mbs{z}_{n} \arrowd \mbs{z}$ e 
-$\mbs{x}_{n} - \mbs{z}_{n} \arrowp \mbs{0}_{K}$.
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-\mbs{x}_{n} \arrowd \mbs{z}.
-\end{align*}
-
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição]
-Seja
-$\seq{X_{n}}_{n \geq 1}$  uma sequência de variáveis aleatórias e $X$ uma variável aleatória com $F_{n}$ e $F$ suas respectivas FDAs, então
-
-\begin{align*}
-	X_{n} \arrowd X, \text{ se } F_{n}(X) \to F(X)
-\end{align*}
-\noindent
-para todo $X$ onde $F$ é contínuo.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição e Limitação em Probabilidade]
-Se $X_{n} \arrowd X$, $X$ um variável aleatória qualquer; então $X_{n} = O_{p}(1)$.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Teorema Central do Limite]
-Seja $\seq{X_{n}}_{n = 1}^{N}$ $iid$ com $\E(X_{n}) = \mu$ e $\Var(X_{n}) = \sigma^{2} < + \infty$.
-Então, para $S_{N} = \sum_{n=1}^{N} X_{n}$:
-
-\begin{align*}
-\frac{S_{N} - N \mu }{ \sqrt{N} \sigma}
-=
-\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
-=
-\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
-=
-\boxed{
-\frac{\sqrt{N} ( \overline{X} - \mu ) }{\sigma}
-\arrowd Z \sim N(0,1)}.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Caso Vetorial]
-Seja $\seq{\mbs{w}_{i}}_{i=1}^{n}$ uma sequência $iid$ de vetores aleatórios $K \times 1$ com
-$\E( w_{ik}^{2} ) < + \infty$, $k= 1, \dots K$ e $\E( \mbs{w}_{i} ) = \mbs{0}_{K}$.
-Então,
-
-\vspace{-1 em}
-\begin{align*}
-	N^{-1/2} \sum_{i=1}^{N} \mbs{w}_{i} \arrowd N(\mbs{0}, B),
-\end{align*}
-
-\noindent
-onde, $B=\Var(\mbs{w}_{i}) = \E( \mbs{w}_{i} \mbs{w}_{i}')$.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
-Seja $\seq{\mbs{z}_{n}}$ uma sequência de vetores $K \times 1$ aleatórios com 
-
-\vspace{-1 em}
-\begin{align*}
-	\mbs{z}_{n} \arrowd N(\mbs{0}, V).
-\end{align*}
-
-Então, para qualquer matriz $A$ de dimensão $K \times M$ \textbf{não} estocástica,
-
-\vspace{-1 em}
-\begin{align*}
-	A' \mbs{z}_{n} \arrowd N(\mbs{0}, A'VA).
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
+\item Nonlinear Models and Related Topics
+\begin{enumerate}[noitemsep, leftmargin = 1em, label=\arabic*.]
+\addtocounter{enumii}{14}
+\item  Discrete Response Models
+\item  Corner Solution Outcomes and Censored Regression Molds
+\item  Sample Selection, Attrition, and Stratified Sampling
+\item  Estimating Average Treatment Effects
+\item  Count Data and Related Models
+\item  Duration Analysis
+\end{enumerate}
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\section{Regressão MQO Clássico}
+\section{Introduction}
 \noindent
-\citet[C.4 -- The Single-Equation Linear Model and OLS Estimation, p.49--76]{wool-2010}
+\citet[C.1, pp. 3--9]{wool-2010} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[noitemsep, label*=1.\arabic*.]
+\item  Causal Relationships and Ceteris Paribus Analysis
+
+\item  The Stochastic Setting and Asymptotic Analysis
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Data Structures
+\item Asymptotic Analysis
+\end{enumerate}
+
+\item  The Stochastic Setting and Asymptotic Analysis
+\item  Some Examples
+\item  Why Not Fixed Explanatory Analysis
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section{Conditional Expectations and Related Concepts}
+\noindent
+\citet[C.2, pp. 13--34]{wool-2010} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[noitemsep, label*=2.\arabic*.]
+\item  The Role of Conditional Expectations in Econometrics
+
+\item  Features of Conditional Expectations
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Definition and Examples
+\item Partial Effects, Elasticities, and Semielasticities
+\item The Error Form of Models of Conditional Expectations
+\item Some Properties of Conditional Expectations
+\item Average Partial Effects
+\end{enumerate}
+\item  Linear Projections
+
+\item[A]  Appendices
+
+\begin{enumerate}[noitemsep]
+\item[A.1] Properties of Conditional Expectations
+\item[A.2] Properties of Conditional Variances
+\item[A.3] Properties of Linear Projections
+\end{enumerate}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Role of Conditional Expectations in Econometrics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Features of Conditional Expectations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Definition and Examples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Partial Effects, Elasticities, and Semielasticities}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{The Error Form of Models of Conditional Expectations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Some Properties of Conditional Expectations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Average Partial Effects}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linear Projections}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Appendices}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Properties of Conditional Expectations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Properties of Conditional Variances}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Properties of Linear Projections}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section{Basic Aymptotic Theory}
+
+\noindent
+\citet[C.3, p.35--45]{wool-2010}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[noitemsep, label*=3.\arabic*.]
+\item  Convergence of Deterministic Sequences
+\item  Convergence in Probability and Bounded in Probability
+\item  Convergence in Distribution
+\item  Limit Theorems for Random Samples
+
+\item  Limiting Behavior of Estimators and Test Statistics
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Asymptotic Properties of Estimators
+\item Asymptotic Properties of Test Statistics
+\end{enumerate}
+\end{enumerate}
+
+\blue{White (1984)}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convergence of Deterministic Sequences}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convergence in Probability and Bounded in Probability}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convergence in Distribution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Limit Theorems for Random Samples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Limiting Behavior of Estimators and Test Statistics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Asymptotic Properties of Estimators}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Asymptotic Properties of Test Statistics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section{The Single-Equation Linear Model and OLS Estimation}
+
+\noindent
+\citet[C.4 p.49--76]{wool-2010}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[noitemsep, label*=4.\arabic*]
+\item  Overview of the Single-Equation Linear Model
+
+\item  Asymptotic Porperties of OLS
+	\begin{enumerate}[noitemsep, leftmargin=1 em, label*=.\arabic*.]
+\item Consitency
+\item Asymptotic Inference Using OLS
+\item Heteroskedasticity-Robust Inference
+\item Lagrange Multiplier (Score) Tests
+\end{enumerate}
+
+\item  OLS Solutions to the Omitted Variables Problem
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item OLS Ignoring the Omitted Variables
+\item The Porxy Variable--OLS Solution
+\item Models with Interactions in Unobservables
+\end{enumerate}
+
+\item  Properties of OLS under Measurement Error
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Measurement Error in the Dependent Variable
+\item Measurement Error in an Explanatory Variable
+\end{enumerate}
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo de equações lineares} 
@@ -462,7 +364,7 @@ Sufficient for assumption \eqref{zeromeanerror} is the zero conditional mean ass
 	\E( u | x_{1}, \dots, x_{K} ) = \E( u | \xbold) = 0.
 \end{align}
 
-Under equation \eqref{ols:mod} aand assumption \eqref{zerocondmean}, we have the \textbf{population regression function}
+Under equation \eqref{ols:mod} and assumption \eqref{zerocondmean}, we have the \textbf{population regression function}
 
 \vspace{-1 em}
 \begin{align} \label{pop:regfun}
@@ -689,473 +591,57 @@ Sob as hipóteses do Teorema \ref{ols:const}, $\mbs{x} \betabold$ é uma \textbf
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\section*{Hudson OLS} 
-
-\subsection*{Hipóteses} 
-
-\begin{description}
-\item[H1] Estamos usando o modelo correto:
-
-	\vspace{-1.5 em}
-\begin{align*}
-y_{i} &= \mbs{x}_{i} \mbs{\beta} + u_{i}
-\, , \quad i = 1, \dots, N;
-\end{align*}
-
-\item[H2] $X$ é \textbf{não} estocástica;
-\item[H3] 
-$\{ u_{i} \}_{i=1}^{N}$  é  $iid$ com e para cada $i = 1, \dots, N$:
-
-\vspace{-1.5 em}
-\begin{align*}
-\E(u_{i}) &= 0
-\\
-\Var(u_{i}) &= \E(u_{i}^2) = \sigma^2
-\end{align*}
-
-\item[H2'] $X$ é estocástica;
-
-\item[H3'] 
-
-\begin{align*}
-\E(u_{i} | X) &= 0
-\\
-\Var(u_{i} | X) &= 
-E
-\left\{ \left[ 
-u_{i} - \E( u_{i} | X)
-\right]^2 | X \right\}
-=
-\E(u_{i}^2 | X) = \sigma^2.
-\end{align*}
-
-$\E(u_{i} | X) = 0$ implica que $u_{i}$ é \textbf{não correlacionado} com todos os regressores $x_{k}$ para $k=1,\dots, K$. \red{Exogeneidade estrita}.
-\end{description}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Estimação} 
-
-\begin{align} \label{betahat:ols}
-\widehat{\mbs{\beta}} = (X'X)^{-1}X'\mbs{y}
-\end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Valor Esperado} 
-
-\begin{align*} 
-\E ( \widehat{\mbs{\beta}} ) 
-&= \E \left[ (X'X)^{-1}X'\mbs{y} \right]
-\\
-&= \E \left[ (X'X)^{-1}X'(X \mbs{\beta} + \mbs{u}) \right]
-\\
-&= \E \left[ (X'X)^{-1}X'X \mbs{\beta} + (X'X)^{-1}X'\mbs{u} \right]
-\\
-&= \E (\mbs{\beta}) + \E[(X'X)^{-1}X'\mbs{u} ]
-\\
-\Aboxed{
-\E ( \widehat{\mbs{\beta}} ) 
-&= \mbs{\beta} + \E[(X'X)^{-1}X'\mbs{u} ] }
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Viés} 
-
-\begin{align*} 
-\Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E ( \widehat{\mbs{\beta}} ) - \mbs{\beta} }
-\\
-\Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E[ (X'X)^{-1}X'\mbs{u} ] }
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Sob \textbf{H2'} e \textbf{H3'}:
-
-\begin{align*}
-\E[(X'X)^{-1}X'\mbs{u} ]
-&= \E \left\{ \E\left[ (X'X)^{-1}X'\mbs{u} | X \right]  \right\}  
-\\
-&= \E \left\{  (X'X)^{-1}X'
-\underbracket[.75pt]{\E( \mbs{u} | X )}_{= \mbs{0}}
-\right\} = 0
-\end{align*}
+\section{Estimating Systems of Equations by OLS and GLS}
 
 \noindent
-ou seja, 
-$B( \widehat{\mbs{\beta}} ) = 0$, logo $\widehat{\mbs{\beta}}$ é \textbf{não viciado}.
-O que também é equivalente a  $\E( \widehat{\mbs{\beta}} ) = \mbs{\beta}$.
+\citet[C.7,  p.143--179]{wool-2010}\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Variância} 
-Supondo \textbf{H2'} e \textbf{H3'}:
+\begin{enumerate}[noitemsep, label*=7.\arabic*.]
+\item  Introduction
+\item  Some Examples
 
-\begin{align*} 
-\Var ( \widehat{\mbs{\beta}} | X) 
-&= \E \left\{\left[ 
-\widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | X )
-\right]^2 | X \right\}
-\\
-&= \E \left\{ 
-\left[ \widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | X ) \right]
-\left[ \widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | X ) \right]'
-| X \right\}
-\\
-&= \E \left\{ 
-\left[ (X'X)^{-1}X' \mbs{u} \right]
-\left[ (X'X)^{-1}X' \mbs{u} \right]'
-| X \right\}
-\\
-&= \E \left[ (X'X)^{-1}X' \mbs{u} \mbs{u}' X (X'X)^{-1} | X \right]
-\\
-\Aboxed{
-\Var ( \widehat{\mbs{\beta}} | X) 
-&= 
-(X'X)^{-1}X' 
-\E \left[ \mbs{u} \mbs{u}'| X \right]
-X (X'X)^{-1} }
-\end{align*}
+\item  System OLS Estimation of a Multivariate Linear System
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Preliminaries
+\item Asymptotic Porperties of System OLS
+\item Testing Multiple Hypotheses
+\end{enumerate}
 
-Supondo homocedasticidade e ausência de correlação serial: 
-$\boxed{ \E \left[ \mbs{u} \mbs{u}'| X \right] = \sigma^2 I_{N} }$.
-Assim, 
+\item Consistency and Asymptotic Normality of Generalized Least Squares
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Consitency
+\item Asymptotic Normality
+\end{enumerate}
 
-\begin{align*} 
-\Var ( \widehat{\mbs{\beta}} | X) 
-&= \sigma^2 (X'X)^{-1}X' I_{N} X (X'X)^{-1}
-= \sigma^2 (X'X)^{-1}X'X (X'X)^{-1}
-\\
-\Aboxed{ \Var ( \widehat{\mbs{\beta}} | X) &= \sigma^2 (X'X)^{-1} }.
-\end{align*}
+\item Feasible GLS
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Asymptotic Properties
+\item Asymptotic Variance of FGLS under a Standard Assumption
+\end{enumerate}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \clearpage
-\subsection*{Ausência de Exogeneidade Estrita}
-Nem sempre poderemos supor \textbf{exogeneidade estrita}.
-Por exemplo, no modelo com variável defasada mostrado abaixo,
+\item Testing Using FGLS
 
-\begin{align*}
-y_{t} &= \beta_{0} + \beta_{1} y_{t-1} + \beta_{2} x_{1t} + u_{t}
-\\
-y_{t-1} &= \beta_{0} + \beta_{1} y_{t-2} + \beta_{2} x_{1t-1} + u_{t-1}
-\\
-y_{t} &= \beta_{0} +
-\beta_{1} \left(  
-\beta_{0} + \beta_{1} y_{t-2} + \beta_{2} x_{1t-1} + u_{t-1}
-\right)
-+
-\beta_{2} x_{1t} + u_{t},
-\end{align*}
+\item Seemingly Unrelated Regressions, Revisited
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Comparison between OLS and FGLS for SUR Systems
+\item Systems with Cross Equation Restrictions
+\item Singular Variance Matrices in SUR Systems
+\end{enumerate}
 
-\noindent
-o erro é correlacionado com o regressor $y_{t-1}$.
-Nesse caso, tentaremos obter apenas \textbf{consistência} e \textbf{variância assintótica} do estimador.
+\item The Linear Panel Data Model, Revisited
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Assumptions for Pooled OLS
+\item Dynamic Completeness
+\item A Note on Time Series Persistence
+\item Robust Asymptotic Variance Matrix
+\item Testing for Serial Correlation and Heteroskedasticity after Pooled OLS
+\item Feasible GLS Estimation under Strict Exogeneity
+\end{enumerate}
+\end{enumerate}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Estimação}
-
-Lembrando que o estimador de OLS é:
-
-\begin{align*}
-\betahatbold = (X'X)^{-1}X'\mbs{y},
-\end{align*}
-
-\noindent
-onde usamos o modelo
-
-\vspace{-1 em}
-\begin{align*}
-	y_{i} = \mbs{x}_{i} \mbs{\beta} + u_{i},
-\end{align*}
-
-\noindent
-e definimos as variáveis
-
-\vspace{-1 em}
-\begin{align*}
-X_{N \times K} =
-\begin{bmatrix}
-	\mbs{x}_{1} \\ \vdots \\	\mbs{x}_{N}	
-\end{bmatrix},
-\quad
-\mbs{y} =
-\begin{bmatrix}
-	y_{1} \\ \vdots \\ y_{N}
-\end{bmatrix},
-\quad
-\mbs{u} =
-\begin{bmatrix}
-	u_{1} \\ \vdots \\ u_{N}
-\end{bmatrix}.
-\end{align*}
-
-\noindent
-Assim, representamos $(X'X)^{-1}$ e $(X'\mbs{y})$ por meio dos seguintes somatórios:
-temos
-
-\vspace{-1 em}
-\begin{align*}
-\left( X'X \right)^{-1} = \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} ,
-\quad
-\left( X'\mbs{y} \right) = \sum_{i=1}^{N} \mbs{x}_{i}' y_{i}.
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Valor Esperado e Viés}
-
-\begin{align*}
-\betahatbold &= 
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' y_{i} \right)
-\\
-&=
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' (\mbs{x}_{i} \mbs{\beta} + \mbs{u}_{i}) \right)
-\\
-&=
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \mbs{\beta} \right) +
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right)
-\\
-&=
-\betabold +
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right).
-\end{align*}
-
-\noindent
-Usando \textbf{LGN matricial} (lembrar que as dimensões dos vetores estão invertidas: $1 \times K$ e \textbf{não} $K \times 1$), temos:
-
-\vspace{-1 em}
-\begin{align} \label{eq:Q}
-	\Aboxed{N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp Q }.
-\end{align}
-
-\noindent
-Supondo $\E(\mbs{x}_{i}' \mbs{x}_{i}) = Q_{K \times K}$, finita e positiva definida, $posto(Q) = K$.
-Supondo $\E(\mbs{x}_{i}' u_{i}) = 0$, o que corresponde a $Cov(\mbs{x}_{i}, u_{i}) = 0$, ou seja, o erro $u_{i}$ \textbf{não} é correlacionado com os regressores da própria equação.
-Isso é bem menos que exogeneidade estrita.
-
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-	N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \arrowp \E(\mbs{x}_{i}' u_{i}) = \mbs{0}_{K}.
-\end{align*}
-
-Logo
-
-\vspace{-1 em}
-\begin{align*}
-\betahatbold = 
-\betabold +
-\underbracket[1pt]{
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)}_{\arrowp 0}
-\end{align*}
-
-Então, 
-$(\betahatbold - \betabold) \arrowp 0$ 
-que é equivalente a 
-$\boxed{\betahatbold \arrowp \betabold}$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection*{Normalidade Assintótica do $\betahatbold^{OLS}$}
-\paragraph{Normalidade Assintótica do $\betahatbold^{OLS}$}
-
-\begin{align*}
-\betahatbold 
-&= 
-\betabold +
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-\\
-(\betahatbold - \betabold)
-&=
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-\\
-\sqrt{N} (\betahatbold - \betabold) &=
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-\end{align*}
-
-\noindent
-Supondo
-
-\vspace{-1 em}
-\begin{align*}
-	\E( x_{ik}^{2} u_{i}^{2} ) < + \infty \, , \quad k=1, \dots, K, 
-\end{align*}
-
-\noindent
-temos, pelo \textbf{TCL}, que
-
-\vspace{-1 em}
-\begin{align} \label{eq:limxu}
-\Aboxed{ N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \arrowd N(0, B) }
-\end{align}
-
-\noindent
-onde 
-
-\vspace{-1 em}
-\begin{align*}
-B =
-\E[\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i}] =
-\E[ u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} ].
-\end{align*}
-
-E temos que $\boxed{N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} = O_{p}(1)}$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vspace{1 em}
-Além disso, vamos utilizar a matriz \textbf{simétrica} e \textbf{não singular} $Q$ da equação \eqref{eq:Q}
-Assim, temos 
-
-\vspace{-1 em}
-\begin{align*}
-\sqrt{N} (\betahatbold - \betabold) &=
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-\\ &=
-\left[ 
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
-+ Q^{-1} - Q^{-1}
-\right]
-\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-\\ &=
-\left[ 
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
-- Q^{-1}
-\right]
-\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-+ Q^{-1} 
-\left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
-\end{align*}
-
-\noident
-Podemos inverter $Q$ porque ela tem posto completo (não singular).
-Pelas propriedades de $Q$, temos:
-
-\vspace{-1 em}
-\begin{align*}
-N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp Q
-\implies
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}  - Q^{-1} = o_{p}(1).
-\end{align*}
-
-Então,
-
-\vspace{-1 em}
-\begin{align*}
-\sqrt{N} (\betahatbold - \betabold) &=
-0_{p}(1) O_{p}(1)
-+ Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
-\end{align*}
-
-Usando \eqref{eq:limxu} e a definição \red{XX}
-
-\begin{align*}
-Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-\arrowd 
-N(\mbs{0}, Q^{-1} B Q^{-1}).
-\end{align*}
-
-Lembrando que $o_{p}(1) O_{p}(1) = o_{p}(1)$, temos:
-
-\vspace{-1 em}
-\begin{align*}
-	\Aboxed{\sqrt{N} (\betahatbold - \betabold) \arrowd N(\mbs{0}, Q^{-1} B Q^{-1})}.
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Variância}
-
-Vamos definir $\boxed{V = Q^{-1} B Q^{-1} }$:
-
-\begin{align*}
-V =
-\E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
-\E[ (\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i} ) ]
-\E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
-\\
-\Aboxed{
-V =
-\E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
-\E[ (u_{i}^{2} \mbs{x}_{i}' \mbs{x}_{i} ) ]
-\E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
-\end{align*}
-
-\noindent
-Sob \textbf{Homocedasticidade}: 
-$B = \E(u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i}) &= \sigma^2 \E(\mbs{x}_{i}' \mbs{x}_{i})$
-
-\begin{align*}
-\Aboxed{
-V &= \sigma^{2} \E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Estimador Amostral}
-
-\begin{align*}
-\widehat{V} &=
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( N^{-1} \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\\ &=
-N
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\\
-\Aboxed{
-\widehat{V} &=
-N
-\left( X'X \right)^{-1}
-\left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
-\left( X'X \right)^{-1} }.
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent
-$\Var(\betahatbold)$ 
-
-\vspace{-1 em}
-\begin{align*}
-\Var(\sqrt{N} \betahatbold) &= V
-\\
-\Var(\betahatbold) &= N^{-1} V
-\\
-\Aboxed{
-\Var(\betahatbold) &= 
-\left( X'X \right)^{-1}
-\left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
-\left( X'X \right)^{-1} }.
-\end{align*}
-
-A variância \textbf{Robusta} é:
-
-\vspace{-1 em}
-\begin{align*}
-\Aboxed{
-\widehat{\Var}(\betahatbold) &= 
-(X'X)^{-1} 
-\left( \sum_{i=1}^{N} \widehat{u}_{i}^{2} \mbs{x}_{i}' \mbs{x}_{i} \right)
-(X'X)^{-1} }.
-\end{align*}
-
-A variância sob \textbf{Homocedasticidade} é:
-
-\vspace{-1 em}
-\begin{align*}
-	\Aboxed{\widehat{\Var}(\betahatbold) &= \widehat{\sigma}^{2} (X' X)^{-1}} .
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\clearpage
-\section{System OLS (SOLS)}
-
-\noindent
-\citet[C.7 -- Estimating Systems of Equations by OLS and GLS, p.143--179]{wool-2010}\\
 \citet[Sec.7.3 -- System OLS Estimation of a Multivariate Linear System, p.147]{wool-2010} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1166,7 +652,7 @@ A variância sob \textbf{Homocedasticidade} é:
 Assumimos que temos as seguintes observações \textit{cross section} $iid$:
 $\seq{ (X_{i}, \mbs{y}_{i}): i=1, \dots, N}$, onde:
 
-\vspace{-1 em}
+\vspace{-1 ex}
 \begin{itemize}[itemsep = -1ex]
 \item [$X_{i}$]  é uma matriz $G \times K$ e contém as variáveis explicativas que aparecem em qualquer lugar do sistema.
 \item [$\mbs{y}_{i}$]  é um vetor $G \times 1$, que contém as variáveis dependentes para todas as equações $G$ (ou períodos de tempo, no caso de dados de painel).
@@ -1485,7 +971,7 @@ Sob as hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, nós fazemos inferência em
 \clearpage
 \section{SOLS para Dados de Painel}
 \noindent
-\citet[Sec.7.8 -- The Linar Panel Data Model, Revisited. p.169]{wool-2010} 
+\citet[Sec.7.8 -- The Linear Panel Data Model, Revisited. p.169]{wool-2010} 
 
 No caso de dados de painel:
 
@@ -1739,8 +1225,58 @@ e temos:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\section{Modelo de Efeitos Não Observados}
-\citet[C.10 -- Basic Linear Unobserved Effects Panel Data Models]{wool-2010}
+\section{Basic Linear Unobserved Effects Panel Data Models}
+\noindent
+\citet[C.10, pp.247--291 ]{wool-2010}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[noitemsep, label*=10.\arabic*.]
+\item  Motivation: The Omitted Variables Problem
+
+\item  Assumptions about the Unobserved Effects and Explanatory Variables
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Random of Fixed Effects?
+\item Strict Exogeneity Assumptions on the Explanatory Variables
+\item Some Examples of Unobserved Effects Panel Data Models
+\end{enumerate}
+
+\item Estimating Unobserved Effects Models by Pooled OLS
+
+\item \textbf{Random Effects Methods}
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Estimation and Inference under the Basic Random Effects Assumptions
+\item Robust Variance Matrix Estimator
+\item A General FGLS Analysis
+\item Testing for the Presence of an Unobserved Effect
+\end{enumerate}
+
+\item \textbf{Fixed Effects Methods}
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Consistency of the Fixed Effects Estimator
+\item Asymptotic Inference with Fixed Effects
+\item The Dummy Variable Regression
+\item Serial Correlation and the Robust Variance Matrix Estimator
+\item Fixed Effects GLS
+\item Using Fixed Effects Estimation for Policy Analysis
+\end{enumerate}
+
+\item \textbf{First Differencing Methods}
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Inference
+\item Robust Variance Matrix
+\item Testing for Serial Correlation
+\item Policy Analysis Using First Differencing
+\end{enumerate}
+
+\item Comparison of Estimators
+\begin{enumerate}[noitemsep, leftmargin=1 em, label*=\arabic*.]
+\item Fixed Effects versus First Differencing
+\item The Relationship between the Random Effects and Fixed Effects Estimators
+\item The Hausman Test Comparing the RE and the FE Estimators
+\end{enumerate}
+\end{enumerate}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
