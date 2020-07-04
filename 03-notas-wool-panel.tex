@@ -7,8 +7,16 @@
 % Pacotes básicos 
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
 \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BABEL
+% \usepackage{babel}
 \usepackage[english]{babel}
+% \usepackage[brazilian]{babel}
 % \selectlanguage{english}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AMS
 \usepackage{amsfonts, amsmath, amssymb, amsthm}
 \usepackage{mathtools, latexsym}
 % \usepackage{mathabx}
@@ -258,7 +266,82 @@
 \subsection{Convergence of Deterministic Sequences}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{defn}
+\item
+\begin{enumerate}
+\item 
+A sequence of nonrandom numbers 
+$\seq{a_{N}; N = 1, 2, \dots}$
+\textbf{converges} to $a$ (has limit $a$) if for all $\err > 0$ there exists $N_{\err}$ such that if $N > N_{\err}$, then $|a_{N} - a| < \err$.
+We write
+$a_{N} \to a \text{ as } N \to +\infty$
+
+\item
+A  sequence 
+$\seq{a_{N}; N = 1, 2, \dots}$
+is \textbf{bounded} if and only if there is some $b < \infty$ such that $|a_{N}| < b$ for all $N = 1, 2, \dots$.
+Otherwise, we say that $\seq{a_{N}}$ is \textbf{unbounded}.
+\end{enumerate}
+\end{defn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{defn}
+\item
+\begin{enumerate}
+\item 
+A sequence $\seq{a_{N}}$ is $\bigO( N^{\lambda})$ (\textit{at most of order} $N^{\lambda}$) if 
+$N^{-\lambda} a_{N}$ 
+is bounded.
+When $\lambda = 0$, $\seq{a_{N}}$ is bounded, and we also write $a_{N} = \bigO(1)$ \textit{(big oh one)}.
+
+\item
+A  sequence 
+$\seq{a_{N}}$ is $\lito(N^{\lambda})$ if  $N^{-\lambda} a_{N} \to 0$.
+When $\lamda = 0$, $a_{N}$ converges to zero, and we also write
+$a_{N} = \lito(1)$ \textit{(little oh one)}.
+
+\end{enumerate}
+\end{defn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Convergence in Probability and Bounded in Probability}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{defn}
+\item
+\begin{enumerate}
+\item 
+A sequence of random variables
+$\seq{x_{N}; N = 1, 2, \dots}$
+\textbf{converges in probability} to the constant $a$ if for all $\err > 0$, 
+\begin{equation*}
+	\p \left[ |x_{N} - a| > \err \right] \to 0 \quad \text{as } N \to \infty.
+\end{equation*}
+We write $x_{N} \arrowp a$  and say that $a$ is the \textbf{probability limit} ($\plim$) of $x_{N}$; $\plim x_{N} = a$.
+
+\item
+	In the special case where $a =0$ ($\plim x_{N} = 0$), we also say that $\seq{x_{N}}$ is $\litop(1)$ (\textit{little oh p one}).
+	We also write $x_{N} = \litop(1)$ or
+	$x_{N} \arrowp 0$ or
+	
+\item
+	A sequence of random variables $\seq{x_{N}}$ is \textbf{bounded in probability} if and only if for every $\err > 0$, there exists a $b_{\err} < \infty$ and an integer $N_{\err}$ such that
+\begin{equation*}
+\p \left[ | x_{N} | \geq b_{\err} \right]  < \err 
+\quad \text{for all } N \geq N_{\err}.
+\end{equation*}
+We write $x_{N} = \bigOp(1)$ ($x_{N}$ is \textit{big oh p one}).
+
+\end{enumerate}
+\end{defn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lem}
+If $x_{N} \arrowp a$, then $x_{N} = \bigOp(1)$.
+This lemma also holds for vectors and matrices.
+\end{lem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Convergence in Distribution}
@@ -847,14 +930,14 @@ Em particular,
 
 \vspace{-1 em}
 \begin{align*} 
-N^{-1/2} \sum_{i=1}^{N} X_{i} \mbs{u}_{i} = O_{p}(1).
+N^{-1/2} \sum_{i=1}^{N} X_{i} \mbs{u}_{i} = \bigOp(1).
 \end{align*}
 
 Porém,
 
 \vspace{-1 em}
 \begin{align*} 
-	\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i} \right)^{-1} = (X'X/N)^{-1} = A^{-1} + o_{p}(1).
+	\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i} \right)^{-1} = (X'X/N)^{-1} = A^{-1} + \litop(1).
 \end{align*}
 
 \noindent
@@ -876,10 +959,10 @@ A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
 \left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
 \\&=
 A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
-+ o_{p}(1) O_{p}(1)
++ \litop(1) \bigOp(1)
 \\&=
 A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
-+ o_{p}(1)
++ \litop(1)
 \end{align*}
 
 Portanto, com apenas \textit{single-equation OLS and 2SLS}, obtemos a representação assintótica para $\sqrt{N}(\betahatbold - \betabold)$ que é uma combinação linear não aleatória de somas parciais que satisfazem o CLT.
