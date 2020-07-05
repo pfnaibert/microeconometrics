@@ -483,25 +483,42 @@ Then $\Zbold_{N} \xbold_{N} = \litop(1)$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{lem}[Slustsky's Theorem]
+% Lemma 3.4 p. 37
+\begin{lem}[Slutsky's Theorem]
 Let $\mbf{g}: \R^{K} \to \R^{J}$ be a function continuous as some point $\mbf{c} \in \R^{K}$.
 Let $\seq{\xbold_{N} : N = 1, 2, \dots}$ be a sequence of $K \times 1$ vectors such that $\xbold_{N} \arrowp \mbf{c}$.
 Then $\mbf{g} (\xbold_{N}) \arrowp \mbf{g} (\mbf{c})$ as $N \to \infty$.
-On other words:
-\begin{equation*}
+In other words:
+\begin{equation}
 	\plim \mbs{g}(\xbold_{N}) = \mbf{g} (\plim \xbold_{N})
-\end{equation*}
+\end{equation}
 if $\mbs{g}(\cdot)$ is continuous at $\plim \xbold_{N}$.
 \end{lem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{defn} 
+	Let $(\Omega, \mathcal{F}, \p)$ be a probability space.
+	A sequence of events:
+	$\seq{\Omega_{N}: N = 1, 2, \dots} \subset \mathcal{F}$ 
+	is said to occur with \textbf{probability approaching one (wpa1)} 
+	if and only if
+	$\p(\Omega_{N}) \to 1$ as $N \to \infty$.
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{cor} 
+	Let $\seq{\Zbold_{N} : N = 1,2,\dots}$ 
+	be a sequence of random $K \times K$ matrices, and let
+	$\Abold$ be a nonrandom, invertible $K \times K$ matrix.
+	If $\Zbold_{N} \arrowp \Abold$ then:
+	\vspace{-1 ex}
+	\begin{enumerate}[noitemsep]
+		\item $\Zbold_{N}^{-1}$ exists with wpa1;
+		\item $\Zbold_{N}^{-1} \arrowp \Abold^{-1}$ or
+			$\plim \Zbold^{-1} = \Abold^{-1}$ (in an appropriate sense).
+	\end{enumerate}
 \end{cor}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -510,31 +527,78 @@ if $\mbs{g}(\cdot)$ is continuous at $\plim \xbold_{N}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{defn} 
+A sequence of random variables $\{x_{N} : N=1, 2, \dots\}$ 
+\textbf{converges in distribution} to the continuous random variable $x$
+if and only if
+\begin{equation*}
+	F_{N}(\xi) \to F(\xi) \quad \text{as } N \to \infty 
+	\text{ for all } \xi \in \R
+\end{equation*}
+where $F_{N}$ is the cumulative distribution function (cdf) of $x_{N}$ and $F$ is the (countinuous) cdf of $x$.
+We write $x_{N} \arrowd x$.
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{remark}
+	When $x \sim N(\mu, \sigma^2)$ we write
+	$x_{N} \arrowd N(\mu, \sigma^2)$ or
+	$x_{N} \asim N(\mu, \sigma^2)$
+	($x_{N}$ is \textbf{asymptotically normal}).
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{defn} 
+	A sequence of $K \times 1$ random vectors $\seq{\xbold_{N}: N=1,2, \dots}$ converges in distribution to the continuous randoom vector $\xbold$
+	if and only if
+	for any $K \times 1$ nonrandom vector $\mbf{c}$ such that
+	$\mbf{c}' \mbf{c} = 1$, $\mbf{c}' \xbold_{N} \arrowd \mbf{c} \xbold$, 
+	and we write $\xbold_{N} \arrowd \xbold$.
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{remark}
+	When $\xbold \sim N(\mbf{m}, \Vbold)$ 
+	the requirement for the definition is that
+	\red{XXX}
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{lem}
+	If $\xbold_{N} \arrowd \xbold$,
+	where $\xbold$ is any $K \times 1$ random vector, 
+	then $\xbold_{N} = \bigOp(1)$.
 \end{lem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{lem}
+\begin{lem}[Continuous mapping theorem]
+	Let $\seq{\xbold_{N}}$ be a sequence of $K \times 1$ random vectors such that
+	$\xbold_{N} \arrowd \xbold$.
+	If $\gbold: \R^{K} \to \R^{J}$ is a continuous function, then
+	$\gbold(\xbold_{N}) \arrowd \gbold(\xbold)$.
 \end{lem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{cor}
+If $\seq{\zbold_{N}}$ is a sequence of $K \times 1$ random vectors such that
+$\zbold_{N} \arrowd N(\mbs{0}, \Vbold)$, then
+\vspace{-1 ex}
+\begin{enumerate}[noitemsep]
+\item For any $K \times M$ nonrandom matrix $\Abold$,
+		$\Abold' \zbold_{N} \arrowd N(\mbs{0}, \Abold' \Vbold \Abold)$.
+
+\item $\zbold_{N}' \Vbold^{-1}\zbold \arrowd \chi_{K}^{2}$ 
+		(or $\zbold_{N}' \Vbold^{-1} \zbold \asim \chi_{K}^{2}$)
+\end{enumerate}
 \end{cor}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{lem}
+\begin{lem}[Asymptotic Equivalence Lemma]
+	Let $\seq{\xbold_{N}}$ and $\seq{\zbold_{N}}$ be sequences of $K \times 1$ random vectors.
+	If $\zbold_{N} \arrowd \zbold$ and $\xbold_{N} - \zbold_{N} \arrowp \mbs{0}$, then
+	$\xbold_{N} \arrowd \zbold$.
 \end{lem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -542,13 +606,30 @@ if $\mbs{g}(\cdot)$ is continuous at $\plim \xbold_{N}$.
 \subsection{Limit Theorems for Random Samples}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{teo}
+\begin{teo}[\textbf{Weak Law of Large Numbers (WLLN)}]
+Let $\seq{\wbold_{i}:i=1,2,\dots}$ be a sequence of independent, identically distributed (iid) $G \times 1$ random vectors such that
+$\E( | w_{ig} | ) < \infty$, $g=1,\dots, G$.
+Then the sequence satisfies the \textbf{weak law of large numbers (WLLN)}:
+	\begin{equation*}
+		N^{-1} \sum_{i=1}^{N} \wbold_{i} \arrowp \mubold_{w}.
+	\end{equation*}
+where $\mubold_{w} \equiv \E(\wbold_{i})$
 \end{teo}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{teo}
+\begin{teo}[\textbf{Central Limit Theorem (CLT)}, Lindberg-Levy]
+Let $\seq{\wbold_{i}:i=1,2,\dots}$ be a sequence of independent, identically distributed (iid) $G \times 1$ random vectors such that
+$\E( | w_{ig} | ) < \infty$, $g=1,\dots, G$, and
+$\E(\wbold_{i}) = \mbs{0}$.
+Then $\seq{\wbold_{i}:i=1,2,\dots}$ satisfies the \textbf{central limit theorem (CLT)}; that is:
+	\begin{equation*}
+		N^{-1/2} \sum_{i=1}^{N} \wbold_{i} \arrowd N(\mbs{0}, \Bbold)
+	\end{equation*}
 \end{teo}
+where $\Bbold = \Var(\wbold_{i}) = \E(\wbold_{i} \wbold_{i}')$
+is necessarily positive semidefinite.
+For our purposes, $\Bbold$ is almost alway positive definite.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -558,27 +639,78 @@ if $\mbs{g}(\cdot)$ is continuous at $\plim \xbold_{N}$.
 \subsubsection{Asymptotic Properties of Estimators}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEF 3.9 p.40
 \begin{defn} 
+Let $\seq{\thetahatbold_{N} : N=1,2,\dots}$ be a sequence of estimators of the $P \times 1$ vector $\thetabold \in \Thetabold$, where $N$ indexes the sample size.	If 
+	\begin{equation}
+		\thetahatbold_{N} \arrowp \thetabold
+	\end{equation}
+for any value of $\thetabold$, then we say $\thetahatbold_{N}$ is a \textbf{consistent estimator} of $\thetabold$.
+\end{defn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEF 3.9 p.40
+\begin{defn} 
+Let $\seq{\thetahatbold_{N} : N=1,2,\dots}$ be a sequence of estimators of the $P \times 1$ vector $\thetabold \in \Thetabold$. Suppose that
+\begin{equation} \label{eq:3.3}
+		\sqrt{N}( \thetahatbold_{N} - \thetabold )
+		\arrowd N(\mbs{0}, \Vbold)
+	\end{equation}
+where $\Vbold$ is a $P \times P$ positive semidefinite matrix.
+Then we say that $\thetahatbold$ is \textbf{$\sqrt{N}$--asymptotically normally distributed} and $\Vbold$ is the \textbf{asymptotic variance} of $\sqrt{N}(\thetahatbold_{N} - \thetabold)$ denoted 
+$\Avar \left[ \sqrt{N}(\thetahatbold_{N} - \thetabold) = \Vbold \right]$.
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{defn} 
+If $\sqrt{N}(\thetahatbold_{N} - \thetabold) \asim N(\mbs{0}, \Vbold )$ where $\Vbold$ is positive definite with $j$-th diagonal $v_{jj}$, and $\Vhatbold \arrowp \Vbold$, then the \textbf{asymptotic standard error} of $\thetahat_{Nj}$, denoted $\se(\thetahat_{Nj})$, is $(\vhat_{Njj}/N)^{1/2}$.
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{defn} 
+Let $\thetahatbold_{N}$ and $\thetatilbold_{N}$ be estimators of $\thetabold$ each satisfying statement \eqref{eq:3.3}, with asymptotic variances
+$\Vbold = \Avar \sqrt{N} (\thetahatbold_{N} - \thetabold)$
+and
+$\Dbold = \Avar \sqrt{N} (\thetatilbold_{N} - \thetabold)$
+(these generally depend on the value of $\thetabold$, but we suppress that consideration here).
+
+\vspace{-1 ex}
+\begin{enumerate}
+	\item 
+$\thetahatbold_{N}$ is \textbf{asymptotically efficient relative to} $\thetatilbold_{N}$ if
+$\Dbold - \Vbold$ is positive semidefinite for all $\thetabold$.
+
+	\item 
+$\thetahatbold_{N}$ and $\thetatilbold_{N}$ are
+\textbf{$\sqrt{N}$--equivalent} if
+$\sqrt{N}(\thetahatbold_{N} - \thetatilbold_{N}) = \litop(1)$
+\end{enumerate}
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{defn} 
-\end{defn}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{defn} 
+Partition $\thetahatbold_{N}$ satisfying statemente \eqref{eq:3.3} into vectors
+$\thetahatbold_{N1}$ and $\thetahatbold_{N2}$.
+Then 
+$\thetahatbold_{N1}$ and $\thetahatbold_{N2}$.
+are \textbf{asymptotically independent} if
+\begin{equation*}
+	\Vbold = 
+	\begin{bmatrix}
+		\Vbold_{1} & \mbs{0} 		\\
+		\mbs{0} & \Vbold_{2}
+	\end{bmatrix}
+\end{equation*}
+where $\Vbold_{1}$ is the asymptotic variance of 
+$\sqrt{N}(\thetahatbold_{N1} - \thetabold_{1})$
+and similarly for $\Vbold_{2}$.
+In other words, the asymptotic variance of 
+$\sqrt{N}(\thetahatbold_{N} - \thetabold)$
+is block diagonal.
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -586,17 +718,96 @@ if $\mbs{g}(\cdot)$ is continuous at $\plim \xbold_{N}$.
 \subsubsection{Asymptotic Properties of Test Statistics}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEF 3.13 p.43
 \begin{defn} 
+\item
+\begin{enumerate}
+\item
+The \textbf{asymptotic size} of a testing procedure is defnied as the limiting probability of rejecting $H_{0}$ when it is true.
+Mathematically, we can write this as 
+$\lim_{N \to \infty} \p_{N}(\text{reject } H_{0} | H_{0})$,
+where the $N$ subscript indexes the sample size.
+
+\item
+A test is said to be \textbf{consistent} against alternative $H_{1}$ if the null hypothesis is rejected with probability approaching one when $H_{1}$ is true:
+$\lim_{N \to \infty} \p_{N}(\text{reject } H_{0} | H_{1}) = 1$,
+\end{enumerate}
+
 \end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LEMMA 3.8 p.43
 \begin{lem} 
+Suppose that statemen \eqref{eq:3.3} holds, where $\Vbold$ is positive definite.
+Then for any nonstochastic matrix $Q \times P$ matrix $\Rbold$, $Q \leq P$, with $\rank(\Rbold) = Q$,
+
+\begin{equation*}
+	\sqrt{N} \Rbold (\thetahatbold_{N} - \thetabold) \asim N(\mbs{0}, \Rbold \Vbold \Rbold')
+\end{equation*}
+and
+\begin{equation*}
+	\left[ \sqrt{N} \Rbold (\thetahatbold_{N} - \thetabold) \right]'
+	\left[ \Rbold \Vbold \Rbold'  \right]^{-1}
+	\left[ \sqrt{N} \Rbold (\thetahatbold_{N} - \thetabold) \right]
+	\asim \chisq_{Q}
+\end{equation*}
+In addition, if $\plim \Vhatbold_{N} = \Vbold$, then
+\begin{equation*}
+	\left[ \sqrt{N} \Rbold (\thetahatbold_{N} - \thetabold) \right]'
+	\left[ \Rbold \Vhatbold_{N} \Rbold'  \right]^{-1}
+	\left[ \sqrt{N} \Rbold (\thetahatbold_{N} - \thetabold) \right]
+	=
+	(\thetahatbold_{N} - \thetabold)' \Rbold '
+	\left[ \Rbold ( \Vhatbold_{N}/N ) \Rbold'  \right]^{-1}
+	\Rbold (\thetahatbold_{N} - \thetabold)
+	\asim \chisq_{Q}
+\end{equation*}
 \end{lem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{remark}
+For testing the null hypothesis $H_{0}: \Rbold \thetabold = \rbold$, 
+where $\rbold$ is a $Q \times 1$ nonrandom vector, define the \textbf{Wald Statistic} for testing $H_{0}$ against $H_{1}: \Rbold \thetabold \neq \rbold $ as
+\begin{equation}\label{eq:3.7}
+	W_{N} \equiv
+	(\Rbold \thetahatbold_{N} - \rbold)'
+	\left[ \Rbold ( \Vhatbold_{N}/N ) \Rbold'  \right]^{-1}
+	(\Rbold \thetahatbold_{N} - \rbold)
+\end{equation}
+Under $H_{0}$, $W_{N} \asim \chisq_{Q}$. If we abuse the asymptotics and treat $\thetahatbold_{N}$ as being distributed as $N(\thetabold, \Vhatbold_{N}/N)$, we get equation \eqref{eq:3.7} exactly.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LEMMA 3.9 p.44
 \begin{lem} 
+	Suppose that statement \eqref{eq:3.3} holds, where $\Vbold$ is positive definite.
+	Let $\cbold: \Thetabold \to \R^{Q}$ be a continuously differentiable function on the parameter space $\Thetabold \subset \R^{P}$, where $Q \leq P$, and assume that $\thetabold$ is in the interior of the parameter space.
+	Define $\Cbold(\thetabold) \equiv \nabla_{\thetabold} \cbold(\thetabold)$ as the $Q \times P$ Jacobian off $\cbold$. Then
+
+\begin{equation}
+	\sqrt{N}[ \cbold( \thetahatbold_{N} ) - \cbold( \thetabold ) ]
+	\asim
+	N[ \mbs{0}, \Cbold(\thetabold) \Vbold \Cbold(\thetabold) ']
+\end{equation}
+and
+
+\begin{equation*}
+\left\{  \sqrt{N}[ \cbold( \thetahatbold_{N} ) - \cbold( \thetabold ) ]\right\}'
+\left[ \Cbold(\thetabold) \Vbold \Cbold(\thetabold)' \right]^{-1}
+\left\{  \sqrt{N}[ \cbold( \thetahatbold_{N} ) - \cbold( \thetabold ) ]\right\}
+\asim \chisq_{Q}
+\end{equation*}
+Define
+$\Chatbold = \Cbold(\thetahatbold_{N})$.
+The $\plim \Chatbold_{N} = \Cbold(\theta)$.
+If $\plim \Vhatbold_{N} = \Vbold$, then
+
+\begin{equation}
+\left\{  \sqrt{N}[ \cbold( \thetahatbold_{N} ) - \cbold( \thetabold ) ]\right\}'
+\left[ \Chatbold_{N} \Vhatbold_{N} \Chatbold_{N}' \right]^{-1}
+\left\{  \sqrt{N}[ \cbold( \thetahatbold_{N} ) - \cbold( \thetabold ) ]\right\}
+\asim \chisq_{Q}
+\end{equation}
 \end{lem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -893,7 +1104,7 @@ Further, under \textbf{OLS.1}
 = E(\xbold'u) = \mbs{0}.
 \end{align*}
 
-Therefore, by \blue{Slutsky's Theorem} (\red{Leamma 3.4}), 
+Therefore, by \blue{Slutsky's Theorem} (\red{Lemma 3.4}), 
 
 \begin{align*}
 	\plim \betahatbold = \betabold + \Abold^{-1} \cdot \mbs{0} = \betabold
