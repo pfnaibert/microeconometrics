@@ -105,311 +105,6 @@
 \clearpage
 \pagenumbering{arabic}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \clearpage
-\section{Conceitos Básicos de Convergência Estatística}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Estimador Consistente}]
-Um estimador $\hat{\theta}$ é \textbf{consistente} para um parâmetro $\theta$ se 
-
-\vspace{-1 em}
-\begin{align*}
-\hat{\theta} \overset{p}{\longrightarrow} \theta.
- %  \\
- %  \hat{\theta} \arrowp \theta.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Convergência em Probabilidade}]
-Uma sequência de variáveis aleatórias:
-$\{ X_{n} \}_{n \geq 1}$ 
-\textbf{converge em probabilidade} para uma variável aleatória $X$ se, dado $\err > 0$, 
-
-\vspace{-1 em}
-\begin{align*}
-	P(| X_{n} - X | > \err ) \to 0,
-\end{align*}
-
-\noindent
-quando $n \to + \infty$.
-E denotamos
-
-\vspace{-1 em}
-\begin{align*}
-	X_{n} \arrowp X.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Desigualdade de Markov}]
-Seja
-$\{ X_{n} \}_{n \geq 1}$ 
-uma sequência de variáveis aleatórias com
-$E|X_{n}|^{K} < +\infty$, $K>0$. 
-Então, dado $\err >0$
-
-\vspace{-1 em}
-\begin{align*}
-	P(| X_{n} | > \err ) \leq \frac{E|X_{n}|^{K}}{\err^{K}}
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1} %[\textbf{}]
-\begin{align*}
-0 \leq P(| \thetahat - \theta | > \err ) \leq \frac{E|X_{n}|^{2}}{\err^{2}}
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Erro Quadrático Médio}]
-\begin{align*}
-EQM(\thetahat) 
-=
-\E\left[ \left( \thetahat - \theta \right)^2 \right] 
-=
-\left[ Bias(\thetahat)^{2} + \Var(\thetahat) \right]
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Então, se $Bias(\thetahat) \to 0$ e $\Var(\thetahat) \to 0$, temos que $EQM(\thetahat) \to 0$.
-Pelo \textbf{Teorema do Sanduíche}, $P(|\thetahat - \theta| > \err) \to 0$; logo, $\thetahat \arrowp \theta$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{LGN -- Lei dos Grandes Números}]
-Seja $\seq{X_{i}}_{i \geq 1}$ uma sequência de variáveis aleatórias $iid$ com $\E(X_{i}) = \mu$.
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-	N^{-1} \sum_{i=1}^{N} X_{i} \arrowp \mu.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{LGN -- Caso Matricial}]
-Seja $\seq{\mbs{x}_{i}}_{i=1}^{N}$, uma sequência $iid$ de vetores aleatórios $K \times 1$ com $\E(\mbs{x}_{i} \mbs{x}_{i}') = Q_{K \times K}$ finita.
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-N^{-1} \sum_{i=1}^{N}
-\mbs{x}_{i} \mbs{x}_{i}'
-\arrowp Q.
-\end{align*}
-
-Se $Q$ for positiva definida, $Q$ terá inversa.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Multiplicação de Matriz}
-
-\begin{align*}
-A_{2 \times 2} =
-\begin{bmatrix}
-	a_{11} & a_{12} \\
-	a_{21} & a_{22}		
-\end{bmatrix}
-\quad
-B_{2 \times 3} =
-\begin{bmatrix}
-	b_{11} & b_{12} & b_{13} \\
-	b_{21} & b_{22} & b_{23}		
-\end{bmatrix}
-\end{align*}
-
-\begin{align*}
-[AB]_{2 \times 3} &=
-\begin{bmatrix}
-	a_{11} \\ a_{21}
-\end{bmatrix}
-\begin{bmatrix}
-	b_{11} & b_{12} & b_{13}
-\end{bmatrix}
-+
-\begin{bmatrix}
-	a_{12} \\ a_{22}
-\end{bmatrix}
-\begin{bmatrix}
-	b_{21} & b_{22} & b_{23}
-\end{bmatrix}
-\implies
-AB = \sum_{i=1}^{2} a_{i}b_{i}
-\end{align*}
-
-\noindent
-onde
-$a_{i}$ é a $i$-ésima \textbf{coluna} da matriz $A$.
-$b_{i}$ é a $i$-ésima \textbf{linha} da matriz $B$.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-\begin{align*}
-P( | X_{n} - X | > \err ) & \to 0
-\\
-X_{n} - X & \arrowp 0
-\\
-X_{n} & \arrowp X
-\end{align*}
-\end{def1}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[$o_{p}$]
-\begin{align*}
-X_{n} = o_{p}(1) & \implies X_{n} \arrowp 0
-\\
-X_{n} = o_{p}(Y_{n}) & \implies
-\frac{X_{n}}{Y_{n}} = o_{p}(1) \implies
-\frac{X_{n}}{Y_{n}} \arrowp 0
-\\
-X_{n} = W_{n} + o_{p}(1) & \implies
-(X_{n} - W_{n}) = o_{p}(1) \implies
-(X_{n} - W_{n}) \arrowp 0
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Limitação em Probabilidade: $O_{p}$]
-Dizemos que $X_{n}$ é \textbf{limitado em probabilidade} e denotado por 
-$X_{n} = O_{p}(1)$,
-se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n} | > 0) < \err$.
-
-\vspace{-1 em}
-\begin{align*}
-X_{n} = O_{p}(1) \implies \exists M > 0 \, ; \;
-\forall \err > 0 \, , \;
-P( | X_{n} | > 0) < \err.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-Dizemos que
-$X_{n} = O_{p}(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
-
-\vspace{-1 em}
-\begin{align*}
-X_{n} = O_{p}(Y_{n}) \implies \exists M > 0 \, ; \;
-\forall \err > 0 \, , \;
-P( | X_{n}/Y_{n} | > 0) < \err.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
-Se
-$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
-
-\vspace{-1 em}
-\begin{align*}
-	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Equivalência Assintótica]
-Seja
-$\seq{\mbs{x}_{n}}$ e $\seq{\mbs{z}_{n}}$
-sequências de vetores aleatórios $K \times 1$.
-Se $\mbs{z}_{n} \arrowd \mbs{z}$ e 
-$\mbs{x}_{n} - \mbs{z}_{n} \arrowp \mbs{0}_{K}$.
-Então, 
-
-\vspace{-1 em}
-\begin{align*}
-\mbs{x}_{n} \arrowd \mbs{z}.
-\end{align*}
-
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição]
-Seja
-$\seq{X_{n}}_{n \geq 1}$  uma sequência de variáveis aleatórias e $X$ uma variável aleatória com $F_{n}$ e $F$ suas respectivas FDAs, então
-
-\begin{align*}
-	X_{n} \arrowd X, \text{ se } F_{n}(X) \to F(X)
-\end{align*}
-\noindent
-para todo $X$ onde $F$ é contínuo.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição e Limitação em Probabilidade]
-Se $X_{n} \arrowd X$, $X$ um variável aleatória qualquer; então $X_{n} = O_{p}(1)$.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Teorema Central do Limite]
-Seja $\seq{X_{n}}_{n = 1}^{N}$ $iid$ com $\E(X_{n}) = \mu$ e $\Var(X_{n}) = \sigma^{2} < + \infty$.
-Então, para $S_{N} = \sum_{n=1}^{N} X_{n}$:
-
-\begin{align*}
-\frac{S_{N} - N \mu }{ \sqrt{N} \sigma}
-=
-\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
-=
-\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
-=
-\boxed{
-\frac{\sqrt{N} ( \overline{X} - \mu ) }{\sigma}
-\arrowd Z \sim N(0,1)}.
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Caso Vetorial]
-Seja $\seq{\mbs{w}_{i}}_{i=1}^{n}$ uma sequência $iid$ de vetores aleatórios $K \times 1$ com
-$\E( w_{ik}^{2} ) < + \infty$, $k= 1, \dots K$ e $\E( \mbs{w}_{i} ) = \mbs{0}_{K}$.
-Então,
-
-\vspace{-1 em}
-\begin{align*}
-	N^{-1/2} \sum_{i=1}^{N} \mbs{w}_{i} \arrowd N(\mbs{0}, B),
-\end{align*}
-
-\noindent
-onde, $B=\Var(\mbs{w}_{i}) = \E( \mbs{w}_{i} \mbs{w}_{i}')$.
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
-Seja $\seq{\mbs{z}_{n}}$ uma sequência de vetores $K \times 1$ aleatórios com 
-
-\vspace{-1 em}
-\begin{align*}
-	\mbs{z}_{n} \arrowd N(\mbs{0}, V).
-\end{align*}
-
-Então, para qualquer matriz $A$ de dimensão $K \times M$ \textbf{não} estocástica,
-
-\vspace{-1 em}
-\begin{align*}
-	A' \mbs{z}_{n} \arrowd N(\mbs{0}, A'VA).
-\end{align*}
-\end{def1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
@@ -419,8 +114,6 @@ Então, para qualquer matriz $A$ de dimensão $K \times M$ \textbf{não} estocá
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo de equações lineares} 
-\noindent
-\citet[Sec. 4.1 -- Overview of the Single-Equation Linear Model; p.49]{wool-2010}
 
 O modelo populacional que estudamos é linear em seus parâmetros,
 
@@ -428,77 +121,18 @@ O modelo populacional que estudamos é linear em seus parâmetros,
 \begin{align} \label{ols:mod}
 y &= \beta_{0} + \beta_{1} x_{1} + \dots + \beta_{K} x_{K} + u
 \end{align}
-\vspace{-1 em}
+onde:
 
-\noindent
-onde
+\begin{description}[\noitemsep]
+	\item [$y, x_{1}, \dots, x_{K}$]  são escalares aleatórios e observáveis (i.e., conseguimos observá-los em uma amostra aleatória da população);
 
-\begin{itemize} \itemsep0pt
-\item $y, x_{1}, \dots, x_{K}$  são escalares aleatórios e observáveis (i.e., conseguimos observá-los em uma amostra aleatória da população);
+	\item [$u$] é o \textit{random disturbance} não observável, ou erro; 
 
-\item $u$ é o \textit{random disturbance} não observável, ou erro; 
-
-\item $\beta_{0}, \beta_{1}, \dots, \beta_{K}$ são parâmetros (constantes) que gostaríamos de estimar.
-\end{itemize}
+	\item [$\beta_{0}, \beta_{1}, \dots, \beta_{K}$] são parâmetros (constantes) que gostaríamos de estimar.
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Structural Model}
-\blue{Goldberger (1972)}
-\footnote{Goldberger (1972), ``Structural Equation Methods in the Social Sciences,'' \textit{Econometrica} 40, 979--1001.}
-defines a \textbf{structural model} as one representing a causal relationship, as opposed to a relationship that simply captures statistical associations.
-A structural equation can be obtained from an economic model, or it can be obtained through informal reasoning.
-Someteimes the structural model is directly estimable.
-Other times times we must combine auxiliary assumptions about other variables with algebraic manipulations to arrive at an \textbf{estimable model}.
-In addtion, we will often have reasons to estimate \textbf{nonstructural equations}, sometimes as a precursor to estimating a structural equation.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Zero Mean Error}
-The key condition for OLS to consitently estimate the $\beta_{j}$ (assuming we have availabe a random sample from the population) is that the error (in the population) has mean zero and is uncorrelated with each of the regressors:
-
-\vspace{-1 em}
-\begin{align} \label{zeromeanerror}
-	\E( u ) = 0 \, , \quad \Cov(x_{j}, u) = 0 \, , \quad j = 1, \dots, K.
-\end{align}
-
-The zero-mean assumptions is for free when an intercept is included.
-It is the zero covariance of $u$ with each $x_{j}$ that is important.
-From \red{XX} we know that equation \eqref{ols:mod} and assumption \eqref{zeromeanerror} is equivalent to defining the\textbf{linear projection} of $y$ onto 
-$(1, x_{1}, \dots, x_{K})$ as
-$\beta_{0} + \beta_{1} x_{1} + \dots \beta_{K} x_{K}$.
-
-Sufficient for assumption \eqref{zeromeanerror} is the zero conditional mean assumption:
-
-\vspace{-1 em}
-\begin{align} \label{zerocondmean}
-	\E( u | x_{1}, \dots, x_{K} ) = \E( u | \xbold) = 0.
-\end{align}
-
-Under equation \eqref{ols:mod} aand assumption \eqref{zerocondmean}, we have the \textbf{population regression function}
-
-\vspace{-1 em}
-\begin{align} \label{pop:regfun}
-	\E( y | x_{1}, \dots, x_{K} ) = \beta_{0} + \beta_{1} x_{1} + \dots \beta_{K} x_{K}. 
-\end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Endogenous Variable}
-
-An explanatory variable $x_{j}$ is said to be \textbf{endogenous} in equation \eqref{ols:mod} if it is correlated with $u$.
-The usage of the word \textbf{endogenous}, in econometrics, is used broadly to describe any situation where an explanatory variable is correlated with the disturbance.
-If $x_{j}$ is uncorrelated with $u$, then $x_{j}$ is said to be \textbf{exogenous} in equation \eqref{ols:mod}.
-If assumption \eqref{zerocondmean} holds, then each explanatory variable is necessarily exogenous.
-
-In applied econometrics, endogeneity usually arises in one of three ways:
-
-\vspace{-1 em}
-\begin{enumerate}[noitemsep]
-	\item \textbf{Ommited Variables};
-	\item \textbf{Measurement Error};
-	\item \textbf{Simultaneity}. 
-\end{enumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Asymptotic Properties of OLS} 
+\subsection*{Notação Vetorial} 
 \noindent
 \citet[Sec. 4.2 -- Asymptotic Properties of OLS; p.51]{wool-2010}
 
@@ -523,7 +157,7 @@ onde,
 Uma vez que a maioria das equações contém um intercepto, assumiremos que $x_{1} \equiv 1$, visto que essa hipótese deixa a interpretação mais fácil.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Amostra Aleatória} 
+\subsection*{Amostra Aleatória} 
 
 Assumimos que conseguimos obter uma amostra aleatória de tamanho $N$ da população para estimarmos $\mbs{\beta}$.
 Dessa forma, $\{ (\mbs{x}_{i}, y_{i}); \, i = 1, 2, \dots, N \}$
@@ -548,13 +182,13 @@ Empilhando as $N$ observações, obtemos a \textbf{Notação Matricial}:
 
 \vspace{-1 em}
 \begin{align} \label{ols:mod:mat}
-	\mbs{y} &= X \mbs{\beta} + \mbs{u} 
+	\mbs{y} &= \Xmat \mbs{\beta} + \mbs{u} 
 \end{align}
 
 \begin{description}[noitemsep]
 \item [$\mbs{y}$]  é um vetor $N \times 1$;
 
-\item [$X$]  é uma matriz $N \times K$ de regressores, com $N$ vetores, $\mbs{x}_{i}$, de dimensão $1 \times K$ empilhados;
+\item [$\Xmat$]  é uma matriz $N \times K$ de regressores, com $N$ vetores, $\mbs{x}_{i}$, de dimensão $1 \times K$ empilhados;
 
 \item [$\mbs{\beta}$] é um vetor $K \times 1$;
 
@@ -568,7 +202,7 @@ Empilhando as $N$ observações, obtemos a \textbf{Notação Matricial}:
 	y_{1} \\ \vdots \\ y_{N}		
 \end{bmatrix};
 \quad
-X = 
+\Xmat = 
 \begin{bmatrix}
 	\mbs{x}_{1} \\ \vdots \\ \mbs{x}_{N}
 \end{bmatrix} = 
@@ -586,136 +220,14 @@ X =
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Consistency}
-\noindent
-\citet[Sec. 4.2.1 -- Consistency; p.52-4]{wool-2010}
-
-\paragraph{Assumptions}
-
-\begin{description}[itemsep = 1ex]
-	\item[OLS.1]  \textbf{population orthogonality condition:} $\E(\mbs{x}'u) = 0$;
-
-	\item[OLS.2]  $posto[ \E( \mbs{x}' \mbs{x} ) ] = K$.
-\end{description}
-
-Because $\xbold$ contains a constant, \textbf{OLS.1} is equivalent to saying that $u$ has zero mean and is uncorrelated with each regressor.
-Suficient for \textbf{OLS.1} is the zero conditional mean assumption \eqref{zerocondmean}.
-
-Since $\E( \xbold'\xbold )$ is symmetric $K \times K$ matrix, \textbf{OLS.2} is equivalent to aassuming that $\E( \xbold'\xbold )$ is positive definite.
-
-Under assumptions \textbf{OLS.1} and \textbf{OLS.2} the parameter $\betabold$ is \textbf{identified}.
-In the context of models that are linear in the parameters under random sampling, identification of $\betabold$ simply means that $\betabold$ can be written in terms of population moments in observable variabels.
-To see this, we premultiply equation \eqref{ols:mod:vec} by $\xbold'$ and take expectations:
-
-\vspace{-1 em}
-\begin{align*}
-	y &= \xbold \betabold + u
-	\\
-	\xbold' y &= \xbold' \xbold \betabold + \xbold' u
-	\\
-	\E( \xbold' y) &= \E( \xbold' \xbold) \betabold + \E(\xbold' u)
-	\\
-	\E( \xbold' y) &= \E( \xbold' \xbold) \betabold
-	\\
-	\Aboxed{\betabold &= \left[ \E( \xbold' \xbold) \right]^{-1} \E( \xbold' y) }.
-\end{align*}
-
-Because $(\xbold, y)$is observed, $\betabold$ is identified.
+\paragraph{OLS.1} 
+$y_{i} &= \mbs{x}_{i} \mbs{\beta} + u_{i} \, , \quad i = 1, \dots, N$;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Analogy Principle}
-The \textbf{analogy principle} for choosing and estimator says to turn to the population problem into its \textbf{sample counterparts} (\blue{Goldberger, 1968}; \blue{Manski, 1988}).
-In the current application this step leads to the \textbf{method of moment}:
-replace the population moments $\E( \xbold' \xbold)$ and $\E(\xbold' y)$ with the corresponding \textbf{sample averages}.
-Doing so leads to the OLS estimator:
-
-\vspace{-1 em}
-\begin{align*}
-\betahatbold &=
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' y_{i} \right)
-\\
-\betahatbold &=
-\betabold +
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right).
-\end{align*}
-
-\noindent
-Isso pode ser escrito na forma matricial:
-
-\vspace{-1 em}
-\begin{align*}
-\betahatbold &=	(X'X)^{-1} X'\ybold
-\\
-\betahatbold &=	\betabold + (X'X)^{-1} X'\ubold ,
-\end{align*}
-
-\noindent onde,
-
-\vspace{-1 ex}
-\begin{description}[noitemsep]
-\item[$X$] é a matriz de dados $N \times K$ dos regressores com linha $i$ igual a $\mbs{x}_{i}$;
-
-\item[$\ybold$] é o vetor de dados $N \times 1$ com o $i$-ésimo elemento de $\mbs{y}$ sendo representado por $y_{i}$.
-\end{description}
-
-Under \textbf{OLS.2} $X'X$ is nonsingular with probability approaching one and
-
-\begin{align*}
-\plim \left[ \left( N^{-1} \sum_{i=1}^{N} \xbold_{i}' \xbold_{i} \right)^{-1} \right] 
-&= \Abold^{-1},
-\end{align*}
-
-\noindent where,
-$\boxed{\Abold \equiv E(\xbold' \xbold)}$ (\red{see Corollary 3.1}).
-
-Further, under \textbf{OLS.1}
-
-\begin{align*}
-\plim \left[ \left( N^{-1} \sum_{i=1}^{N} \xbold_{i}' u_{i} \right)^{-1} \right]
-= E(\xbold'u) = \mbs{0}.
-\end{align*}
-
-Therefore, by \blue{Slutsky's Theorem} (\red{Leamma 3.4}), 
-
-\begin{align*}
-	\plim \betahatbold = \betabold + \Abold^{-1} \cdot \mbs{0} = \betabold
-\end{align*}
+\paragraph{OLS.2}  $\Xmat$ é \textbf{não} estocástica;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Resumo}
-Resumimos os resultados acima com um teorema:
-
-\begin{teo1}[Consistência do OLS]\label{ols:const}
-Sob as Hipóteses \textbf{OLS.1} e \textbf{OLS.2}, o estimador de OLS, $\betahatbold$ obtido de uma amostra aleatória seguindo o modelo populacional \eqref{ols:mod:vec} é consistente para $\betabold$.
-\end{teo1}
-
-Sob as hipóteses do Teorema \ref{ols:const}, $\mbs{x} \betabold$ é uma \textbf{projeção linear} de $y$ em $\mbs{x}$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Asymptotic Inference Using OLS}
-\noindent
-\citet[Sec. 4.2.2 -- Asymptotic INference Using OLS; p.54-5]{wool-2010}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\clearpage
-\section*{Hudson OLS} 
-
-\subsection*{Hipóteses} 
-
-\begin{description}
-\item[H1] Estamos usando o modelo correto:
-
-	\vspace{-1.5 em}
-\begin{align*}
-y_{i} &= \mbs{x}_{i} \mbs{\beta} + u_{i}
-\, , \quad i = 1, \dots, N;
-\end{align*}
-
-\item[H2] $X$ é \textbf{não} estocástica;
-\item[H3] 
-$\{ u_{i} \}_{i=1}^{N}$  é  $iid$ com e para cada $i = 1, \dots, N$:
+\paragraph{OLS.3} $\{ u_{i} \}_{i=1}^{N}$  é  $iid$ com e para cada $i = 1, \dots, N$:
 
 \vspace{-1.5 em}
 \begin{align*}
@@ -724,135 +236,159 @@ $\{ u_{i} \}_{i=1}^{N}$  é  $iid$ com e para cada $i = 1, \dots, N$:
 \Var(u_{i}) &= \E(u_{i}^2) = \sigma^2
 \end{align*}
 
-\item[H2'] $X$ é estocástica;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{OLS.2'} $\Xmat$ é estocástica;
 
-\item[H3'] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{OLS.3'} 
 
 \begin{align*}
-\E(u_{i} | X) &= 0
+\E(u_{i} | \Xmat) &= 0, 
 \\
-\Var(u_{i} | X) &= 
+\Var(u_{i} | \Xmat) &= 
 E
 \left\{ \left[ 
-u_{i} - \E( u_{i} | X)
-\right]^2 | X \right\}
+u_{i} - \E( u_{i} | \Xmat)
+\right]^2 | \Xmat \right\}
 =
-\E(u_{i}^2 | X) = \sigma^2.
+\E(u_{i}^2 | \Xmat) = \sigma^2.
 \end{align*}
 
-$\E(u_{i} | X) = 0$ implica que $u_{i}$ é \textbf{não correlacionado} com todos os regressores $x_{k}$ para $k=1,\dots, K$. \red{Exogeneidade estrita}.
-\end{description}
+\begin{remark}
+$\E(u_{i} | \Xmat) = 0$ implica que $u_{i}$ é \textbf{não correlacionado} com todos os regressores $x_{k}$ para $k=1,\dots, K$. \red{Exogeneidade estrita}.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Estimação} 
+\subsection{Estimação} 
 
-\begin{align} \label{betahat:ols}
-\widehat{\mbs{\beta}} = (X'X)^{-1}X'\mbs{y}
-\end{align}
+\vspace{-2 em}
+\begin{equation} \label{betahat:ols}
+	\boxed{ \widehat{\mbs{\beta}} = (\Xmat'\Xmat)^{-1}\Xmat'\yvec }
+\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Valor Esperado} 
+\subsection{Valor Esperado} 
 
+\vspace{-2 em}
 \begin{align*} 
 \E ( \widehat{\mbs{\beta}} ) 
-&= \E \left[ (X'X)^{-1}X'\mbs{y} \right]
+&= \E \left[ (\Xmat'\Xmat)^{-1}\Xmat'\mbs{y} \right]
 \\
-&= \E \left[ (X'X)^{-1}X'(X \mbs{\beta} + \mbs{u}) \right]
+&= \E \left[ (\Xmat'\Xmat)^{-1}\Xmat'(\Xmat \mbs{\beta} + \mbs{u}) \right]
 \\
-&= \E \left[ (X'X)^{-1}X'X \mbs{\beta} + (X'X)^{-1}X'\mbs{u} \right]
+&= \E \left[ (\Xmat'\Xmat)^{-1}\Xmat'\Xmat \mbs{\beta} + (\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} \right]
 \\
-&= \E (\mbs{\beta}) + \E[(X'X)^{-1}X'\mbs{u} ]
+&= \E (\mbs{\beta}) + \E[(\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} ]
 \\
 \Aboxed{
 \E ( \widehat{\mbs{\beta}} ) 
-&= \mbs{\beta} + \E[(X'X)^{-1}X'\mbs{u} ] }
+&= \mbs{\beta} + \E[(\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} ] }
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Viés} 
+\subsubsection{Viés} 
 
+\vspace{-2 em}
 \begin{align*} 
 \Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E ( \widehat{\mbs{\beta}} ) - \mbs{\beta} }
 \\
-\Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E[ (X'X)^{-1}X'\mbs{u} ] }
+\Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E[ (\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} ] }
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Sob \textbf{H2'} e \textbf{H3'}:
+\begin{remark}
+Sob \textbf{OLS.2'} e \textbf{OLS.3'}:
 
+\vspace{-1 em}
 \begin{align*}
-\E[(X'X)^{-1}X'\mbs{u} ]
-&= \E \left\{ \E\left[ (X'X)^{-1}X'\mbs{u} | X \right]  \right\}  
+\E[(\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} ]
+&= \E \left\{ \E\left[ (\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} | \Xmat \right]  \right\}  
 \\
-&= \E \left\{  (X'X)^{-1}X'
-\underbracket[.75pt]{\E( \mbs{u} | X )}_{= \mbs{0}}
+&= \E \left\{  (\Xmat'\Xmat)^{-1}\Xmat'
+\underbracket[.75pt]{\E( \mbs{u} | \Xmat )}_{= \mbs{0}}
 \right\} = 0
 \end{align*}
 
 \noindent
 ou seja, 
-$B( \widehat{\mbs{\beta}} ) = 0$, logo $\widehat{\mbs{\beta}}$ é \textbf{não viciado}.
+$B( \widehat{\mbs{\beta}} ) = 0$, logo $\widehat{\mbs{\beta}}$ é \textbf{não-viciado}.
 O que também é equivalente a  $\E( \widehat{\mbs{\beta}} ) = \mbs{\beta}$.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Variância} 
-Supondo \textbf{H2'} e \textbf{H3'}:
+\subsection{Variância} 
+Supondo \textbf{OLS.2'} e \textbf{OLS.3'}:
 
+\vspace{-1 em}
 \begin{align*} 
-\Var ( \widehat{\mbs{\beta}} | X) 
+\Var ( \widehat{\mbs{\beta}} | \Xmat) 
 &= \E \left\{\left[ 
-\widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | X )
-\right]^2 | X \right\}
+\widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | \Xmat )
+\right]^2 | \Xmat \right\}
 \\
 &= \E \left\{ 
-\left[ \widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | X ) \right]
-\left[ \widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | X ) \right]'
-| X \right\}
+\left[ \widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | \Xmat ) \right]
+\left[ \widehat{\mbs{\beta}} - \E ( \widehat{\mbs{\beta}} | \Xmat ) \right]'
+| \Xmat \right\}
 \\
 &= \E \left\{ 
-\left[ (X'X)^{-1}X' \mbs{u} \right]
-\left[ (X'X)^{-1}X' \mbs{u} \right]'
-| X \right\}
+\left[ (\Xmat'\Xmat)^{-1}\Xmat' \mbs{u} \right]
+\left[ (\Xmat'\Xmat)^{-1}\Xmat' \mbs{u} \right]'
+| \Xmat \right\}
 \\
-&= \E \left[ (X'X)^{-1}X' \mbs{u} \mbs{u}' X (X'X)^{-1} | X \right]
+&= \E \left[ (\Xmat'\Xmat)^{-1}\Xmat' \mbs{u} \mbs{u}' \Xmat (\Xmat'\Xmat)^{-1} | \Xmat \right]
 \\
 \Aboxed{
-\Var ( \widehat{\mbs{\beta}} | X) 
+\Var ( \widehat{\mbs{\beta}} | \Xmat) 
 &= 
-(X'X)^{-1}X' 
-\E \left[ \mbs{u} \mbs{u}'| X \right]
-X (X'X)^{-1} }
+(\Xmat'\Xmat)^{-1}\Xmat' 
+\E \left[ \mbs{u} \mbs{u}'| \Xmat \right]
+\Xmat (\Xmat'\Xmat)^{-1} }
 \end{align*}
 
 Supondo homocedasticidade e ausência de correlação serial: 
-$\boxed{ \E \left[ \mbs{u} \mbs{u}'| X \right] = \sigma^2 I_{N} }$.
+$\boxed{ \E \left[ \mbs{u} \mbs{u}'| \Xmat \right] = \sigma^2 I_{N} }$.
 Assim, 
 
+\vspace{-1 em}
 \begin{align*} 
-\Var ( \widehat{\mbs{\beta}} | X) 
-&= \sigma^2 (X'X)^{-1}X' I_{N} X (X'X)^{-1}
-= \sigma^2 (X'X)^{-1}X'X (X'X)^{-1}
+\Var ( \widehat{\mbs{\beta}} | \Xmat) 
+&= \sigma^2 (\Xmat'\Xmat)^{-1}\Xmat' I_{N} \Xmat (\Xmat'\Xmat)^{-1}
+= \sigma^2 (\Xmat'\Xmat)^{-1}\Xmat'\Xmat (\Xmat'\Xmat)^{-1}
 \\
-\Aboxed{ \Var ( \widehat{\mbs{\beta}} | X) &= \sigma^2 (X'X)^{-1} }.
+\Aboxed{ \Var ( \widehat{\mbs{\beta}} | \Xmat) &= \sigma^2 (\Xmat'\Xmat)^{-1} }.
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \clearpage
-\subsection*{Ausência de Exogeneidade Estrita}
+\clearpage
+\section{Ausência de Exogeneidade Estrita}
 Nem sempre poderemos supor \textbf{exogeneidade estrita}.
-Por exemplo, no modelo com variável defasada mostrado abaixo,
+Por exemplo, no modelo com variável defasada mostrado abaixo:
 
+\vspace{-1 em}
 \begin{align*}
+%  \left.
+%  \begin{aligned}
 y_{t} &= \beta_{0} + \beta_{1} y_{t-1} + \beta_{2} x_{1t} + u_{t}
 \\
 y_{t-1} &= \beta_{0} + \beta_{1} y_{t-2} + \beta_{2} x_{1t-1} + u_{t-1}
+%  \end{aligned}
+%  \right\}
+%  \implies
 \\
-y_{t} &= \beta_{0} +
-\beta_{1} \left(  
-\beta_{0} + \beta_{1} y_{t-2} + \beta_{2} x_{1t-1} + u_{t-1}
-\right)
+y_{t} &=
+\beta_{0}(1 + \beta_{1})
 +
-\beta_{2} x_{1t} + u_{t},
+\beta_{1}^2 y_{t-2}
++
+\beta_{1} 
+\beta_{2} x_{1t-1} 
++
+\beta_{2} x_{1t} 
++
+u_{t}
++
+\beta_{1} u_{t-1},
 \end{align*}
 
 \noindent
@@ -860,12 +396,19 @@ o erro é correlacionado com o regressor $y_{t-1}$.
 Nesse caso, tentaremos obter apenas \textbf{consistência} e \textbf{variância assintótica} do estimador.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Estimação}
+\begin{center}
+\red{Aqui comeceçaria a seção \ref{app1}}.
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Estimação}
 
 Lembrando que o estimador de OLS é:
 
+\vspace{-1 em}
 \begin{align*}
-\betahatbold = (X'X)^{-1}X'\mbs{y},
+\betahatbold = (\Xmat'\Xmat)^{-1}\Xmat'\mbs{y},
 \end{align*}
 
 \noindent
@@ -881,7 +424,7 @@ e definimos as variáveis
 
 \vspace{-1 em}
 \begin{align*}
-X_{N \times K} =
+\Xmat_{N \times K} =
 \begin{bmatrix}
 	\mbs{x}_{1} \\ \vdots \\	\mbs{x}_{N}	
 \end{bmatrix},
@@ -898,19 +441,19 @@ X_{N \times K} =
 \end{align*}
 
 \noindent
-Assim, representamos $(X'X)^{-1}$ e $(X'\mbs{y})$ por meio dos seguintes somatórios:
-temos
+Assim, representamos $(\Xmat'\Xmat)^{-1}$ e $(\Xmat'\mbs{y})$ por meio dos seguintes somatórios
 
 \vspace{-1 em}
 \begin{align*}
-\left( X'X \right)^{-1} = \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} ,
+\left( \Xmat'\Xmat \right)^{-1} = \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} ,
 \quad
-\left( X'\mbs{y} \right) = \sum_{i=1}^{N} \mbs{x}_{i}' y_{i}.
+\left( \Xmat'\mbs{y} \right) = \sum_{i=1}^{N} \mbs{x}_{i}' y_{i}.
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Valor Esperado e Viés}
+\subsection{Valor Esperado e Viés}
 
+\vspace{-2 em}
 \begin{align*}
 \betahatbold &= 
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
@@ -926,7 +469,7 @@ temos
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right)
 \\
 &=
-\betabold +
+\betavec +
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right).
 \end{align*}
@@ -956,34 +499,34 @@ Logo
 \vspace{-1 em}
 \begin{align*}
 \betahatbold = 
-\betabold +
+\betavec +
 \underbracket[1pt]{
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)}_{\arrowp 0}
 \end{align*}
 
 Então, 
-$(\betahatbold - \betabold) \arrowp 0$ 
+$(\betahatbold - \betavec) \arrowp 0$ 
 que é equivalente a 
-$\boxed{\betahatbold \arrowp \betabold}$.
+$\boxed{\betahatbold \arrowp \betavec}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection*{Normalidade Assintótica do $\betahatbold^{OLS}$}
-\paragraph{Normalidade Assintótica do $\betahatbold^{OLS}$}
+\subsection{Normalidade Assintótica} % do $\betahatbold^{OLS}$}
 
+\vspace{-2 em}
 \begin{align*}
 \betahatbold 
 &= 
-\betabold +
+\betavec +
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\
-(\betahatbold - \betabold)
+(\betahatbold - \betavec)
 &=
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\
-\sqrt{N} (\betahatbold - \betabold) &=
+\sqrt{N} (\betahatbold - \betavec) &=
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \end{align*}
@@ -1023,7 +566,7 @@ Assim, temos
 
 \vspace{-1 em}
 \begin{align*}
-\sqrt{N} (\betahatbold - \betabold) &=
+\sqrt{N} (\betahatbold - \betavec) &=
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\ &=
@@ -1057,7 +600,7 @@ Então,
 
 \vspace{-1 em}
 \begin{align*}
-\sqrt{N} (\betahatbold - \betabold) &=
+\sqrt{N} (\betahatbold - \betavec) &=
 0_{p}(1) O_{p}(1)
 + Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
 \end{align*}
@@ -1074,11 +617,11 @@ Lembrando que $o_{p}(1) O_{p}(1) = o_{p}(1)$, temos:
 
 \vspace{-1 em}
 \begin{align*}
-	\Aboxed{\sqrt{N} (\betahatbold - \betabold) \arrowd N(\mbs{0}, Q^{-1} B Q^{-1})}.
+	\Aboxed{\sqrt{N} (\betahatbold - \betavec) \arrowd N(\mbs{0}, Q^{-1} B Q^{-1})}.
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Variância}
+\subsection{Variância}
 
 Vamos definir $\boxed{V = Q^{-1} B Q^{-1} }$:
 
@@ -1121,9 +664,9 @@ N
 \Aboxed{
 \widehat{V} &=
 N
-\left( X'X \right)^{-1}
+\left( \Xmat'\Xmat \right)^{-1}
 \left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
-\left( X'X \right)^{-1} }.
+\left( \Xmat'\Xmat \right)^{-1} }.
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1138,9 +681,9 @@ $\Var(\betahatbold)$
 \\
 \Aboxed{
 \Var(\betahatbold) &= 
-\left( X'X \right)^{-1}
+\left( \Xmat'\Xmat \right)^{-1}
 \left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
-\left( X'X \right)^{-1} }.
+\left( \Xmat'\Xmat \right)^{-1} }.
 \end{align*}
 
 A variância \textbf{Robusta} é:
@@ -1149,16 +692,16 @@ A variância \textbf{Robusta} é:
 \begin{align*}
 \Aboxed{
 \widehat{\Var}(\betahatbold) &= 
-(X'X)^{-1} 
+(\Xmat'\Xmat)^{-1} 
 \left( \sum_{i=1}^{N} \widehat{u}_{i}^{2} \mbs{x}_{i}' \mbs{x}_{i} \right)
-(X'X)^{-1} }.
+(\Xmat'\Xmat)^{-1} }.
 \end{align*}
 
 A variância sob \textbf{Homocedasticidade} é:
 
 \vspace{-1 em}
 \begin{align*}
-	\Aboxed{\widehat{\Var}(\betahatbold) &= \widehat{\sigma}^{2} (X' X)^{-1}} .
+	\Aboxed{\widehat{\Var}(\betahatbold) &= \widehat{\sigma}^{2} (\Xmat' \Xmat)^{-1}} .
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1175,11 +718,11 @@ A variância sob \textbf{Homocedasticidade} é:
 \citet[Sec.7.3.1]{wool-2010}
 
 Assumimos que temos as seguintes observações \textit{cross section} $iid$:
-$\seq{ (X_{i}, \mbs{y}_{i}): i=1, \dots, N}$, onde:
+$\seq{ (\Xmat_{i}, \mbs{y}_{i}): i=1, \dots, N}$, onde:
 
 \vspace{-1 em}
 \begin{itemize}[itemsep = -1ex]
-\item [$X_{i}$]  é uma matriz $G \times K$ e contém as variáveis explicativas que aparecem em qualquer lugar do sistema.
+\item [$\Xmat_{i}$]  é uma matriz $G \times K$ e contém as variáveis explicativas que aparecem em qualquer lugar do sistema.
 \item [$\mbs{y}_{i}$]  é um vetor $G \times 1$, que contém as variáveis dependentes para todas as equações $G$ (ou períodos de tempo, no caso de dados de painel).
 \end{itemize}
 
@@ -1187,7 +730,7 @@ O modelo linear multivariado para uma \red{observação (draw)} aleatória da po
 
 \vspace{-1 em}
 \begin{align}\label{mod:SOLS}
-	\mbs{y}_{i} = X_{i} \betabold + \mbs{u}_{i} \, , \quad i=1, \dots, N,
+	\mbs{y}_{i} = \Xmat_{i} \betavec + \mbs{u}_{i} \, , \quad i=1, \dots, N,
 \end{align}
 
 \noindent
@@ -1195,11 +738,11 @@ onde:
 
 \vspace{-1 em}
 \begin{itemize}[itemsep = -1ex]
-\item [$\betabold$] é um vetor $K \times 1$ de parâmetros de interesse; e
+\item [$\betavec$] é um vetor $K \times 1$ de parâmetros de interesse; e
 \item [$\mbs{u}_{i}$] é um vetor $G \times 1$ de não observáveis.
 \end{itemize}
 
-A equação \eqref{mod:SOLS} explica as $G$ variáveis $y_{i1}, \dots, y_{iG}$ em termos de $X_{i}$ e das não observáveis $\mbs{u}_{i}$.
+A equação \eqref{mod:SOLS} explica as $G$ variáveis $y_{i1}, \dots, y_{iG}$ em termos de $\Xmat_{i}$ e das não observáveis $\mbs{u}_{i}$.
 Por causa da hipótese de amostra aleatória podemos escrever tudo em temos de uma observação genérica.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1208,53 +751,53 @@ Por causa da hipótese de amostra aleatória podemos escrever tudo em temos de u
 \citet[Sec.7.3.1]{wool-2010}
 
 \begin{description}[itemsep = 0ex]
-\item [SOLS.1] $\E(X_{i}' \mbs{u}_{i}) = 0$.
+\item [SOLS.1] $\E(\Xmat_{i}' \mbs{u}_{i}) = 0$.
 		
-\item [SOLS.2] $A \equiv \E( X_{i}' X_{i} )$ é não singular (tem posto pleno, posto igual a $K$). 
+\item [SOLS.2] $A \equiv \E( \Xmat_{i}' \Xmat_{i} )$ é não singular (tem posto pleno, posto igual a $K$). 
 \end{description}
 
-A hipótese \textbf{SOLS.1} é a mais fraca que podemos impor num aracabouço de regressão para conseguirmos um estimador de $\betabold$ consistente.
-Essa hipótese permite que alguns elementos de $X_{i}$ sejam correlacionados com elementos de $\mbs{u}_{i}$.
+A hipótese \textbf{SOLS.1} é a mais fraca que podemos impor num aracabouço de regressão para conseguirmos um estimador de $\betavec$ consistente.
+Essa hipótese permite que alguns elementos de $\Xmat_{i}$ sejam correlacionados com elementos de $\mbs{u}_{i}$.
 Uma hipótese mais forte seria:
 
 \vspace{-1 em}
 \begin{align} \label{cond:mean:0}
-	\E(\mbs{u}_{i} | X_{i} ) = \mbs{0}
+	\E(\mbs{u}_{i} | \Xmat_{i} ) = \mbs{0}
 \end{align}
 
 Sob \textbf{SOLS.1}, temos:
 
 \vspace{-1 em}
 \begin{align*} 
-\E[ X_{i}' ( \mbs{y}_{i} - X_{i} \betabold ) ] &= \mbs{0}
+\E[ \Xmat_{i}' ( \mbs{y}_{i} - \Xmat_{i} \betavec ) ] &= \mbs{0}
 \\
-\E( X_{i}' X_{i} ) \betabold &= \E( X_{i}' \mbs{y}_{i} )  
+\E( \Xmat_{i}' \Xmat_{i} ) \betavec &= \E( \Xmat_{i}' \mbs{y}_{i} )  
 \end{align*}
 
-Para cada $i$, $X_{i} \mbs{y}_{i}$ é um vetor aleatório $K \times 1$ e $X_{i}'X_{i}$ é uma matriz $K \times K$ aleatória simétrica, positiva semidefinida.
-Então, $\E(X_{i}' X_{i})$ é sempre uma matriz $K \times K$ não aleatória simétrica, positiva semidefinida.
-Para conseguirmos estimar $\betabold$ precisamos assumir que ele é o único vetor $K \times 1$ que satisfaz $\E( X_{i}' X_{i} ) \betabold = \E( X_{i}' \mbs{y}_{i} )$.
-Por isso assumimos \textbf{SOLS.2} e sob \textbf{SOLS.1} e \textbf{SOLS.2}, podemos escrever $\betabold$ como:
+Para cada $i$, $\Xmat_{i} \mbs{y}_{i}$ é um vetor aleatório $K \times 1$ e $\Xmat_{i}'\Xmat_{i}$ é uma matriz $K \times K$ aleatória simétrica, positiva semidefinida.
+Então, $\E(\Xmat_{i}' \Xmat_{i})$ é sempre uma matriz $K \times K$ não aleatória simétrica, positiva semidefinida.
+Para conseguirmos estimar $\betavec$ precisamos assumir que ele é o único vetor $K \times 1$ que satisfaz $\E( \Xmat_{i}' \Xmat_{i} ) \betavec = \E( \Xmat_{i}' \mbs{y}_{i} )$.
+Por isso assumimos \textbf{SOLS.2} e sob \textbf{SOLS.1} e \textbf{SOLS.2}, podemos escrever $\betavec$ como:
 
 \vspace{-1 em}
 \begin{align} \label{beta:SOLS}
 	\Aboxed{
-\betabold &=
-\left[ \E( X_{i}' X_{i} )  \right]^{-1}
-\E( X_{i}' \mbs{y}_{i} )  }
+\betavec &=
+\left[ \E( \Xmat_{i}' \Xmat_{i} )  \right]^{-1}
+\E( \Xmat_{i}' \mbs{y}_{i} )  }
 \end{align}
 
 \noindent
-o que mostra que \textbf{SOLS.1} e \textbf{SOLS.2} identifica o vetor $\betabold$.
-O\textbf{princípio da analogia} sugere que estimemos $\betabold$ pelas analogias amostrais de \eqref{beta:SOLS}.
-Assim, definimos o estimador SOLS de $\betabold$ como:
+o que mostra que \textbf{SOLS.1} e \textbf{SOLS.2} identifica o vetor $\betavec$.
+O\textbf{princípio da analogia} sugere que estimemos $\betavec$ pelas analogias amostrais de \eqref{beta:SOLS}.
+Assim, definimos o estimador SOLS de $\betavec$ como:
 
 \vspace{-1 em}
 \begin{align} \label{betahat:SOLS}
 \Aboxed{
 \betahatbold^{SOLS} &=
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' \mbs{y}_{i}   \right)
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \mbs{y}_{i}   \right)
 }.
 \end{align}
 
@@ -1264,7 +807,7 @@ Para computar $\betahatbold$ usando linguagem de computação é mais fácil uti
 \begin{align} \label{betahat:SOLS:mat}
 \Aboxed{
 \betahatbold^{SOLS} &=
-\left(  X' X   \right)^{-1} \left(  X' \mbs{y}   \right)
+\left(  \Xmat' \Xmat   \right)^{-1} \left(  \Xmat' \mbs{y}   \right)
 }
 \end{align}
 
@@ -1273,7 +816,7 @@ onde
 
 \vspace{-1 em}
 \begin{description}[itemsep = -1ex]
-\item [$X \equiv (X_{1}', \dots, X_{N}')$]  é uma matriz $NG \times K$ dos $X_{i}$ empilhados.
+\item [$\Xmat \equiv (\Xmat_{1}', \dots, \Xmat_{N}')$]  é uma matriz $NG \times K$ dos $\Xmat_{i}$ empilhados.
 
 \item [$\mbs{y} \equiv (\mbs{y}_{1}', \dots, \mbs{y}_{N}')$] é um vetor $NG \times 1$ das observações $\mbs{y}_{i}$ empilhadas.
 \end{description}
@@ -1289,28 +832,28 @@ Para provarmos a \textbf{consistência} do estimador, usamos a equação \eqref{
 \vspace{-1 em}
 \begin{align*}
 \betahatbold^{SOLS} &=
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' \mbs{y}_{i}   \right)
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \mbs{y}_{i}   \right)
 \\ &=
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left[ N^{-1}\sum_{i=1}^{N} X_{i}' (X_{i} \betabold + \mbs{u}_{i})   \right]
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left[ N^{-1}\sum_{i=1}^{N} \Xmat_{i}' (\Xmat_{i} \betavec + \mbs{u}_{i})   \right]
 \\ &=
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' X_{i} \betabold    \right)
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \betavec    \right)
 +
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \\ &=
-\betabold
+\betavec
 +
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1}\sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \end{align*}
 
 Por \textbf{SOLS.1},
-$N^{-1} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i} \arrowp \mbs{0}$;
+$N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i} \arrowp \mbs{0}$;
 e por \textbf{SOLS.2}
-$\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i} \right)^{-1} \arrowp A^{-1}$.
+$\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1} \arrowp A^{-1}$.
 
 Resumimos esse resultado pelo seguinte Teorema:
 
@@ -1319,7 +862,7 @@ Resumimos esse resultado pelo seguinte Teorema:
 Sob Hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, temos 
 \begin{align*}
 \Aboxed{
-	\betahatbold^{SOLS} \arrowp \betabold
+	\betahatbold^{SOLS} \arrowp \betavec
 }.
 \end{align*}
 \end{teo1}
@@ -1330,33 +873,33 @@ Sob Hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, temos
 
 Para fazermos \textbf{Inferência}, precisamos achar a variância assintótica do estimador de OLS sob, essencialmente, as mesmas duas hipóteses. 
 Tecnicamente, a seguinte derivação exige os elementos de
-$X_{i}' \mbs{u}_{i} \mbs{u}_{i}' X_{i}$
+$\Xmat_{i}' \mbs{u}_{i} \mbs{u}_{i}' \Xmat_{i}$
 tenham \textit{finite expected absolute value}.
 De \eqref{betahat:SOLS} e \eqref{mod:SOLS}, escrevemos:
 
 \vspace{-1 em}
 \begin{align*} 
 \betahatbold  &=
-\betabold +
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+\betavec +
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \\ 
-(\betahatbold - \betabold) &= 
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+(\betahatbold - \betavec) &= 
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \\ 
 \Aboxed{
-\sqrt{N}(\betahatbold - \betabold) &= 
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
-\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+\sqrt{N}(\betahatbold - \betavec) &= 
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
+\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 }.
 \end{align*}
 
-Uma vez que $\E(X_{i}' \mbs{u}_{i})=0$, sob a hipótese \textbf{SOLS.1}, o CLT implica que:
+Uma vez que $\E(\Xmat_{i}' \mbs{u}_{i})=0$, sob a hipótese \textbf{SOLS.1}, o CLT implica que:
 
 \vspace{-1 em}
 \begin{align*} 
-N^{-1/2} \sum_{i=1}^{N} X_{i} \mbs{u}_{i} \arrowd N(\mbs{0}, B),
+N^{-1/2} \sum_{i=1}^{N} \Xmat_{i} \mbs{u}_{i} \arrowd N(\mbs{0}, B),
 \end{align*}
 
 \noindent
@@ -1364,7 +907,7 @@ onde
 
 \vspace{-1 em}
 \begin{align*} 
-B \equiv \E(X_{i}' \mbs{u}_{i} \mbs{u}_{i}' X_{i}) \equiv \Var(X_{i} \mbs{u}_{i}).
+B \equiv \E(\Xmat_{i}' \mbs{u}_{i} \mbs{u}_{i}' \Xmat_{i}) \equiv \Var(\Xmat_{i} \mbs{u}_{i}).
 \end{align*}
 
 \noindent
@@ -1372,14 +915,14 @@ Em particular,
 
 \vspace{-1 em}
 \begin{align*} 
-N^{-1/2} \sum_{i=1}^{N} X_{i} \mbs{u}_{i} = O_{p}(1).
+N^{-1/2} \sum_{i=1}^{N} \Xmat_{i} \mbs{u}_{i} = O_{p}(1).
 \end{align*}
 
 Porém,
 
 \vspace{-1 em}
 \begin{align*} 
-	\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i} \right)^{-1} = (X'X/N)^{-1} = A^{-1} + o_{p}(1).
+	\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1} = (\Xmat'\Xmat/N)^{-1} = A^{-1} + o_{p}(1).
 \end{align*}
 
 \noindent
@@ -1387,31 +930,31 @@ Sendo Assim,
 
 \vspace{-1 em}
 \begin{align*} 
-\sqrt{N}(\betahatbold - \betabold) &= 
+\sqrt{N}(\betahatbold - \betavec) &= 
 \left[ 
 A^{-1} +
-\left( N^{-1} \sum_{i=1}^{N} X_{i}' X_{i}   \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}   \right)^{-1}
 - A^{-1}
 \right]
-\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \\ &=
-A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 +
-[(X'X/N)^{-1} - A^{-1}]
-\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+[(\Xmat'\Xmat/N)^{-1} - A^{-1}]
+\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \\&=
-A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 + o_{p}(1) O_{p}(1)
 \\&=
-A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} X_{i}' \mbs{u}_{i}   \right)
+A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 + o_{p}(1)
 \end{align*}
 
-Portanto, com apenas \textit{single-equation OLS and 2SLS}, obtemos a representação assintótica para $\sqrt{N}(\betahatbold - \betabold)$ que é uma combinação linear não aleatória de somas parciais que satisfazem o CLT.
+Portanto, com apenas \textit{single-equation OLS and 2SLS}, obtemos a representação assintótica para $\sqrt{N}(\betahatbold - \betavec)$ que é uma combinação linear não aleatória de somas parciais que satisfazem o CLT.
 Usando o \red{lema de equivalência assintótica}, temos:
 
 \begin{align*} 
-\sqrt{N}(\betahatbold - \betabold)
+\sqrt{N}(\betahatbold - \betavec)
 \arrowd
 N(\mbs{0}, A^{-1} B A^{-1})
 \end{align*}
@@ -1424,7 +967,7 @@ Sob Hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, temos que a seguinte equação
 
 \begin{align} \label{eq:sols:norm}
 	\Aboxed{
-\sqrt{N}(\betahatbold - \betabold)
+\sqrt{N}(\betahatbold - \betavec)
 \arrowd
 N(\mbs{0}, A^{-1} B A^{-1})
 }.
@@ -1447,49 +990,49 @@ Estimação consistente de $A$ é:
 
 \vspace{-1 em}
 \begin{align*}
-	\widehat{A} \equiv X'X/N = N^{-1} \sum_{i=1}^{N} X_{i}'X_{i}
+	\widehat{A} \equiv \Xmat'\Xmat/N = N^{-1} \sum_{i=1}^{N} \Xmat_{i}'\Xmat_{i}
 \end{align*}
 
 Um estimador consistente para $B$ pode ser achado usando o princípio da analogia.
 
 \vspace{-1 em}
 \begin{align*}
-B = \E(X_{i}' \mbs{u}_{i} \mbs{u}_{i}' X_{i}), 
+B = \E(\Xmat_{i}' \mbs{u}_{i} \mbs{u}_{i}' \Xmat_{i}), 
 \quad
-N^{-1}\sum_{i=1}^{N} X_{i}' \mbs{u}_{i} \mbs{u}_{i}' X_{i} \arrowp B.
+N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i} \mbs{u}_{i}' \Xmat_{i} \arrowp B.
 \end{align*}
 
 Uma vez que não podemos observar $\mbs{u}_{i}$, usamos os resíduos da estimação de SOLS:
 
 \vspace{-1 em}
 \begin{align*}
-\widehat{\mbs{u}}_{i} \equiv \mbs{y}_{i} - X_{i} \betahatbold 
+\widehat{\mbs{u}}_{i} \equiv \mbs{y}_{i} - \Xmat_{i} \betahatbold 
 =
-\ubold_{i} - X_{i} (\betahatbold - \betabold).
+\ubold_{i} - \Xmat_{i} (\betahatbold - \betavec).
 \end{align*}
 
 Assim, definimos $\Bhat$ e usando LGN, podemos mostrar que:
 
 \vspace{-1 em}
 \begin{align*}
-\Bhat \equiv N^{-1}\sum_{i=1}^{N} X_{i}' \uhatbold_{i} \uhatbold_{i}' X_{i} 
+\Bhat \equiv N^{-1}\sum_{i=1}^{N} \Xmat_{i}' \uhatbold_{i} \uhatbold_{i}' \Xmat_{i} 
 \arrowp B.
 \end{align*}
 
 \noindent
-onde supomos que certos momentos envolvendo $X_{i}$ e $\ubold_{i}$ são finitos.
+onde supomos que certos momentos envolvendo $\Xmat_{i}$ e $\ubold_{i}$ são finitos.
 
-Portanto, $\Avar[\sqrt{N}(\betahatbold - \betabold)]$ é \textbf{consistentemente} estimado por $\Ahat^{-1} \Bhat \Ahat^{-1}$, e $\Avar(\betahatbold)$ é estimado como:
+Portanto, $\Avar[\sqrt{N}(\betahatbold - \betavec)]$ é \textbf{consistentemente} estimado por $\Ahat^{-1} \Bhat \Ahat^{-1}$, e $\Avar(\betahatbold)$ é estimado como:
 
 \vspace{-1 em}
 \begin{align*}
 \Vhat \equiv 
-\left( \sum_{i=1}^{N} X_{i}' X_{i}  \right)^{-1}
-\left( \sum_{i=1}^{N} X_{i}' \uhatbold_{i} \uhatbold_{i}'  X_{i}  \right)
-\left( \sum_{i=1}^{N} X_{i}' X_{i}  \right)^{-1}.
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}  \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}' \uhatbold_{i} \uhatbold_{i}'  \Xmat_{i}  \right)
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}  \right)^{-1}.
 \end{align*}
 
-Sob as hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, nós fazemos inferência em $\betabold$ como $\betahatbold$ fosse normalmente distribuído com média $\betabold$ e variância $\Vhat$.
+Sob as hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, nós fazemos inferência em $\betavec$ como $\betahatbold$ fosse normalmente distribuído com média $\betavec$ e variância $\Vhat$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1502,11 +1045,11 @@ No caso de dados de painel:
 
 \vspace{-1 em}
 \begin{align*}
-\sum_{i=1}^{N} X_{i}' X_{i}
+\sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}
 =
 \sum_{i=1}^{N} \sum_{t=1}^{T} \mbs{x}_{it}' \mbs{x}_{it};
 \quad
-\sum_{i=1}^{N} X_{i}' \mbs{y}_{i}
+\sum_{i=1}^{N} \Xmat_{i}' \mbs{y}_{i}
 =
 \sum_{i=1}^{N} \sum_{t=1}^{T} \mbs{x}_{it}' y_{it}.
 \end{align*}
@@ -1529,7 +1072,7 @@ O Teorema \ref{SOLS:const}, abaixo, mostraa que o estimador POLS é consistente 
 
 $\E(\mbs{x}_{it})$
 
-$X_{i}' \mbs{u}_{i} = \sum_{t=1}^{T} \mbs{x}_{it}' u_{it}$
+$\Xmat_{i}' \mbs{u}_{i} = \sum_{t=1}^{T} \mbs{x}_{it}' u_{it}$
 
 
 
@@ -1549,14 +1092,14 @@ Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipóte
 \begin{enumerate}
 \item %1
 
-$\E(X_{i} \otimes \mbs{u}_{i}) = 0$.
+$\E(\Xmat_{i} \otimes \mbs{u}_{i}) = 0$.
 
-Para SGLS ser consistente, precisamos que $\mbs{u}_{i}$ não seja correlacionada com nenhum elemento de $X_{i}$.
+Para SGLS ser consistente, precisamos que $\mbs{u}_{i}$ não seja correlacionada com nenhum elemento de $\Xmat_{i}$.
 
 \item %2
 
 $\Omega$ é positiva definida (para ter inversa).
-$\E(X_{i}^{\prime} \Omega^{-1} X_{i})$ é \textbf{não} singular (para ter invesa).
+$\E(\Xmat_{i}^{\prime} \Omega^{-1} \Xmat_{i})$ é \textbf{não} singular (para ter invesa).
 
 Onde, $\Omega$ é a seguinte matriz \textbf{simétrica}, positiva-definida:
 
@@ -1575,13 +1118,13 @@ Agora, transformamos o sistema de equações ao realizarmos a pré-multiplicaç�
 \begin{align*}
 \Omega^{-1/2} \mbs{y}_{i} 
 &=
-\Omega^{-1/2} X_{i} \mbs{\beta}
+\Omega^{-1/2} \Xmat_{i} \mbs{\beta}
 +
 \Omega^{-1/2} \mbs{u}_{i}
 \\
 \mbs{y}_{i}^{*}
 &=
-X_{i}^{*} \mbs{\beta}
+\Xmat_{i}^{*} \mbs{\beta}
 +
 \mbs{u}^{*}_{i}
 \end{align*}
@@ -1592,16 +1135,16 @@ Estimando a equação acima por \textbf{SOLS}:
 \begin{align*}
 \beta^{SOLS}
 &=
-\left( \sum_{i=1} X_{i}^{*'} X_{i}^{*} \right)^{-1}
-\left( \sum_{i=1} X_{i}^{*'} \mbs{y}_{i}^{*} \right)
+\left( \sum_{i=1} \Xmat_{i}^{*'} \Xmat_{i}^{*} \right)^{-1}
+\left( \sum_{i=1} \Xmat_{i}^{*'} \mbs{y}_{i}^{*} \right)
 \\
 &=
-\left( \sum_{i=1} X_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} X_{i} \right)^{-1}
-\left( \sum_{i=1} X_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} \mbs{y}_{i} \right)
+\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} \mbs{y}_{i} \right)
 \\
 &=
-\left( \sum_{i=1} X_{i}^{'} \Omega^{-1} X_{i} \right)^{-1}
-\left( \sum_{i=1} X_{i}^{'} \Omega^{-1} \mbs{y}_{i} \right)
+\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1} \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1} \mbs{y}_{i} \right)
 \end{align*}
 
 
@@ -1621,7 +1164,7 @@ Para tanto usamos um procedimento de dois passos:
 
 \begin{enumerate}
 \item  % Passo 1
-Estimar $\mbs{y}_{i} = X_{i} \mbs{\beta} + \mbs{u}_{i}$ via \textbf{SOLS} e guardar o resíduo estimado $\widehat{\mbs{u}_{i}}$.
+Estimar $\mbs{y}_{i} = \Xmat_{i} \mbs{\beta} + \mbs{u}_{i}$ via \textbf{SOLS} e guardar o resíduo estimado $\widehat{\mbs{u}_{i}}$.
 
 \item  %Passo 2
 Estimar $\Omega$ com o seguinte estimador $\widehat{\Omega}$:
@@ -1641,10 +1184,10 @@ Com a estimativa $\widehat{\Omega}$ feita, podemos obter $\beta^{FSGLS}$ pela f�
 	\beta^{FGLS}
 	= 
 	\left[ 
-		\sum_{i} X_{i}' \widehat{\Omega}^{-1} X_{i}
+		\sum_{i} \Xmat_{i}' \widehat{\Omega}^{-1} \Xmat_{i}
 	\right]^{-1}
 	\left[ 
-		\sum_{i} X_{i}' \widehat{\Omega}^{-1} \mbs{y}_{i}
+		\sum_{i} \Xmat_{i}' \widehat{\Omega}^{-1} \mbs{y}_{i}
 	\right]
 \end{align*}
 
@@ -1654,8 +1197,8 @@ Empilhando as $N$ observações:
 \begin{align*}
 \beta^{FGLS}
 = 
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \mbs{y} \right]
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \mbs{y} \right]
 \end{align*}
 
 Reescrevendo a equação acima:
@@ -1664,23 +1207,23 @@ Reescrevendo a equação acima:
 \begin{align*}
 \beta^{FGLS}
 &= 
-\left[  X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
-\left[  X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) (X \beta + u) \right]
+\left[  \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
+\left[  \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) (\Xmat \beta + u) \right]
 \\
 &= 
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
 \left\{ 
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \beta \right]
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \beta \right]
 % \\
 % &
 \; +
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
 \right\}
 \\
 &= 
 \beta +
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1691,8 +1234,8 @@ Reescrevendo a equação acima:
 \E(\beta^{FGLS})
 = 
 \beta +
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
 \end{align*}
 
 Concluímos que, se 
@@ -1707,44 +1250,44 @@ $\beta^{FSGLS} \xrightarrow{\enskip p \enskip} \beta$,
 \begin{align*}
 \Var(\beta^{FGLS})
 &= 
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
 \left\{ 
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
-\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
 \right\}^{\prime}
 \\
 &=
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
 \left[
-X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) 
+\Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) 
 u u'
-\left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X
+\left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat
 \right]
-\left[ X \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) X \right]^{-1}
+\left[ \Xmat \left( I_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
 \end{align*}
 
 Tirando o valor Esperado e supondo que:
 
 \vspace{-1.5 em}
 \begin{align*}
-\E(X_{i} \Omega^{-1} u_{i} u_{i}' X_{i}) = \E(X_{i} \Omega^{-1})
+\E(\Xmat_{i} \Omega^{-1} u_{i} u_{i}' \Xmat_{i}) = \E(\Xmat_{i} \Omega^{-1})
 \end{align*}
 temos:
 
 \vspace{-1.5 em}
 \begin{align*}
-\E\left[ X' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right)
+\E\left[ \Xmat' \left( I_{N} \otimes \widehat{\Omega}^{-1} \right)
 	u u'
-\left( I_{N} \otimes \widehat{\Omega}^{-1} \right)' X \right]
+\left( I_{N} \otimes \widehat{\Omega}^{-1} \right)' \Xmat \right]
 =
-\E(X' \Omega^{-1} X)
+\E(\Xmat' \Omega^{-1} \Xmat)
 \end{align*}
 e temos:
 
 \vspace{-1.5 em}
 \begin{align*}
-	\Var(\beta^{FSGLS}) = \left[ \E(X' \Omega^{-1} X \right]^{-1}.
+	\Var(\beta^{FSGLS}) = \left[ \E(\Xmat' \Omega^{-1} \Xmat \right]^{-1}.
 \end{align*}
 
 
@@ -1806,14 +1349,14 @@ Indo para o problema de dados de painel, temos:
 
 \vspace{-1 em}
 \begin{align} \label{mod2}
-	\mbs{y}_{i} = X_{i} \mbs{\beta} + \mbs{u}_{i}
+	\mbs{y}_{i} = \Xmat_{i} \mbs{\beta} + \mbs{u}_{i}
 	\; ; \quad i = 1, \dots, N.
 \end{align}
 
 \noindent
 onde 
 $\mbs{y}_{i}$ é um vetor $T \times 1$,
-$X_{i}$ é uma matriz $T \times K$,
+$\Xmat_{i}$ é uma matriz $T \times K$,
 $\mbs{\beta}$ é o vetor de coeficientes $K \times 1$,
 $\mbs{u}_{i}$ é o vetor de erros $T \times 1$.
 
@@ -1821,7 +1364,7 @@ Se é verdade que há endogeneidade em \eqref{mod2}, então:
 
 \vspace{-1 em}
 \begin{align*}
-	\E(X_{i}^{\prime} \mbs{u}_{i}) \neq 0
+	\E(\Xmat_{i}^{\prime} \mbs{u}_{i}) \neq 0
 \end{align*}
 
 Definimos $Z_{i}$ como uma matriz $T \times L$ com $L \geq K$ de variáveis exógenas (incluindo o instrumento).
@@ -1836,15 +1379,15 @@ Supondo $L = K$ (apenas substituímos a variável endógena por um instrumento).
 
 \vspace{-1 em}
 \begin{align*}
-\E[ Z_{i}^{\prime} ( \mbs{y}_{i} - X_{i} \mbs{\beta} ) ] &= 0
+\E[ Z_{i}^{\prime} ( \mbs{y}_{i} - \Xmat_{i} \mbs{\beta} ) ] &= 0
 \\
-\E( Z_{i}^{\prime} \mbs{y}_{i} ) - \E( Z_{i}^{\prime} X_{i} ) \mbs{\beta} &= 0
+\E( Z_{i}^{\prime} \mbs{y}_{i} ) - \E( Z_{i}^{\prime} \Xmat_{i} ) \mbs{\beta} &= 0
 \\
-\E( Z_{i}^{\prime} \mbs{y}_{i} ) &= \E( Z_{i}^{\prime} X_{i} ) \mbs{\beta}
+\E( Z_{i}^{\prime} \mbs{y}_{i} ) &= \E( Z_{i}^{\prime} \Xmat_{i} ) \mbs{\beta}
 \\
 \Aboxed{
 \mbs{\beta} &=
-\left[ \E( Z_{i}^{\prime} X_{i} ) \right]^{-1}
+\left[ \E( Z_{i}^{\prime} \Xmat_{i} ) \right]^{-1}
 \left[ \E( Z_{i}^{\prime} \mbs{y}_{i} ) \right]
 }
 \end{align*}
@@ -1854,12 +1397,12 @@ Se Usarmos estimadores amostrais:
 \vspace{-1 em}
 \begin{align*}
 \mbs{\hat{\beta}} &=
-\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} X_{i} \right]^{-1}
+\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \Xmat_{i} \right]^{-1}
 \left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \mbs{y}_{i} \right]
 \\
 \Aboxed{
 \mbs{\hat{\beta}} &=
-( Z^{\prime} X )^{-1} ( Z^{\prime} \mbs{y} ) }
+( Z^{\prime} \Xmat )^{-1} ( Z^{\prime} \mbs{y} ) }
 \end{align*}
 
 \vspace{1 em}
@@ -1878,30 +1421,30 @@ Se $L > K$, vamos considerar:
 &=
 \E[ ( Z_{i}\mbs{u}_{i} )' ( Z_{i}\mbs{u}_{i} ) ]
 =
-( Z' \mbs{y} - Z' X \mbs{\beta} )' ( Z' \mbs{y} - Z' X \mbs{\beta} )
+( Z' \mbs{y} - Z' \Xmat \mbs{\beta} )' ( Z' \mbs{y} - Z' \Xmat \mbs{\beta} )
 \\
 &=
 \mbs{y}' ZZ' \mbs{y}
 -
-\mbs{y}' ZZ' X \mbs{\beta}
+\mbs{y}' ZZ' \Xmat \mbs{\beta}
 -
-\mbs{\beta}' X' ZZ' \mbs{y}
+\mbs{\beta}' \Xmat' ZZ' \mbs{y}
 +
-\mbs{\beta}' X' ZZ' X \mbs{\beta}
+\mbs{\beta}' \Xmat' ZZ' \Xmat \mbs{\beta}
 \end{align*}
 
 Derivando em relação em $\mbs{\beta}$ e igualando a zero:
 
 \vspace{-1 em}
 \begin{align*}
--2 \mbs{y}' ZZ' X + 2 \mbs{\beta}'X' ZZ' X &= 0
+-2 \mbs{y}' ZZ' \Xmat + 2 \mbs{\beta}'\Xmat' ZZ' \Xmat &= 0
 \\
-\mbs{\beta}'X' ZZ' X &= \mbs{y}' ZZ' X 
+\mbs{\beta}'\Xmat' ZZ' \Xmat &= \mbs{y}' ZZ' \Xmat 
 \\
-\mbs{\beta}' &= ( \mbs{y}' ZZ' X ) ( X' ZZ' X )^{-1}
+\mbs{\beta}' &= ( \mbs{y}' ZZ' \Xmat ) ( \Xmat' ZZ' \Xmat )^{-1}
 \\
 \Aboxed{
-\mbs{\beta} &= ( X' ZZ' X )^{-1} ( X' ZZ' \mbs{y} ) }
+\mbs{\beta} &= ( \Xmat' ZZ' \Xmat )^{-1} ( \Xmat' ZZ' \mbs{y} ) }
 \end{align*}
 
 Um estimador mais eficiente pode ser encontrado fazendo:
@@ -1909,7 +1452,7 @@ Um estimador mais eficiente pode ser encontrado fazendo:
 \vspace{-1 em}
 \begin{align*}
 \underset{\mbs{\beta}}{\text{Min}} \;
-\E[ ( Z_{i}' \mbs{y} - Z' X \mbs{\beta} )' W ( Z_{i}' \mbs{y} - Z' X \mbs{\beta} ) ].
+\E[ ( Z_{i}' \mbs{y} - Z' \Xmat \mbs{\beta} )' W ( Z_{i}' \mbs{y} - Z' \Xmat \mbs{\beta} ) ].
 \end{align*}
 
 \noindent
@@ -1921,11 +1464,11 @@ Escolhendo $\widehat{W}$, a priori, temos:
 \left\{ 
 \mbs{y}' Z \widehat{W} Z' \mbs{y}
 -
-\mbs{y}' Z \widehat{W} Z' X \mbs{\beta}
+\mbs{y}' Z \widehat{W} Z' \Xmat \mbs{\beta}
 -
-\mbs{\beta}' X'  Z \widehat{W} Z' \mbs{y}
+\mbs{\beta}' \Xmat'  Z \widehat{W} Z' \mbs{y}
 +
-\mbs{\beta}' X'  Z \widehat{W} Z' X \mbs{\beta}
+\mbs{\beta}' \Xmat'  Z \widehat{W} Z' \Xmat \mbs{\beta}
 \right\}
 \end{align*}
 
@@ -1933,14 +1476,14 @@ Derivando em relação em $\mbs{\beta}$ e igualando a zero:
 
 \vspace{-1 em}
 \begin{align*}
--2 \mbs{y}' Z \widehat{W} Z' X + 2 \mbs{\beta}'X' Z \widehat{W} Z' X &= 0
+-2 \mbs{y}' Z \widehat{W} Z' \Xmat + 2 \mbs{\beta}'\Xmat' Z \widehat{W} Z' \Xmat &= 0
 \\
-\mbs{\beta}'X' Z \widehat{W} Z' X &= \mbs{y}' Z \widehat{W} Z' X 
+\mbs{\beta}'\Xmat' Z \widehat{W} Z' \Xmat &= \mbs{y}' Z \widehat{W} Z' \Xmat 
 \\
-\mbs{\beta}' &= ( \mbs{y}' Z \widehat{W} Z' X ) ( X' Z \widehat{W} Z' X )^{-1}
+\mbs{\beta}' &= ( \mbs{y}' Z \widehat{W} Z' \Xmat ) ( \Xmat' Z \widehat{W} Z' \Xmat )^{-1}
 \\
 \Aboxed{
-\mbs{\beta}^{GMM} &= ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \mbs{y} ) }
+\mbs{\beta}^{GMM} &= ( \Xmat' Z \widehat{W}' Z' \Xmat )^{-1} ( \Xmat' Z \widehat{W}' Z' \mbs{y} ) }
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1951,7 +1494,7 @@ Derivando em relação em $\mbs{\beta}$ e igualando a zero:
 \Aboxed{
 \E( \mbs{\beta}^{GMM} ) &=
 \mbs{\beta} +
-\E[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \mbs{u} ) ] }.
+\E[ ( \Xmat' Z \widehat{W}' Z' \Xmat )^{-1} ( \Xmat' Z \widehat{W}' Z' \mbs{u} ) ] }.
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3459,6 +3002,7 @@ N^{-1} \sum_{i=1}^{N}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \section*{Appêndice}
 
@@ -3561,6 +3105,312 @@ M^{0} \mbs{1} &=
 =
 \mbs{0}_{N} 
 \end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section{Conceitos Básicos de Convergência Estatística} \label{app1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[\textbf{Estimador Consistente}]
+Um estimador $\hat{\theta}$ é \textbf{consistente} para um parâmetro $\theta$ se 
+
+\vspace{-1 em}
+\begin{align*}
+\hat{\theta} \overset{p}{\longrightarrow} \theta.
+ %  \\
+ %  \hat{\theta} \arrowp \theta.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[\textbf{Convergência em Probabilidade}]
+Uma sequência de variáveis aleatórias:
+$\{ X_{n} \}_{n \geq 1}$ 
+\textbf{converge em probabilidade} para uma variável aleatória $X$ se, dado $\err > 0$, 
+
+\vspace{-1 em}
+\begin{align*}
+	P(| X_{n} - X | > \err ) \to 0,
+\end{align*}
+
+\noindent
+quando $n \to + \infty$.
+E denotamos
+
+\vspace{-1 em}
+\begin{align*}
+	X_{n} \arrowp X.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[\textbf{Desigualdade de Markov}]
+Seja
+$\{ X_{n} \}_{n \geq 1}$ 
+uma sequência de variáveis aleatórias com
+$E|X_{n}|^{K} < +\infty$, $K>0$. 
+Então, dado $\err >0$
+
+\vspace{-1 em}
+\begin{align*}
+	P(| X_{n} | > \err ) \leq \frac{E|X_{n}|^{K}}{\err^{K}}
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1} %[\textbf{}]
+\begin{align*}
+0 \leq P(| \thetahat - \theta | > \err ) \leq \frac{E|X_{n}|^{2}}{\err^{2}}
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[\textbf{Erro Quadrático Médio}]
+\begin{align*}
+EQM(\thetahat) 
+=
+\E\left[ \left( \thetahat - \theta \right)^2 \right] 
+=
+\left[ Bias(\thetahat)^{2} + \Var(\thetahat) \right]
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Então, se $Bias(\thetahat) \to 0$ e $\Var(\thetahat) \to 0$, temos que $EQM(\thetahat) \to 0$.
+Pelo \textbf{Teorema do Sanduíche}, $P(|\thetahat - \theta| > \err) \to 0$; logo, $\thetahat \arrowp \theta$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[\textbf{LGN -- Lei dos Grandes Números}]
+Seja $\seq{X_{i}}_{i \geq 1}$ uma sequência de variáveis aleatórias $iid$ com $\E(X_{i}) = \mu$.
+Então, 
+
+\vspace{-1 em}
+\begin{align*}
+	N^{-1} \sum_{i=1}^{N} X_{i} \arrowp \mu.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[\textbf{LGN -- Caso Matricial}]
+Seja $\seq{\mbs{x}_{i}}_{i=1}^{N}$, uma sequência $iid$ de vetores aleatórios $K \times 1$ com $\E(\mbs{x}_{i} \mbs{x}_{i}') = Q_{K \times K}$ finita.
+Então, 
+
+\vspace{-1 em}
+\begin{align*}
+N^{-1} \sum_{i=1}^{N}
+\mbs{x}_{i} \mbs{x}_{i}'
+\arrowp Q.
+\end{align*}
+
+Se $Q$ for positiva definida, $Q$ terá inversa.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Multiplicação de Matriz}
+
+\begin{align*}
+A_{2 \times 2} =
+\begin{bmatrix}
+	a_{11} & a_{12} \\
+	a_{21} & a_{22}		
+\end{bmatrix}
+\quad
+B_{2 \times 3} =
+\begin{bmatrix}
+	b_{11} & b_{12} & b_{13} \\
+	b_{21} & b_{22} & b_{23}		
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+[AB]_{2 \times 3} &=
+\begin{bmatrix}
+	a_{11} \\ a_{21}
+\end{bmatrix}
+\begin{bmatrix}
+	b_{11} & b_{12} & b_{13}
+\end{bmatrix}
++
+\begin{bmatrix}
+	a_{12} \\ a_{22}
+\end{bmatrix}
+\begin{bmatrix}
+	b_{21} & b_{22} & b_{23}
+\end{bmatrix}
+\implies
+AB = \sum_{i=1}^{2} a_{i}b_{i}
+\end{align*}
+
+\noindent
+onde
+$a_{i}$ é a $i$-ésima \textbf{coluna} da matriz $A$.
+$b_{i}$ é a $i$-ésima \textbf{linha} da matriz $B$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}
+\begin{align*}
+P( | X_{n} - X | > \err ) & \to 0
+\\
+X_{n} - X & \arrowp 0
+\\
+X_{n} & \arrowp X
+\end{align*}
+\end{def1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[$o_{p}$]
+\begin{align*}
+X_{n} = o_{p}(1) & \implies X_{n} \arrowp 0
+\\
+X_{n} = o_{p}(Y_{n}) & \implies
+\frac{X_{n}}{Y_{n}} = o_{p}(1) \implies
+\frac{X_{n}}{Y_{n}} \arrowp 0
+\\
+X_{n} = W_{n} + o_{p}(1) & \implies
+(X_{n} - W_{n}) = o_{p}(1) \implies
+(X_{n} - W_{n}) \arrowp 0
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Limitação em Probabilidade: $O_{p}$]
+Dizemos que $X_{n}$ é \textbf{limitado em probabilidade} e denotado por 
+$X_{n} = O_{p}(1)$,
+se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n} | > 0) < \err$.
+
+\vspace{-1 em}
+\begin{align*}
+X_{n} = O_{p}(1) \implies \exists M > 0 \, ; \;
+\forall \err > 0 \, , \;
+P( | X_{n} | > 0) < \err.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}
+Dizemos que
+$X_{n} = O_{p}(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
+
+\vspace{-1 em}
+\begin{align*}
+X_{n} = O_{p}(Y_{n}) \implies \exists M > 0 \, ; \;
+\forall \err > 0 \, , \;
+P( | X_{n}/Y_{n} | > 0) < \err.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}
+Se
+$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
+
+\vspace{-1 em}
+\begin{align*}
+	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Equivalência Assintótica]
+Seja
+$\seq{\mbs{x}_{n}}$ e $\seq{\mbs{z}_{n}}$
+sequências de vetores aleatórios $K \times 1$.
+Se $\mbs{z}_{n} \arrowd \mbs{z}$ e 
+$\mbs{x}_{n} - \mbs{z}_{n} \arrowp \mbs{0}_{K}$.
+Então, 
+
+\vspace{-1 em}
+\begin{align*}
+\mbs{x}_{n} \arrowd \mbs{z}.
+\end{align*}
+
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Convergência em Distribuição]
+Seja
+$\seq{X_{n}}_{n \geq 1}$  uma sequência de variáveis aleatórias e $X$ uma variável aleatória com $F_{n}$ e $F$ suas respectivas FDAs, então
+
+\begin{align*}
+	X_{n} \arrowd X, \text{ se } F_{n}(X) \to F(X)
+\end{align*}
+\noindent
+para todo $X$ onde $F$ é contínuo.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[Convergência em Distribuição e Limitação em Probabilidade]
+Se $X_{n} \arrowd X$, $X$ um variável aleatória qualquer; então $X_{n} = O_{p}(1)$.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[TCL -- Teorema Central do Limite]
+Seja $\seq{X_{n}}_{n = 1}^{N}$ $iid$ com $\E(X_{n}) = \mu$ e $\Var(X_{n}) = \sigma^{2} < + \infty$.
+Então, para $S_{N} = \sum_{n=1}^{N} X_{n}$:
+
+\begin{align*}
+\frac{S_{N} - N \mu }{ \sqrt{N} \sigma}
+=
+\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
+=
+\frac{N ( \overline{X} - \mu ) }{ \sqrt{N} \sigma}
+=
+\boxed{
+\frac{\sqrt{N} ( \overline{X} - \mu ) }{\sigma}
+\arrowd Z \sim N(0,1)}.
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[TCL -- Caso Vetorial]
+Seja $\seq{\mbs{w}_{i}}_{i=1}^{n}$ uma sequência $iid$ de vetores aleatórios $K \times 1$ com
+$\E( w_{ik}^{2} ) < + \infty$, $k= 1, \dots K$ e $\E( \mbs{w}_{i} ) = \mbs{0}_{K}$.
+Então,
+
+\vspace{-1 em}
+\begin{align*}
+	N^{-1/2} \sum_{i=1}^{N} \mbs{w}_{i} \arrowd N(\mbs{0}, B),
+\end{align*}
+
+\noindent
+onde, $B=\Var(\mbs{w}_{i}) = \E( \mbs{w}_{i} \mbs{w}_{i}')$.
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{def1}[]
+Seja $\seq{\mbs{z}_{n}}$ uma sequência de vetores $K \times 1$ aleatórios com 
+
+\vspace{-1 em}
+\begin{align*}
+	\mbs{z}_{n} \arrowd N(\mbs{0}, V).
+\end{align*}
+
+Então, para qualquer matriz $A$ de dimensão $K \times M$ \textbf{não} estocástica,
+
+\vspace{-1 em}
+\begin{align*}
+	A' \mbs{z}_{n} \arrowd N(\mbs{0}, A'VA).
+\end{align*}
+\end{def1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
