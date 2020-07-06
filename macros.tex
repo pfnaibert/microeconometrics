@@ -1,0 +1,259 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MACROS
+% 2017/10/13 Sex 11:34:37 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pagestyle
+\rhead{\thepage}
+\lhead{\theauthor}
+\chead{\thetitle}
+\renewcommand{\headrulewidth}{.5 pt} % no rule 
+\rfoot{}
+\lfoot{}
+\cfoot{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Maketitle customization
+\renewcommand{\maketitle}{%
+\begin{center}
+{\Large\uppercase{\thetitle}}\\
+\vspace{1 em}
+{\large\textsc{By \theauthor}} \\
+\vspace{1 em}
+\thedate
+\end{center}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defs, theorems, etc
+% \usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+
+\newtheorem{teo}{Theorem}[section]
+% \newtheorem{cor}{Corollary}[theorem]
+\newtheorem{cor}{Corollary}[section]
+% \newtheorem{lem}{Lemma}[theorem]
+\newtheorem{lem}{Lemma}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\renewcommand{\qedsymbol}{\blacksquare}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Stats
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% operators
+\newcommand{\Avar}{\ensuremath{\text{Avar}}}
+\newcommand{\Avarhat}{\ensuremath{\widehat{\text{Avar}}}}
+
+\newcommand{\Var}{\ensuremath{\text{Var}}}
+\newcommand{\Varhat}{\ensuremath{\widehat{\text{Var}}}}
+
+\newcommand{\se}{\ensuremath{\text{se}}}
+
+\newcommand{\Cov}{\ensuremath{\text{Cov}}}
+\newcommand{\E}{\ensuremath{\text{E}}}
+\newcommand{\p}{\ensuremath{\text{P}}}
+
+\newcommand{\B}{\ensuremath{\text{B}}}
+% \newcommand{\H}{\ensuremath{\text{H}}}
+\renewcommand{\L}{\ensuremath{\text{L}}}
+
+\newcommand{\rank}{\ensuremath{\text{rank}}}
+\newcommand{\MSE}{\ensuremath{\text{MSE}}}
+
+\newcommand{\chisq}{\ensuremath{\chi^{2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lims
+\newcommand{\plim}{\ensuremath{\text{plim} \,}}
+
+\newcommand{\arrowp}{\ensuremath{ \overset{p}{\longrightarrow} } }
+\newcommand{\arrowd}{\ensuremath{ \overset{d}{\longrightarrow} } }
+\newcommand{\asim}{\ensuremath{ \overset{a}{\sim} } }
+
+\newcommand{\bigO}{\ensuremath{\text{O}}}
+\newcommand{\bigOp}{\ensuremath{\text{O}_{p}}}
+
+\newcommand{\lito}{\ensuremath{\text{o}}}
+\newcommand{\litop}{\ensuremath{\text{o}_{p}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% greeks
+
+\newcommand{\mubold}{\ensuremath{\mbs{\mu}}}
+
+\newcommand{\betahat}{\ensuremath{\hat{\beta}}}
+\newcommand{\betahatbold}{\ensuremath{\widehat{\mbs{\beta}}}}
+\newcommand{\betavec}{\ensuremath{\mbs{\beta}}}
+
+\newcommand{\gammavec}{\ensuremath{\mbs{\gamma}}}
+\newcommand{\deltavec}{\ensuremath{\mbs{\delta}}}
+\newcommand{\pivec}{\ensuremath{\mbs{\pi}}}
+\newcommand{\pimat}{\ensuremath{\mbs{\Pi}}}
+
+\newcommand{\thetabold}{\ensuremath{\mbs{\theta}}}
+\newcommand{\Thetabold}{\ensuremath{\mbs{\Theta}}}
+
+\newcommand{\thetahat}{\ensuremath{\hat{\theta}}}
+\newcommand{\thetahatbold}{\ensuremath{\hat{\mbs{\theta}}}}
+
+\newcommand{\thetatil}{\ensuremath{\tilde{\theta}}}
+\newcommand{\thetatilbold}{\ensuremath{\tilde{\mbs{\theta}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vectors
+\newcommand{\ubold}{\ensuremath{\mbs{u}}}
+\newcommand{\uhat}{\ensuremath{\widehat{u}}}
+\newcommand{\uhatbold}{\ensuremath{\widehat{\mbs{u}}}}
+
+\newcommand{\bvec}{\ensuremath{\mbf{b}}}
+\newcommand{\cvec}{\ensuremath{\mbf{c}}}
+\newcommand{\fvec}{\ensuremath{\mbf{f}}}
+\newcommand{\gvec}{\ensuremath{\mbf{g}}}
+\newcommand{\rvec}{\ensuremath{\mbf{r}}}
+\newcommand{\vvec}{\ensuremath{\mbf{v}}}
+\newcommand{\vhat}{\ensuremath{\hat{v}}}
+\newcommand{\xvec}{\ensuremath{\mbs{x}}}
+\newcommand{\yvec}{\ensuremath{\mbs{y}}}
+\newcommand{\zvec}{\ensuremath{\mbf{z}}}
+\newcommand{\wvec}{\ensuremath{\mbf{w}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrices
+
+\newcommand{\Abold}{\ensuremath{\mbf{A}}}
+\newcommand{\Bbold}{\ensuremath{\mbf{B}}}
+\newcommand{\Cbold}{\ensuremath{\mbf{C}}}
+\newcommand{\Dbold}{\ensuremath{\mbf{D}}}
+
+\newcommand{\Rbold}{\ensuremath{\mbf{R}}}
+\newcommand{\Vbold}{\ensuremath{\mbf{V}}}
+\newcommand{\Xbold}{\ensuremath{\mbf{X}}}
+\newcommand{\Ybold}{\ensuremath{\mbf{y}}}
+\newcommand{\Zbold}{\ensuremath{\mbf{Z}}}
+\newcommand{\Wbold}{\ensuremath{\mbf{Z}}}
+
+\newcommand{\Ahat}{\ensuremath{\widehat{A}}}
+\newcommand{\Bhat}{\ensuremath{\widehat{B}}}
+\newcommand{\Dhat}{\ensuremath{\widehat{D}}}
+\newcommand{\Vhat}{\ensuremath{\widehat{V}}}
+
+\newcommand{\Ahatbold}{\ensuremath{\widehat{\mbf{A}}}}
+\newcommand{\Bhatbold}{\ensuremath{\widehat{\mbf{B}}}}
+\newcommand{\Chatbold}{\ensuremath{\widehat{\mbf{C}}}}
+\newcommand{\Dhatbold}{\ensuremath{\widehat{\mbf{D}}}}
+\newcommand{\Vhatbold}{\ensuremath{\widehat{\mbf{V}}}}
+
+\renewcommand{\LG}{\mathcal{L}}
+\renewcommand{\l}{\ell}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% inner product
+% produto interno na forma <x,y>
+%   \DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{#1,#2}
+%   \DeclarePairedDelimiterX\floor[1]{\lfloor}{\rfloor}{#1}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sequencias
+%  fazer $\{x_n\}$ e $\{x\}_n^N$ mais rápido.
+\renewcommand{\seq}[1]{\{#1\}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Atalhos para notação de conjuntos dos números reais, naturais, etc
+% \renewcommand{\R}{\mathbb{R}}
+
+\newcommand{\model}{\ensuremath{\mathcal{M}}}
+\newcommand{\RS}{\ensuremath{R^2}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}} 
+\newcommand{\Rn}{\ensuremath{\mathbb{R}^n}} 
+\newcommand{\Rm}{\ensuremath{\mathbb{R}^m}} 
+\newcommand{\Rp}{\ensuremath{\mathbb{R}^p}} 
+\newcommand{\I}{\ensuremath{\mathbb{R}\setminus\mathbb{Q}}}
+\newcommand{\md}{\ensuremath{\mathcal{D}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% atalhos para outros operadores matemáticos
+% \DeclareMathOperator{\L}{\mathcal{L}}
+\DeclareMathOperator{\eu}{\mathrm{e}}
+\DeclareMathOperator{\de}{\mathrm{d}}
+\DeclareMathOperator{\up}{\uparrow}
+\DeclareMathOperator{\dn}{\downarrow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Derivadas
+\newcommand{\dpf}[2]{\frac{d#1}{d#2}}
+\newcommand{\dsf}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\opt}[1]{{#1}^{*}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Derivadas Parciais
+\newcommand{\pdf}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\psdf}[2]{\frac{\partial^2#1}{\partial#2^2}}
+\newcommand{\pcdf}[3]{\frac{\partial^2#1}{\partial#2 \partial#3}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% função valor
+\newcommand{\vth}{V_{\theta}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Atalhos para cores:
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\magenta}[1]{\textcolor{magenta}{#1}}
+% \newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GREEK LETTERS
+\newcommand{\ga}{\ensuremath{\alpha}} 
+\newcommand{\gab}{\ensuremath{\boldsymbol{\alpha}}} 
+\newcommand{\gb}{\ensuremath{\beta}} 
+\newcommand{\gbb}{\ensuremath{\boldsymbol{\beta}}} 
+\newcommand{\G}{\ensuremath{\Gamma}} 
+\newcommand{\gg}{\ensuremath{\gamma}} 
+\newcommand{\D}{\ensuremath{\Delta}} 
+\newcommand{\gl}{\ensuremath{\lambda}} 
+\newcommand{\gL}{\ensuremath{\Lambda}} 
+\newcommand{\gSi}{\ensuremath{\Sigma^{-1}}}  % inv sigma
+\newcommand{\gS}{\ensuremath{\Sigma}} 
+\newcommand{\gs}{\ensuremath{\sigma}} 
+\newcommand{\gsh}{\ensuremath{\hat{\sigma}}} 
+\newcommand{\gss}{\ensuremath{\sigma^2}} 
+\newcommand{\gssh}{\ensuremath{\hat{\sigma}^2}}  % sigma hat
+\newcommand{\gSib}{\ensuremath{\boldsymbol{\Sigma}^{-1}}} 
+\newcommand{\gSb}{\ensuremath{\boldsymbol{\Sigma}}} 
+\newcommand{\gsb}{\ensuremath{\boldsymbol{\sigma}}} 
+\newcommand{\gib}{\ensuremath{\boldsymbol{\iota}}} 
+\newcommand{\gi}{\ensuremath{\iota}}
+\newcommand{\err}{\ensuremath{\varepsilon}} 
+\newcommand{\gO}{\ensuremath{\Omega}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+\newcommand{\bm}[1]{\boldsymbol{#1}}
+\newcommand{\mbs}[1]{\boldsymbol{#1}}
+\newcommand{\mbf}[1]{\mathbf{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Não faço a mínima ideia o que esse comandos fazem
+% \renewcommand{\cancel}{\color{red}}
+% \newcommand{\encircle}[1]{\tikz[baseline= (X.base)]\node(X)[draw, shape=circle, inner sep=0]{\strut#1};}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
