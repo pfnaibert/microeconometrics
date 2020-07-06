@@ -7,9 +7,18 @@
 % Pacotes básicos 
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
 \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% languages
 \usepackage[english]{babel}
 % \selectlanguage{english}
-\usepackage{amsfonts, amsmath, amssymb, amsthm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AMS math
+\usepackage{amsfonts, amssymb, amsthm}
+\usepackage[fleqn]{amsmath}
+\setlength{\mathindent}{0pt}
+
 \usepackage{mathtools, latexsym}
 % \usepackage{mathabx}
 
@@ -47,7 +56,7 @@
 % \linenumbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{../macros.tex}
+\input{macros.tex}
 % \pagestyle{headings}
 \pagestyle{fancy}
 \numberwithin{equation}{section}
@@ -3569,7 +3578,7 @@ M^{0} \mbs{1} &=
 \clearpage
 \bibliographystyle{authordate3} % bibliography style
 \renewcommand\bibname{REFERENCES} 
-\bibliography{../refs.bib}
+\bibliography{./refs.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
