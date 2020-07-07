@@ -177,49 +177,8 @@ $\mbs{x}_{i}$
 é um vetor $1 \times K$ de regressores.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Notação Matricial [Meu]}
-Empilhando as $N$ observações, obtemos a \textbf{Notação Matricial}:
+\subsection{Hipóteses} 
 
-\vspace{-1 em}
-\begin{align} \label{ols:mod:mat}
-	\mbs{y} &= \Xmat \mbs{\beta} + \mbs{u} 
-\end{align}
-
-\begin{description}[noitemsep]
-\item [$\mbs{y}$]  é um vetor $N \times 1$;
-
-\item [$\Xmat$]  é uma matriz $N \times K$ de regressores, com $N$ vetores, $\mbs{x}_{i}$, de dimensão $1 \times K$ empilhados;
-
-\item [$\mbs{\beta}$] é um vetor $K \times 1$;
-
-\item [$\mbs{u}$] é um vetor $N \times 1$;
-\end{description}
-
-\vspace{-1 em}
-\begin{align*}
-\mbs{y} = 
-\begin{bmatrix}
-	y_{1} \\ \vdots \\ y_{N}		
-\end{bmatrix};
-\quad
-\Xmat = 
-\begin{bmatrix}
-	\mbs{x}_{1} \\ \vdots \\ \mbs{x}_{N}
-\end{bmatrix} = 
-\begin{bmatrix}
-	x_{11}     & x_{12}     & \dots  & x_{1K} \\          
-%	x_{21}     & x_{22}     & \dots  & x_{2K} \\         
-	\vdots     & \vdots     & \ddots & \vdots \\        
-	x_{N1} & x_{N2} & \dots  & x_{NK}		
-\end{bmatrix};
-\quad
-\mbs{u} = 
-\begin{bmatrix}
-	u_{1} \\ \vdots \\ u_{N}		
-\end{bmatrix}.
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{OLS.1} 
 $y_{i} &= \mbs{x}_{i} \mbs{\beta} + u_{i} \, , \quad i = 1, \dots, N$;
 
@@ -261,10 +220,114 @@ $\E(u_{i} | \Xmat) = 0$ implica que $u_{i}$ é \textbf{não correlacionado} com 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Estimação} 
 
-\vspace{-2 em}
-\begin{equation} \label{betahat:ols}
-	\boxed{ \widehat{\mbs{\beta}} = (\Xmat'\Xmat)^{-1}\Xmat'\yvec }
-\end{equation}
+Usando \textbf{OLS.1:}
+
+\vspace{-1.5 em}
+\begin{align*}
+y_{i} &= \xvec_{i} \betavec + u_{i} 
+\\
+\xvec_{i}' y_{i} &= \xvec_{i}' \xvec_{i} \betavec + \xvec_{i}' u_{i} 
+\\
+\E( \xvec_{i}' y_{i}) &= \E( \xvec_{i}' \xvec_{i} ) \betavec + \E( \xvec_{i}' u_{i} ) 
+\end{align*}
+Usando $\boxed{\E( \xvec_{i}' u_{i} ) = 0}$ 
+\red{[Qual seria essa hipótese?]}
+
+\vspace{-1 em}
+\begin{align}
+\notag
+\E( \xvec_{i}' y_{i}) &= \E( \xvec_{i}' \xvec_{i} ) \betavec
+\\
+\label{ols:beta}
+\Aboxed{\betavec &= [\E( \xvec_{i}' \xvec_{i} )]^{-1} \E( \xvec_{i}' y_{i}) }.
+\end{align}
+
+Agora, usando o \textbf{princípio da analogia} e utilizando \textbf{estimadores amostrais}:
+
+\vspace{-1 em}
+\begin{align}\label{ols:betahat:sums}
+	\Aboxed{
+\betahatbold &= 
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' y_{i} \right) }.
+\end{align}
+
+Podemos desenvolver essa equação para:
+
+\vspace{-1 em}
+\begin{align}
+	\notag
+\betahatbold &= 
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' (\mbs{x}_{i} \mbs{\beta} + \mbs{u}_{i}) \right)
+\\
+	\notag
+&=
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \mbs{\beta} \right) +
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right)
+\\
+\label{ols:betahat:u}
+\Aboxed{
+\betahatbold &= 
+\betavec +
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right) }.
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Notação Matricial}
+Empilhando as $N$ observações, obtemos a \textbf{Notação Matricial}:
+
+\vspace{-1 em}
+\begin{align} \label{ols:mod:mat}
+	\mbs{y} &= \Xmat \mbs{\beta} + \mbs{u} 
+\end{align}
+
+\begin{description}[noitemsep]
+\item [$\mbs{y}$]  é um vetor $N \times 1$;
+
+\item [$\Xmat$]  é uma matriz $N \times K$ de regressores, com $N$ vetores, $\mbs{x}_{i}$, de dimensão $1 \times K$ empilhados;
+
+\item [$\mbs{\beta}$] é um vetor $K \times 1$;
+
+\item [$\mbs{u}$] é um vetor $N \times 1$;
+\end{description}
+
+\vspace{-1 em}
+\begin{align*}
+\mbs{y} = 
+\begin{bmatrix}
+	y_{1} \\ \vdots \\ y_{N}		
+\end{bmatrix};
+\quad
+\Xmat = 
+\begin{bmatrix}
+	\mbs{x}_{1} \\ \vdots \\ \mbs{x}_{N}
+\end{bmatrix} = 
+\begin{bmatrix}
+	x_{11}     & x_{12}     & \dots  & x_{1K} \\          
+%	x_{21}     & x_{22}     & \dots  & x_{2K} \\         
+	\vdots     & \vdots     & \ddots & \vdots \\        
+	x_{N1} & x_{N2} & \dots  & x_{NK}		
+\end{bmatrix};
+\quad
+\mbs{u} = 
+\begin{bmatrix}
+	u_{1} \\ \vdots \\ u_{N}		
+\end{bmatrix}.
+\end{align*}
+
+As somas de vetores viram simples multiplicações de matrizes e a equação \eqref{ols:betahat:sums}, vira:
+
+\vspace{-1 em}
+\begin{align} 
+\notag
+\widehat{\betavec} &= (N^{-1} \Xmat' \Xmat)^{-1} (N^{-1} \Xmat'\yvec)
+\\
+\label{ols:betahat:mat}
+\Aboxed{ \widehat{\mbs{\beta}} &= (\Xmat'\Xmat)^{-1}(\Xmat'\yvec)}
+\end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Valor Esperado} 
@@ -290,9 +353,9 @@ $\E(u_{i} | \Xmat) = 0$ implica que $u_{i}$ é \textbf{não correlacionado} com 
 
 \vspace{-2 em}
 \begin{align*} 
-\Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E ( \widehat{\mbs{\beta}} ) - \mbs{\beta} }
+\Aboxed{ \B( \widehat{\mbs{\beta}} ) &= \E ( \widehat{\mbs{\beta}} ) - \mbs{\beta} }
 \\
-\Aboxed{ B( \widehat{\mbs{\beta}} ) &= \E[ (\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} ] }
+\Aboxed{ \B( \widehat{\mbs{\beta}} ) &= \E[ (\Xmat'\Xmat)^{-1}\Xmat'\mbs{u} ] }
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,7 +374,7 @@ Sob \textbf{OLS.2'} e \textbf{OLS.3'}:
 
 \noindent
 ou seja, 
-$B( \widehat{\mbs{\beta}} ) = 0$, logo $\widehat{\mbs{\beta}}$ é \textbf{não-viciado}.
+$\B( \widehat{\mbs{\beta}} ) = 0$, logo $\widehat{\mbs{\beta}}$ é \textbf{não-viciado}.
 O que também é equivalente a  $\E( \widehat{\mbs{\beta}} ) = \mbs{\beta}$.
 \end{remark}
 
@@ -346,7 +409,9 @@ Supondo \textbf{OLS.2'} e \textbf{OLS.3'}:
 \Xmat (\Xmat'\Xmat)^{-1} }
 \end{align*}
 
-Supondo homocedasticidade e ausência de correlação serial: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Homocedasticidade}
+Supondo \textbf{homocedasticidade} e ausência de correlação serial: 
 $\boxed{ \E \left[ \mbs{u} \mbs{u}'| \Xmat \right] = \sigma^2 I_{N} }$.
 Assim, 
 
@@ -394,99 +459,44 @@ u_{t}
 \noindent
 o erro é correlacionado com o regressor $y_{t-1}$.
 Nesse caso, tentaremos obter apenas \textbf{consistência} e \textbf{variância assintótica} do estimador.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{center}
-\red{Aqui comeceçaria a seção \ref{app1}}.
-\end{center}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Estimação}
-
-Lembrando que o estimador de OLS é:
+Para tanto, utilizaremos a equação \eqref{ols:betahat:u}: 
 
 \vspace{-1 em}
-\begin{align*}
-\betahatbold = (\Xmat'\Xmat)^{-1}\Xmat'\mbs{y},
-\end{align*}
-
-\noindent
-onde usamos o modelo
-
-\vspace{-1 em}
-\begin{align*}
-	y_{i} = \mbs{x}_{i} \mbs{\beta} + u_{i},
-\end{align*}
-
-\noindent
-e definimos as variáveis
-
-\vspace{-1 em}
-\begin{align*}
-\Xmat_{N \times K} =
-\begin{bmatrix}
-	\mbs{x}_{1} \\ \vdots \\	\mbs{x}_{N}	
-\end{bmatrix},
-\quad
-\mbs{y} =
-\begin{bmatrix}
-	y_{1} \\ \vdots \\ y_{N}
-\end{bmatrix},
-\quad
-\mbs{u} =
-\begin{bmatrix}
-	u_{1} \\ \vdots \\ u_{N}
-\end{bmatrix}.
-\end{align*}
-
-\noindent
-Assim, representamos $(\Xmat'\Xmat)^{-1}$ e $(\Xmat'\mbs{y})$ por meio dos seguintes somatórios
-
-\vspace{-1 em}
-\begin{align*}
-\left( \Xmat'\Xmat \right)^{-1} = \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} ,
-\quad
-\left( \Xmat'\mbs{y} \right) = \sum_{i=1}^{N} \mbs{x}_{i}' y_{i}.
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Valor Esperado e Viés}
-
-\vspace{-2 em}
 \begin{align*}
 \betahatbold &= 
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' y_{i} \right)
-\\
-&=
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' (\mbs{x}_{i} \mbs{\beta} + \mbs{u}_{i}) \right)
-\\
-&=
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \mbs{\beta} \right) +
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right)
-\\
-&=
 \betavec +
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right).
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{u}_{i} \right).
 \end{align*}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1 em}
+\begin{center}
+	\Large{\red{Aqui comeceçaria a seção \ref{app1}}.}
+\end{center}
+\vspace{1 em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Consistência}
+Vamos definir a matriz $K \times K$, $\Amat \equiv \E(\mbs{x}_{i}' \mbs{x}_{i})$.
+Supondo $\Amat$, finita e positiva definida, $\posto(\Amat) = K$.
+Usando \textbf{LGN matricial} (Definição \ref{def:lgn:mat} na página \pageref{def:lgn:mat}), temos: 
+
 \noindent
-Usando \textbf{LGN matricial} (lembrar que as dimensões dos vetores estão invertidas: $1 \times K$ e \textbf{não} $K \times 1$), temos:
+\red{[lembrar que as dimensões dos vetores estão invertidas: $1 \times K$ e \textbf{não} $K \times 1$]}
 
 \vspace{-1 em}
-\begin{align} \label{eq:Q}
-	\Aboxed{N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp Q }.
+\begin{align} \label{eq:Amat}
+N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i}
+\arrowp \Amat
+\implies
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\arrowp \Amat^{-1}.
 \end{align}
 
-\noindent
-Supondo $\E(\mbs{x}_{i}' \mbs{x}_{i}) = Q_{K \times K}$, finita e positiva definida, $posto(Q) = K$.
-Supondo $\E(\mbs{x}_{i}' u_{i}) = 0$, o que corresponde a $Cov(\mbs{x}_{i}, u_{i}) = 0$, ou seja, o erro $u_{i}$ \textbf{não} é correlacionado com os regressores da própria equação.
+Além disso, vamos supor $\E(\mbs{x}_{i}' u_{i}) = 0$, o que corresponde a $Cov(\mbs{x}_{i}, u_{i}) = 0$, ou seja, o erro $u_{i}$ \textbf{não} é correlacionado com os regressores da própria equação.
 Isso é bem menos que exogeneidade estrita.
-
 Então, 
 
 \vspace{-1 em}
@@ -494,21 +504,25 @@ Então,
 	N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \arrowp \E(\mbs{x}_{i}' u_{i}) = \mbs{0}_{K}.
 \end{align*}
 
-Logo
+Logo,
 
 \vspace{-1 em}
 \begin{align*}
+	\boxed{
 \betahatbold = 
 \betavec +
 \underbracket[1pt]{
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)}_{\arrowp 0}
+}
 \end{align*}
 
 Então, 
 $(\betahatbold - \betavec) \arrowp 0$ 
 que é equivalente a 
-$\boxed{\betahatbold \arrowp \betavec}$.
+$\betahatbold \arrowp \betavec$ e 
+$\plim\betahatbold = \betavec$,
+ou seja, $\betahatbold$ é \textbf{consistente} para $\betavec$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Normalidade Assintótica} % do $\betahatbold^{OLS}$}
@@ -518,13 +532,13 @@ $\boxed{\betahatbold \arrowp \betavec}$.
 \betahatbold 
 &= 
 \betavec +
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\
 (\betahatbold - \betavec)
 &=
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\
 \sqrt{N} (\betahatbold - \betavec) &=
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
@@ -533,35 +547,21 @@ $\boxed{\betahatbold \arrowp \betavec}$.
 
 \noindent
 Supondo
-
-\vspace{-1 em}
-\begin{align*}
-	\E( x_{ik}^{2} u_{i}^{2} ) < + \infty \, , \quad k=1, \dots, K, 
-\end{align*}
-
-\noindent
-temos, pelo \textbf{TCL}, que
+$\E( x_{ik}^{2} u_{i}^{2} ) < + \infty$,
+$k=1, \dots, K$, e definindo
+$\Bmat = \E[\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i}] = \E[ u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} ]$.
+Temos, pela Definição \ref{def:tcl} (\textbf{TCL}), que
 
 \vspace{-1 em}
 \begin{align} \label{eq:limxu}
-\Aboxed{ N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \arrowd N(0, B) }
+N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \arrowd N(\mbs{0}, \Bmat)
+\implies
+N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} = \bigOp(1)
 \end{align}
-
-\noindent
-onde 
-
-\vspace{-1 em}
-\begin{align*}
-B =
-\E[\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i}] =
-\E[ u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} ].
-\end{align*}
-
-E temos que $\boxed{N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} = O_{p}(1)}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \vspace{1 em}
-Além disso, vamos utilizar a matriz \textbf{simétrica} e \textbf{não singular} $Q$ da equação \eqref{eq:Q}
+Além disso, vamos utilizar a matriz \textbf{simétrica} e \textbf{não singular} $\Amat$ da equação \eqref{eq:Amat}
 Assim, temos 
 
 \vspace{-1 em}
@@ -572,28 +572,28 @@ Assim, temos
 \\ &=
 \left[ 
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
-+ Q^{-1} - Q^{-1}
++ \Amat^{-1} - \Amat^{-1}
 \right]
 \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \\ &=
 \left[ 
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1} 
-- Q^{-1}
+- \Amat^{-1}
 \right]
 \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
-+ Q^{-1} 
++ \Amat^{-1} 
 \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
 \end{align*}
 
 \noident
-Podemos inverter $Q$ porque ela tem posto completo (não singular).
-Pelas propriedades de $Q$, temos:
+Podemos inverter $\Amat$ porque ela tem posto completo (não singular).
+Pelas propriedades de $\Amat$, temos:
 
 \vspace{-1 em}
 \begin{align*}
-N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp Q
+N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \arrowp \Amat
 \implies
-\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}  - Q^{-1} = o_{p}(1).
+\left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}  - \Amat^{-1} = \litop(1).
 \end{align*}
 
 Então,
@@ -601,57 +601,64 @@ Então,
 \vspace{-1 em}
 \begin{align*}
 \sqrt{N} (\betahatbold - \betavec) &=
-0_{p}(1) O_{p}(1)
-+ Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
+\litop(1) \bigOp(1)
++ \Amat^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right),
 \end{align*}
 
-Usando \eqref{eq:limxu} e a definição \red{XX}
+Usando \eqref{eq:limxu} e a Definição \ref{def:equiv:assin}.
 
 \begin{align*}
-Q^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
+\Amat^{-1} \left( N^{-1/2} \sum_{i=1}^{N} \mbs{x}_{i}' u_{i} \right)
 \arrowd 
-N(\mbs{0}, Q^{-1} B Q^{-1}).
+N(\mbs{0}, \Amat^{-1} \Bmat \Amat^{-1}).
 \end{align*}
 
-Lembrando que $o_{p}(1) O_{p}(1) = o_{p}(1)$, temos:
+Lembrando que $\litop(1) \bigOp(1) = \litop(1)$, temos:
 
 \vspace{-1 em}
 \begin{align*}
-	\Aboxed{\sqrt{N} (\betahatbold - \betavec) \arrowd N(\mbs{0}, Q^{-1} B Q^{-1})}.
+\sqrt{N} (\betahatbold - \betavec) \arrowd \mathcal{N}(\mbs{0}, \Amat^{-1} \Bmat \Amat^{-1})
+\implies
+\sqrt{N} (\betahatbold - \betavec) \asim \mathcal{N}(\mbs{0}, \Amat^{-1} \Bmat \Amat^{-1})
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Variância}
 
-Vamos definir $\boxed{V = Q^{-1} B Q^{-1} }$:
-
+\vspace{-2 em}
 \begin{align*}
-V =
+\Vmat &= \Amat^{-1} \Bmat \Amat^{-1} 
+\\
+\Vmat &=
 \E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
 \E[ (\mbs{x}_{i}' u_{i}' u_{i} \mbs{x}_{i} ) ]
 \E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
 \\
-\Aboxed{
-V =
+\Vmat &=
 \E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}
 \E[ (u_{i}^{2} \mbs{x}_{i}' \mbs{x}_{i} ) ]
-\E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
-\end{align*}
-
-\noindent
-Sob \textbf{Homocedasticidade}: 
-$B = \E(u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i}) &= \sigma^2 \E(\mbs{x}_{i}' \mbs{x}_{i})$
-
-\begin{align*}
-\Aboxed{
-V &= \sigma^{2} \E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
+\E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1}.
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Estimador Amostral}
+\subsubsection{Homocedasticidade}
 
+Sob \textbf{Homocedasticidade}, temos
+$\Bmat = \E(u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i}) &= \sigma^2 \E(\mbs{x}_{i}' \mbs{x}_{i})$, 
+logo
+
+\vspace{-1 em}
 \begin{align*}
-\widehat{V} &=
+\Aboxed{
+\Vmat &= \sigma^{2} \E[ (\mbs{x}_{i}' \mbs{x}_{i} ) ]^{-1} }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Estimador Amostral}
+
+\vspace{-2 em}
+\begin{align*}
+\widehat{\Vmat} &=
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \left( N^{-1} \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
 \left( N^{-1} \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
@@ -662,7 +669,7 @@ N
 \left( \sum_{i=1}^{N} \mbs{x}_{i}' \mbs{x}_{i} \right)^{-1}
 \\
 \Aboxed{
-\widehat{V} &=
+\widehat{\Vmat} &=
 N
 \left( \Xmat'\Xmat \right)^{-1}
 \left( \sum_{i=1}^{N} u_{i}^2 \mbs{x}_{i}' \mbs{x}_{i} \right)
@@ -670,14 +677,14 @@ N
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent
-$\Var(\betahatbold)$ 
+% \subsubsection{Variância de $\betahatbold$}
+\subsubsection{Variância do estimador de OLS }
 
 \vspace{-1 em}
 \begin{align*}
-\Var(\sqrt{N} \betahatbold) &= V
+\Var(\sqrt{N} \betahatbold) &= \Vmat
 \\
-\Var(\betahatbold) &= N^{-1} V
+\Var(\betahatbold) &= N^{-1} \Vmat
 \\
 \Aboxed{
 \Var(\betahatbold) &= 
@@ -686,6 +693,7 @@ $\Var(\betahatbold)$
 \left( \Xmat'\Xmat \right)^{-1} }.
 \end{align*}
 
+\noindent
 A variância \textbf{Robusta} é:
 
 \vspace{-1 em}
@@ -697,6 +705,7 @@ A variância \textbf{Robusta} é:
 (\Xmat'\Xmat)^{-1} }.
 \end{align*}
 
+\noindent
 A variância sob \textbf{Homocedasticidade} é:
 
 \vspace{-1 em}
@@ -899,7 +908,7 @@ Uma vez que $\E(\Xmat_{i}' \mbs{u}_{i})=0$, sob a hipótese \textbf{SOLS.1}, o C
 
 \vspace{-1 em}
 \begin{align*} 
-N^{-1/2} \sum_{i=1}^{N} \Xmat_{i} \mbs{u}_{i} \arrowd N(\mbs{0}, B),
+N^{-1/2} \sum_{i=1}^{N} \Xmat_{i} \mbs{u}_{i} \arrowd N(\mbs{0}, \Bmat),
 \end{align*}
 
 \noindent
@@ -907,7 +916,7 @@ onde
 
 \vspace{-1 em}
 \begin{align*} 
-B \equiv \E(\Xmat_{i}' \mbs{u}_{i} \mbs{u}_{i}' \Xmat_{i}) \equiv \Var(\Xmat_{i} \mbs{u}_{i}).
+\Bmat \equiv \E(\Xmat_{i}' \mbs{u}_{i} \mbs{u}_{i}' \Xmat_{i}) \equiv \Var(\Xmat_{i} \mbs{u}_{i}).
 \end{align*}
 
 \noindent
@@ -915,14 +924,14 @@ Em particular,
 
 \vspace{-1 em}
 \begin{align*} 
-N^{-1/2} \sum_{i=1}^{N} \Xmat_{i} \mbs{u}_{i} = O_{p}(1).
+N^{-1/2} \sum_{i=1}^{N} \Xmat_{i} \mbs{u}_{i} = \bigOp(1).
 \end{align*}
 
 Porém,
 
 \vspace{-1 em}
 \begin{align*} 
-	\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1} = (\Xmat'\Xmat/N)^{-1} = A^{-1} + o_{p}(1).
+	\left( N^{-1} \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1} = (\Xmat'\Xmat/N)^{-1} = A^{-1} + \litop(1).
 \end{align*}
 
 \noindent
@@ -944,10 +953,10 @@ A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
 \\&=
 A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
-+ o_{p}(1) O_{p}(1)
++ \litop(1) \bigOp(1)
 \\&=
 A^{-1}\left( N^{-1/2} \sum_{i=1}^{N} \Xmat_{i}' \mbs{u}_{i}   \right)
-+ o_{p}(1)
++ \litop(1)
 \end{align*}
 
 Portanto, com apenas \textit{single-equation OLS and 2SLS}, obtemos a representação assintótica para $\sqrt{N}(\betahatbold - \betavec)$ que é uma combinação linear não aleatória de somas parciais que satisfazem o CLT.
@@ -956,7 +965,7 @@ Usando o \red{lema de equivalência assintótica}, temos:
 \begin{align*} 
 \sqrt{N}(\betahatbold - \betavec)
 \arrowd
-N(\mbs{0}, A^{-1} B A^{-1})
+N(\mbs{0}, A^{-1} \Bmat A^{-1})
 \end{align*}
 
 Resumimos esse resultado com o seguinte Teorema:
@@ -969,7 +978,7 @@ Sob Hipóteses \textbf{SOLS.1} e \textbf{SOLS.2}, temos que a seguinte equação
 	\Aboxed{
 \sqrt{N}(\betahatbold - \betavec)
 \arrowd
-N(\mbs{0}, A^{-1} B A^{-1})
+N(\mbs{0}, A^{-1} \Bmat A^{-1})
 }.
 \end{align}
 \end{teo1}
@@ -982,7 +991,7 @@ A variância assintótica de $\betahatbold^{SOLS}$ é:
 
 \vspace{-1 em}
 \begin{align}\label{eq:avar:sols}
-	\Avar(\betahatbold^{SOLS}) = A^{-1} B A^{-1}/N.
+	\Avar(\betahatbold^{SOLS}) = A^{-1} \Bmat A^{-1}/N.
 \end{align}
 
 Assim, $\Avar(\betahatbold^{SOLS})$ tende a zero a uma taxa $1/N$, como esperado.
@@ -3111,7 +3120,7 @@ M^{0} \mbs{1} &=
 \section{Conceitos Básicos de Convergência Estatística} \label{app1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Estimador Consistente}]
+\begin{defn}[\textbf{Estimador Consistente}]
 Um estimador $\hat{\theta}$ é \textbf{consistente} para um parâmetro $\theta$ se 
 
 \vspace{-1 em}
@@ -3120,11 +3129,11 @@ Um estimador $\hat{\theta}$ é \textbf{consistente} para um parâmetro $\theta$ 
  %  \\
  %  \hat{\theta} \arrowp \theta.
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Convergência em Probabilidade}]
+\begin{defn}[\textbf{Convergência em Probabilidade}]
 Uma sequência de variáveis aleatórias:
 $\{ X_{n} \}_{n \geq 1}$ 
 \textbf{converge em probabilidade} para uma variável aleatória $X$ se, dado $\err > 0$, 
@@ -3142,11 +3151,11 @@ E denotamos
 \begin{align*}
 	X_{n} \arrowp X.
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Desigualdade de Markov}]
+\begin{defn}[\textbf{Desigualdade de Markov}]
 Seja
 $\{ X_{n} \}_{n \geq 1}$ 
 uma sequência de variáveis aleatórias com
@@ -3157,19 +3166,19 @@ Então, dado $\err >0$
 \begin{align*}
 	P(| X_{n} | > \err ) \leq \frac{E|X_{n}|^{K}}{\err^{K}}
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1} %[\textbf{}]
+\begin{defn} %[\textbf{}]
 \begin{align*}
 0 \leq P(| \thetahat - \theta | > \err ) \leq \frac{E|X_{n}|^{2}}{\err^{2}}
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{Erro Quadrático Médio}]
+\begin{defn}[\textbf{Erro Quadrático Médio}]
 \begin{align*}
 EQM(\thetahat) 
 =
@@ -3177,14 +3186,14 @@ EQM(\thetahat)
 =
 \left[ Bias(\thetahat)^{2} + \Var(\thetahat) \right]
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Então, se $Bias(\thetahat) \to 0$ e $\Var(\thetahat) \to 0$, temos que $EQM(\thetahat) \to 0$.
 Pelo \textbf{Teorema do Sanduíche}, $P(|\thetahat - \theta| > \err) \to 0$; logo, $\thetahat \arrowp \theta$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{LGN -- Lei dos Grandes Números}]
+\begin{defn}[\textbf{LGN -- Lei dos Grandes Números}] \label{def:lgn}
 Seja $\seq{X_{i}}_{i \geq 1}$ uma sequência de variáveis aleatórias $iid$ com $\E(X_{i}) = \mu$.
 Então, 
 
@@ -3192,11 +3201,11 @@ Então,
 \begin{align*}
 	N^{-1} \sum_{i=1}^{N} X_{i} \arrowp \mu.
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[\textbf{LGN -- Caso Matricial}]
+\begin{defn}[\textbf{LGN -- Caso Matricial}] \label{def:lgn:mat}
 Seja $\seq{\mbs{x}_{i}}_{i=1}^{N}$, uma sequência $iid$ de vetores aleatórios $K \times 1$ com $\E(\mbs{x}_{i} \mbs{x}_{i}') = Q_{K \times K}$ finita.
 Então, 
 
@@ -3208,7 +3217,7 @@ N^{-1} \sum_{i=1}^{N}
 \end{align*}
 
 Se $Q$ for positiva definida, $Q$ terá inversa.
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3254,7 +3263,7 @@ $b_{i}$ é a $i$-ésima \textbf{linha} da matriz $B$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
+\begin{defn}
 \begin{align*}
 P( | X_{n} - X | > \err ) & \to 0
 \\
@@ -3262,67 +3271,67 @@ X_{n} - X & \arrowp 0
 \\
 X_{n} & \arrowp X
 \end{align*}
-\end{def1}
+\end{defn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[$o_{p}$]
+\begin{defn}[$\litop$]
 \begin{align*}
-X_{n} = o_{p}(1) & \implies X_{n} \arrowp 0
+X_{n} = \litop(1) & \implies X_{n} \arrowp 0
 \\
-X_{n} = o_{p}(Y_{n}) & \implies
-\frac{X_{n}}{Y_{n}} = o_{p}(1) \implies
+X_{n} = \litop(Y_{n}) & \implies
+\frac{X_{n}}{Y_{n}} = \litop(1) \implies
 \frac{X_{n}}{Y_{n}} \arrowp 0
 \\
-X_{n} = W_{n} + o_{p}(1) & \implies
-(X_{n} - W_{n}) = o_{p}(1) \implies
+X_{n} = W_{n} + \litop(1) & \implies
+(X_{n} - W_{n}) = \litop(1) \implies
 (X_{n} - W_{n}) \arrowp 0
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Limitação em Probabilidade: $O_{p}$]
+\begin{defn}[Limitação em Probabilidade: $\bigOp$]
 Dizemos que $X_{n}$ é \textbf{limitado em probabilidade} e denotado por 
-$X_{n} = O_{p}(1)$,
+$X_{n} = \bigOp(1)$,
 se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n} | > 0) < \err$.
 
 \vspace{-1 em}
 \begin{align*}
-X_{n} = O_{p}(1) \implies \exists M > 0 \, ; \;
+X_{n} = \bigOp(1) \implies \exists M > 0 \, ; \;
 \forall \err > 0 \, , \;
 P( | X_{n} | > 0) < \err.
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
+\begin{defn}
 Dizemos que
-$X_{n} = O_{p}(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
+$X_{n} = \bigOp(Y_{n})$ se existe $M$ maior que zero, tal que para todo $\err$ maior que zero, $P( | X_{n}/Y_{n} | > 0) < \err$.
 
 \vspace{-1 em}
 \begin{align*}
-X_{n} = O_{p}(Y_{n}) \implies \exists M > 0 \, ; \;
+X_{n} = \bigOp(Y_{n}) \implies \exists M > 0 \, ; \;
 \forall \err > 0 \, , \;
 P( | X_{n}/Y_{n} | > 0) < \err.
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}
+\begin{defn}
 Se
-$X_{n} = O_{p}(1)$ e $Y_{n} = o_{p}(1)$, então
+$X_{n} = \bigOp(1)$ e $Y_{n} = \litop(1)$, então
 
 \vspace{-1 em}
 \begin{align*}
-	X_{n} Y_{n} = O_{p}(1) o_{p}(1) = o_{p}(1).
+	X_{n} Y_{n} = \bigOp(1) \litop(1) = \litop(1).
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Equivalência Assintótica]
+\begin{defn}[Equivalência Assintótica] \label{def:equiv:assin}
 Seja
 $\seq{\mbs{x}_{n}}$ e $\seq{\mbs{z}_{n}}$
 sequências de vetores aleatórios $K \times 1$.
@@ -3335,11 +3344,11 @@ Então,
 \mbs{x}_{n} \arrowd \mbs{z}.
 \end{align*}
 
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição]
+\begin{defn}[Convergência em Distribuição]
 Seja
 $\seq{X_{n}}_{n \geq 1}$  uma sequência de variáveis aleatórias e $X$ uma variável aleatória com $F_{n}$ e $F$ suas respectivas FDAs, então
 
@@ -3348,17 +3357,17 @@ $\seq{X_{n}}_{n \geq 1}$  uma sequência de variáveis aleatórias e $X$ uma var
 \end{align*}
 \noindent
 para todo $X$ onde $F$ é contínuo.
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[Convergência em Distribuição e Limitação em Probabilidade]
-Se $X_{n} \arrowd X$, $X$ um variável aleatória qualquer; então $X_{n} = O_{p}(1)$.
-\end{def1}
+\begin{defn}[Convergência em Distribuição e Limitação em Probabilidade]
+Se $X_{n} \arrowd X$, $X$ um variável aleatória qualquer; então $X_{n} = \bigOp(1)$.
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Teorema Central do Limite]
+\begin{defn}[TCL -- Teorema Central do Limite] \label{def:tcl}
 Seja $\seq{X_{n}}_{n = 1}^{N}$ $iid$ com $\E(X_{n}) = \mu$ e $\Var(X_{n}) = \sigma^{2} < + \infty$.
 Então, para $S_{N} = \sum_{n=1}^{N} X_{n}$:
 
@@ -3373,11 +3382,11 @@ Então, para $S_{N} = \sum_{n=1}^{N} X_{n}$:
 \frac{\sqrt{N} ( \overline{X} - \mu ) }{\sigma}
 \arrowd Z \sim N(0,1)}.
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[TCL -- Caso Vetorial]
+\begin{defn}[TCL -- Caso Vetorial] \label{def:tcl:vec}
 Seja $\seq{\mbs{w}_{i}}_{i=1}^{n}$ uma sequência $iid$ de vetores aleatórios $K \times 1$ com
 $\E( w_{ik}^{2} ) < + \infty$, $k= 1, \dots K$ e $\E( \mbs{w}_{i} ) = \mbs{0}_{K}$.
 Então,
@@ -3389,11 +3398,11 @@ Então,
 
 \noindent
 onde, $B=\Var(\mbs{w}_{i}) = \E( \mbs{w}_{i} \mbs{w}_{i}')$.
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{def1}[]
+\begin{defn}[]
 Seja $\seq{\mbs{z}_{n}}$ uma sequência de vetores $K \times 1$ aleatórios com 
 
 \vspace{-1 em}
@@ -3407,10 +3416,8 @@ Então, para qualquer matriz $A$ de dimensão $K \times M$ \textbf{não} estocá
 \begin{align*}
 	A' \mbs{z}_{n} \arrowd N(\mbs{0}, A'VA).
 \end{align*}
-\end{def1}
+\end{defn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
