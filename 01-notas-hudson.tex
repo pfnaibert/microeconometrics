@@ -1143,7 +1143,7 @@ Em notação matricial:
 \end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{remark}
+\paragraph{Remark} \red{REVER}
 
 \begin{align*}
 \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}
@@ -1169,7 +1169,6 @@ Portanto, podemos escrever $\betahatbold$ como:
 Este estimador é chamado \textbf{estimador de Mínimos Quadrados Agrupados (POLS)} porque ele corresponde a rodar uma regressão OLS nas observações agrupadas através de $i$ e $t$. 
 % This estimator is called the \textbf{pooled ordinary least squares (POLS) estimator} because it corresponds to running OLS oin the observation pooled across $i$ and $t$.
 O estimador da equação \eqref{betahat:POLS} é o mesmo para unidades de \textit{cross section} amostradas em diferentes pontos do tempo.
-\end{remark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1183,9 +1182,8 @@ $i=1, \dots, N$ e $t=1, \dots, T$.
 De fato, \textbf{POLS.1} $\implies$ \textbf{SOLS.1}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{remark}
+\paragraph{OBS:}
 	O modelo \eqref{pols:mod} permite $y_{i,t-1}$ como regressor, se satisfeita \textbf{POLS.1}.
-\end{remark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1200,9 +1198,12 @@ De fato, \textbf{POLS.1} $\implies$ \textbf{SOLS.1}.
 onde $c_{i} + u_{it} = v_{it}$.
 Estamos supondo $c_{i}$ \textbf{não} observável.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1 em}
+\noindent
 Considerando $y_{i, t-1}$ como regressor:
 
-\vspace{-2 em}
+\vspace{-1 em}
 \begin{align*}
 \left.
 \begin{aligned}
@@ -1215,6 +1216,257 @@ Considerando $y_{i, t-1}$ como regressor:
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Estimação}
+\begin{center}
+\red{SIC}
+\end{center}
+
+\vspace{-2 em}
+\begin{align*}
+\betavechat = \betavec +
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}' \vvec_{i} \right)
+\end{align*}
+
+\vspace{-1 em}
+\begin{align*}
+	\yvec_{i} = \Xmat_{i} \betavec + \onevec c_{i} + \uvec_{i}
+	\implies
+	\yvec_{i} = \Xmat_{i} \betavec + \vvec_{i}
+\end{align*}
+onde $\onevec$ é um vetor $T \times 1$ de uns.
+
+\noindent
+Então,
+
+\vspace{-1 em}
+\begin{align*}
+\betavechat = \betavec +
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}' \onevec c_{i} \right)
++
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}' \uvec_{i} \right)
+\end{align*}
+
+\nondent
+onde
+
+\vspace{-1 em}
+\begin{align*}
+& \left( \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i} \right)^{-1}
+\arrowp \Amat^{-1}
+\\
+& \left( \sum_{i=1}^{N} \Xmat_{i}' \onevec c_{i} \right)
+\arrowp \E(\Xmat_{i}' \onevec c_{i})
+\\
+& \left( \sum_{i=1}^{N} \Xmat_{i}' \uvec_{i} \right)
+\arrowp \zerovec
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{itemize}[noitemsep]
+\item
+Se $c_{i}$ é \textbf{não} correlacionado com os regressores, então o POLS é consistente (mas não é eficiente).
+		
+\item
+	O estimador eficiente, neste caso, é o GLS (Modelo de \textbf{Efeitos Aleatórios}).
+
+\item
+	Se $c_{i}$ é correlacionado com \textbf{pelo menos} um regressor, o POLS é \textbf{inconsistente}.
+	Nesse caso, usaremos o Modelo de \textbf{Efeitos Fixos} ou \textbf{Primeira Diferença}.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Alguns Testes}
+
+Lembrando a equação do modelo \eqref{pols:mod}:
+
+\vspace{-2 em}
+\begin{align*}
+	y_{it} = \xvec_{it} \betavec + u_{it}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Autocorrelação dos Resíduos}
+
+Nos dois testes apresentado, primeiro precisamos guardar os resíduos estimado.
+Para tanto, rodamos a regressão do modelo \eqref{pols:mod} e guardamos os resíduos:
+
+\vspace{-1 em}
+\begin{align} \label{pols:uhat}
+	\uhat_{it} = y_{it} - \xvec_{it} \betavechat^{POLS}.
+\end{align}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Com Exogeneidade Estrita}
+Sob exogeneidade estrita, rodamos a seguinte regressão dos resíduos:
+
+\vspace{-1.5 em}
+\begin{align*}
+	\uhat_{it} = \delta_{0} + \delta \uhat_{it-1}  + \err_{it}
+	\, , \quad i=1,\dots, N; \quad t=1,\dots, T.
+\end{align*}
+
+\noindent
+Então, testamos
+
+\vspace{-1 em}
+\begin{align*}
+% \left\{
+% \begin{aligned}
+H_{0} : \delta_{1} = 0
+\\
+H_{1} : \delta_{1} \neq 0
+% \end{aligned}
+% \right.
+\end{align*}
+
+\noindent
+via teste $t$ (pode ser robusto).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Sem Exogeneidade Estrita (Apenas exogeneidade contemporânea)}
+Sem exogeneidade estrita, rodamos a seguinte regressão dos resíduos:
+
+\vspace{-1.5 em}
+\begin{align*}
+	\uhat_{it} = \xvec_{it} \alphavec + \delta \uhat_{it-1}  + \err_{it}
+	\, , \quad i=1,\dots, N; \quad t=1,\dots, T.
+\end{align*}
+
+\noindent
+Então, testamos
+
+\vspace{-1 em}
+\begin{align*}
+% \left\{
+% \begin{aligned}
+H_{0} : \delta_{1} = 0
+\\
+H_{1} : \delta_{1} \neq 0
+% \end{aligned}
+% \right.
+\end{align*}
+
+\noindent
+via teste $t$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Heterocedasticidade}
+Com os resíduos da equação \eqref{pols:uhat}, rodamos a seguinte regressão:
+
+\vspace{-1 em}
+\begin{align*}
+	\uhat^{2}_{it} = \gamma_{0} + \gamma_{1} \yhat_{it}' + \gamma_{2} \yhat^{2}_{it} + \err_{it}
+\end{align*}
+
+\noindent
+onde $\yhat_{it} = \xvec_{it} \betavechat^{POLS}$.
+Definindo $\hvec_{it} = ( \yhat_{it}', \yhat^{2}_{it} )$, podemos reescrever a equação acima como
+
+\vspace{-1 em}
+\begin{align*}
+	\uhat^{2}_{it} = \gamma_{0} + \hvec_{it} \gammavec + \err_{it}
+\end{align*}
+
+\noindent
+Então, testamos
+
+\vspace{-1 em}
+\begin{align*}
+% \left\{
+% \begin{aligned}
+H_{0} &: \gammavec = \zerovec \quad (\gamma_{1} = 0 \text{ e } \gamma_{2} = 0 )
+\\
+H_{1} &: \gammavec \neq \zerovec
+% \end{aligned}
+% \right.
+\end{align*}
+
+\noindent
+via teste de Wald.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Teste de Wald}
+
+Se é verdade que
+
+\vspace{-1 em}
+\begin{align*}
+	\sqrt{N} (\betavechat - \betavec) 
+	\arrowd
+	\mathcal{N}(\zerovec, \Vmathat).
+\end{align*}
+
+\noindent
+Seja $\Rmat$ uma matriz $Q \times K$ com $Q \leq K$ e $\posto(\Rmat) = Q$ (posto pleno), então
+
+\vspace{-1 em}
+\begin{align*}
+	\sqrt{N} \Rmat (\betavechat - \betavec) 
+	\arrowd
+	\mathcal{N}(\zerovec, \Rmat \Vmathat \Rmat').
+\end{align*}
+
+e
+
+\vspace{-1 em}
+\begin{align*}
+	\left[ \sqrt{N} \Rmat (\betavechat - \betavec)  \right]'
+	\left( \Rmat \Vmat \Rmat' \right)^{-1}
+	\left[ \sqrt{N} \Rmat (\betavechat - \betavec)  \right]
+	\asim
+	\chisq_{Q} 
+\end{align*}
+
+O resulado acima vale para $\Vmathat$ no lugar de $\Vmat$, desde que $\Vmathat \arrowp \Vmat$.
+Ou seja, vale para estimadores \textbf{consistentes} de $\Vmat$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Teste de Wald}
+
+\begin{align*}
+% \left\{
+% \begin{aligned}
+H_{0} &: \Rmat \betavec = \rvec
+\\
+H_{1} &: \Rmat \betavec \neq \rvec
+% \end{aligned}
+% \right.
+\end{align*}
+
+A estatística do teste acima é:
+
+\vspace{-1 em}
+\begin{align*}
+	N
+	\left[ \Rmat \betavechat - \rvec  \right]'
+	\left( \Rmat \Vmathat \Rmat' \right)^{-1}
+	\left[ \Rmat \betavechat - \rvec  \right]
+	\asim
+	\chisq_{Q} 
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Remarks}
+\begin{enumerate}
+	\item $\Vmathat$ pode ser a matriz robusta.
+
+	\item Uma aproximação, via distribuição $F$ é dado por:
+\begin{align*}
+	\frac{\text{Est. Teste}}{Q} \asim F_{Q, N-K}
+\end{align*}
+
+\noindent
+com $\Avar(\betavechat) = \frac{N}{N-K} \Vmathat$.
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 \subsection{Estimação I}
 
 \begin{center}
@@ -1286,6 +1538,7 @@ usando $\yvec_{it} &= \Xmat_{i} \betavec + \vvec_{i}$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 \subsection{Estimação II}
 
 \begin{center}
@@ -1390,50 +1643,142 @@ usando $\yvec_{it} &= \Xmat_{i} \betavec + c_{i} \onevec  + \uvec_{i}$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{itemize}[noitemsep]
-\item
-Se $c_{i}$ é \textbf{não} correlacionado com os regressores, então o POLS é consistente (mas não é eficiente).
-		
-\item
-	O estimador eficiente, neste caso, é o GLS (Modelo de \textbf{Efeitos Aleatórios}).
-
-\item
-	Se $c_{i}$ é correlacionado com \textbf{pelo menos} um regressor, o POLS é \textbf{inconsistente}.
-	Nesse caso, usaremos o Modelo de \textbf{Efeitos Fixos} ou \textbf{Primeira Diferença}.
-\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Alguns Testes}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Autocorrelação dos Resíduos}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Heterocedasticidade}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Teste de Wald}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\section{Fixed Effects (EF, FE)}
-\begin{center}
-\blue{Aula 3}
-\end{center}
+\section{Modelo de Efeitos Fixos (EF), (Fixed Effects FE)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo}
 
-O modelo linear de \textbf{efeitos não observados}:
+O modelo linear de \textbf{efeitos individuais não observados}:
 
 \vspace{-1 em}
-\begin{align} \label{mod1:FE}
-	y_{it} = \mbs{x}_{it} \mbs{\beta} + c_{i} + u_{it},
+\begin{align} \label{fe:mod:1}
+	y_{it} &= \xvec_{it} \betavec + c_{i} + u_{it} 
+	\, , \qquad	i = 1, \dots, N; \quad t = 1, \dots, T.
 \end{align}
 
 \noindent
-onde
-$t = 1, \dots, T$ e $i = 1, \dots, N$.
+Estamos supondo $c_{i}$ \textbf{não} observável.
+Definindo $v_{it} = c_{i} + u_{it}$.
+
+\vspace{-1 em}
+\begin{align}\label{fe:mod:2}
+	y_{it} &= \xvec_{it} \betavec + v_{it}.
+	\, , \qquad	i = 1, \dots, N; \quad t = 1, \dots, T.
+\end{align}
+
+\noindent
+No modelo FE permitimos $\Cov(\xvec_{it}, c_{i} ) \neq 0$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Hipóteses}
+
+\paragraph{FE.1:} Exogeneidade Estrita:
+$\E( u _{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
+
+\paragraph{FE.2:} Posto pleno de $\E( \Xmat_{i}' \Omega^{-1} \Xmat_{i} )$ (para inverter a matriz).
+$\posto[ \E( \Xmat_{i}' \Omega^{-1} \Xmat_{i} ) ]  = K$.
+
+\paragraph{FE.3:} Homoscedasticidade:
+$\E( \uvec_{i} \uvec_{i}' \,|\, \Xmat_{i}, c_{i}) = \sigma_{u}^{2} \Imat_{T}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Transformação \textit{Within}}
+
+Seja:
+
+\vspace{-1 em}
+\begin{align*}
+	\bar{y}_{i} = T^{-1} \sum_{t=1}^{T} y_{it};
+	\quad
+	\bar{\xvec}_{i} = T^{-1} \sum_{t=1}^{T} \xvec_{it};
+	\quad
+	\bar{c}_{i} = T^{-1} \sum_{t=1}^{T} c_{i} = c_{i};
+	\quad
+	\bar{u}_{i} = T^{-1} \sum_{t=1}^{T} u_{it}.
+\end{align*}
+
+Então, de \eqref{fe:mod:1}, somando ao longo do tempo e dividindo por $T$, temos:
+
+\vspace{-1 em}
+\begin{align} \label{fe:mod:3}
+	\bar{y}_{i} &= \bar{\xvec}_{i} \betavec + \bar{c}_{i} + \bar{u}_{i} 
+	\, , \qquad	i = 1, \dots, N.
+\end{align}
+
+Subtraindo \eqref{fe:mod:3} de \eqref{fe:mod:1}:
+
+\vspace{-1 em}
+\begin{align} \label{fe:mod:4}
+y_{it} - \bar{y}_{i} &=
+(\xvec_{it} - \bar{\xvec}_{i}) \betavec +
+\underbracket[1pt]{c_{i} - \bar{c}_{i}}_{=0} +
+u_{it} - \bar{u}_{i} 
+\, , \qquad	i = 1, \dots, N; \quad t = 1, \dots, T.
+\end{align}
+
+\noindent
+Finalmente, obtemos:
+
+\vspace{-1 em}
+\begin{align} \label{fe:mod:5}
+\ddot{y}_{it} &= \ddot{\xvec}_{it} \betavec + \ddot{u}_{it} 
+\, , \qquad	i = 1, \dots, N; \quad t = 1, \dots, T.
+\end{align}
+
+\noindent
+Eliminamos variáveis que não variam ao longo do tempo.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Centering Matrix $\Mzero$}
+
+Definimos a matriz $\Mzero$ como:
+
+\vspace{-1 em}
+\begin{align*}
+	\Mzero &=
+	\Imat_{T} - T^{-1} \mbs{1}_{T} \mbs{1}_{T}'
+	=
+	I_{T} - \mbs{1}_{T} (\mbs{1}_{T}' \mbs{1}_{T})^{-1} \mbs{1}_{T}'.
+\end{align*}
+
+\noindent
+A matriz $\Mzero$ é idempotente e simétrica.
+
+\begin{align*}
+	\Mzero \mbs{x} &= \mbs{x} - \overline{\mbs{x}} \mbs{1}_{T}
+	= \ddot{\mbs{x}}.
+\end{align*}
+
+Podemos transformar o modelo \eqref{mod2:FE} ao premultiplicarmos todo o modelo por $\Mzero$.
+
+\vspace{-1 em}
+\begin{align*} 
+\Mzero \mbs{y}_{i} &= \Mzero X_{i} \mbs{\beta} + \Mzero ( c_{1} \mbs{1}_{T} ) + \Mzero \mbs{u}_{i},
+\quad i = 1, \dots, N.
+\end{align*}
+
+\vspace{-1 em}
+\begin{align*} 
+\Mzero ( c_{1} \mbs{1}_{T} ) = 
+( I_{T} - T^{-1} \mbs{1}_{T} \mbs{1}_{T}' ) c_{i} \mbs{1}_{T} 
+=
+c_{i} \mbs{1}_{T} - T^{-1} c_{i} \mbs{1}_{T} \mbs{1}_{T}' \mbs{1}_{T} 
+=
+c_{i} \mbs{1}_{T} - c_{i} \mbs{1}_{T} 
+\implies
+\boxed{ \Mzero ( c_{1} \mbs{1}_{T} ) = 0 }
+\end{align*}
+
+\vspace{-1 em}
+\begin{align} \label{mod2:FE}
+\ddot{\mbs{y}}_{i} &= \ddot{X}_{i} \mbs{\beta} + \ddot{\mbs{u}_{i}},
+\quad i = 1, \dots, N.
+\end{align}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 
 O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
 Abordamos esse componente como parte do erro, não como parâmetro a não observado.
@@ -1452,53 +1797,6 @@ com
 $\mbs{v}_{i} = c_{i} \mbs{1}_{T} + \mbs{u}_{i}$ sendo os erros compostos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Matriz $M^{0}$}
-
-Definimos a matriz $M^{0}$ como:
-
-\vspace{-1 em}
-\begin{align*}
-	M^{0} &=
-	I_{T} - T^{-1} \mbs{1}_{T} \mbs{1}_{T}'
-	=
-	I_{T} - \mbs{1}_{T} (\mbs{1}_{T}' \mbs{1}_{T})^{-1} \mbs{1}_{T}'.
-\end{align*}
-
-\noindent
-A matriz $M^{0}$ é idempotente e simétrica.
-
-\begin{align*}
-	M^{0} \mbs{x} &= \mbs{x} - \overline{\mbs{x}} \mbs{1}_{T}
-	= \ddot{\mbs{x}}.
-\end{align*}
-
-Podemos transformar o modelo \eqref{mod2:FE} ao premultiplicarmos todo o modelo por $M^{0}$.
-
-\vspace{-1 em}
-\begin{align*} 
-M^{0} \mbs{y}_{i} &= M^{0} X_{i} \mbs{\beta} + M^{0} ( c_{1} \mbs{1}_{T} ) + M^{0} \mbs{u}_{i},
-\quad i = 1, \dots, N.
-\end{align*}
-
-\vspace{-1 em}
-\begin{align*} 
-M^{0} ( c_{1} \mbs{1}_{T} ) = 
-( I_{T} - T^{-1} \mbs{1}_{T} \mbs{1}_{T}' ) c_{i} \mbs{1}_{T} 
-=
-c_{i} \mbs{1}_{T} - T^{-1} c_{i} \mbs{1}_{T} \mbs{1}_{T}' \mbs{1}_{T} 
-=
-c_{i} \mbs{1}_{T} - c_{i} \mbs{1}_{T} 
-\implies
-\boxed{ M^{0} ( c_{1} \mbs{1}_{T} ) = 0 }
-\end{align*}
-
-\vspace{-1 em}
-\begin{align} \label{mod2:FE}
-\ddot{\mbs{y}}_{i} &= \ddot{X}_{i} \mbs{\beta} + \ddot{\mbs{u}_{i}},
-\quad i = 1, \dots, N.
-\end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Estimação POLS}
 
 Aplicando POLS no modelo \eqref{mod2:FE}
@@ -1511,24 +1809,6 @@ Aplicando POLS no modelo \eqref{mod2:FE}
 \left[ \sum_{i=1}^{N} \ddot{X}_{i}' \ddot{\mbs{y}}_{i} \right]
 }
 \end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Hipóteses}
-
-As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{FE}$ são:
-
-\begin{description}
-\setlength\itemsep{.5 em}
-
-\item [FE.1:] Exogeneidade Estrita:
-$\E( u _{it} \, | \, \mbs{x}_{i1}, \dots, \mbs{x}_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
-
-\item  [FE.2:] Posto completo de $\E( X_{i}' \Omega^{-1} X_{i} )$ (para inverter a matriz).
-$posto[ \E( X_{i}' \Omega^{-1} X_{i} ) ]  = K$.
-
-\item [FE.3:] Homoscedasticidade:
-	$\E(\mbs{u}_{i} \mbs{u}_{i}' \,|\, X_{i}, c_{i}) = \sigma_{u}^{2} I_{T}$.
-\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Valor Esperado}
@@ -1552,9 +1832,9 @@ Usando \textbf{FE.1} e \textbf{FE.2}, apenas.
 
 \noindent
 Sabendo que 
-$\ddot{X} = ( I_{N} \otimes M^{0} ) X$
+$\ddot{X} = ( I_{N} \otimes \Mzero ) X$
 e
-$\ddot{\mbs{u}} = ( I_{N} \otimes M^{0} ) \mbs{u}$,
+$\ddot{\mbs{u}} = ( I_{N} \otimes \Mzero ) \mbs{u}$,
 definimos:
 
 \vspace{-1 em}
@@ -1563,10 +1843,10 @@ definimos:
 \mbs{\beta} +
 \E \left\{
 \left[  
-X' ( I_{N} \otimes M^{0} )( I_{N} \otimes M^{0} ) X 
+X' ( I_{N} \otimes \Mzero )( I_{N} \otimes \Mzero ) X 
 \right]^{-1}
 \left[ 
-X' ( I_{N} \otimes M^{0} )( I_{N} \otimes M^{0} ) \mbs{u}
+X' ( I_{N} \otimes \Mzero )( I_{N} \otimes \Mzero ) \mbs{u}
 \right]
 \right\}
 \\
@@ -1575,10 +1855,10 @@ X' ( I_{N} \otimes M^{0} )( I_{N} \otimes M^{0} ) \mbs{u}
 \mbs{\beta} +
 \E \left\{
 \left[  
-X' ( I_{N} \otimes M^{0} ) X 
+X' ( I_{N} \otimes \Mzero ) X 
 \right]^{-1}
 \left[ 
-X' ( I_{N} \otimes M^{0} ) \mbs{u}
+X' ( I_{N} \otimes \Mzero ) \mbs{u}
 \right]
 \right\} }
 \end{align*}
@@ -1606,11 +1886,11 @@ Usando \textbf{FE.1} e \textbf{FE.2}, apenas:
 \begin{align*}
 \E\left[ ( \ddot{X}' \ddot{X} )^{-1} \right] &=
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
 \\ &=
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
 \end{align*}
 
@@ -1621,13 +1901,13 @@ X' ( I_{N} \otimes M^{0} ) X
 \right] 
 &=
 \E \left[
-X' ( I_{N} \otimes M^{0} ) ( I_{N} \otimes M^{0} ) 
+X' ( I_{N} \otimes \Mzero ) ( I_{N} \otimes \Mzero ) 
 \mbs{u} \mbs{u}'
-( I_{N} \otimes M^{0} ) ( I_{N} \otimes M^{0} ) X
+( I_{N} \otimes \Mzero ) ( I_{N} \otimes \Mzero ) X
 \right]
 \\ &=
 \E \left[
-X' ( I_{N} \otimes M^{0} ) \mbs{u} \mbs{u}' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) \mbs{u} \mbs{u}' ( I_{N} \otimes \Mzero ) X
 \right]
 \end{align*}
 \end{description}
@@ -1639,13 +1919,13 @@ X' ( I_{N} \otimes M^{0} ) \mbs{u} \mbs{u}' ( I_{N} \otimes M^{0} ) X
 \Aboxed{
 \Var( \mbs{\beta}^{FE} ) &= 
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
 \E \left[
-X' ( I_{N} \otimes M^{0} ) \mbs{u} \mbs{u}' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) \mbs{u} \mbs{u}' ( I_{N} \otimes \Mzero ) X
 \right]
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
 }
 \end{align*}
@@ -1658,36 +1938,36 @@ Usando \textbf{FE.3}, temos
 \begin{description}
 \item [Recheio':]
 \begin{align*}
-\E \left[ X' ( I_{N} \otimes M^{0} ) \right]
+\E \left[ X' ( I_{N} \otimes \Mzero ) \right]
 \sigma^2_{u} I_{NT}
-\E \left[ ( I_{N} \otimes M^{0} ) X \right]
+\E \left[ ( I_{N} \otimes \Mzero ) X \right]
 =
 \sigma^2_{u}
-\E \left[ X' ( I_{N} \otimes M^{0} ) X \right]
+\E \left[ X' ( I_{N} \otimes \Mzero ) X \right]
 \end{align*}
 \end{description}
 
 \noindent
-\red{ $( I_{N} \otimes M^{0} )$ é uma matrix de dimensão $NT \times NT$, visto que $I_{N}$ é $N\times N$ e $M^{0}$ é $T \times T$.}
+\red{ $( I_{N} \otimes \Mzero )$ é uma matrix de dimensão $NT \times NT$, visto que $I_{N}$ é $N\times N$ e $\Mzero$ é $T \times T$.}
 
 \vspace{-2 em}
 \begin{align*}
 \Var( \mbs{\beta}^{FE} ) &= \text{Pão Recheio' Pão} 
 \\ &=
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
-\sigma_{u}^{2} \E\left[ X' ( I_{N} \otimes M^{0} ) X \right]
+\sigma_{u}^{2} \E\left[ X' ( I_{N} \otimes \Mzero ) X \right]
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
 \\  &=
 \E \left\{ \left[
-X' ( I_{N} \otimes M^{0} ) X
+X' ( I_{N} \otimes \Mzero ) X
 \right]^{-1} \right\}
 \sigma_{u}^{2} I_{NT}
 \\
-\Aboxed{ \Var( \mbs{\beta}^{FE} ) &= \sigma_{u}^{2} \cdot  \E\left[ X' ( I_{N} \otimes M^{0} ) X \right] }
+\Aboxed{ \Var( \mbs{\beta}^{FE} ) &= \sigma_{u}^{2} \cdot  \E\left[ X' ( I_{N} \otimes \Mzero ) X \right] }
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3413,13 +3693,13 @@ Centering Matrix
 
 \vspace{-1 em}
 \begin{align*}
-	M^{0} &= 
+	\Mzero &= 
 	I_{N} - \mbs{1}_{N} ( \mbs{1}_{N}' \mbs{1}_{N} )^{-1} \mbs{1}_{N}'
 	= 
 	I_{N} - N^{-1} \mbs{1}_{N} \mbs{1}_{N}' 
 \end{align*}
 
-A Matriz $M^{0}$ é \textbf{idempotente} e \textbf{simétrica}.
+A Matriz $\Mzero$ é \textbf{idempotente} e \textbf{simétrica}.
 
 \begin{description}\itemsep0pt
 \item [Idempotência:] $AA = A$
@@ -3429,7 +3709,7 @@ A Matriz $M^{0}$ é \textbf{idempotente} e \textbf{simétrica}.
 
 \vspace{-1 em}
 \begin{align*}
-M^{0} \mbs{x} &= 
+\Mzero \mbs{x} &= 
 ( I_{N} - N^{-1} \mbs{1}_{N} \mbs{1}_{N}' ) \mbs{x} 
 = 
 \mbs{x} - N^{-1} \mbs{1}_{N} (\mbs{1}_{N}' \mbs{x}) 
@@ -3443,7 +3723,7 @@ M^{0} \mbs{x} &=
 
 \vspace{-1 em}
 \begin{align*}
-M^{0} \mbs{1} &= 
+\Mzero \mbs{1} &= 
 ( I_{N} - N^{-1} \mbs{1}_{N} \mbs{1}_{N}' ) \mbs{1}_{N}
 = 
 \mbs{1}_{N} - N^{-1} \mbs{1}_{N} (\mbs{1}_{N}' \mbs{1}_{N}) 
