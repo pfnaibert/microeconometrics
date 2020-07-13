@@ -62,7 +62,7 @@
 
 \newcommand{\B}{\ensuremath{\text{B}}}
 % \newcommand{\H}{\ensuremath{\text{H}}}
-\renewcommand{\L}{\ensuremath{\text{L}}}
+% \renewcommand{\L}{\ensuremath{\text{L}}}
 
 \newcommand{\rank}{\ensuremath{\text{rank}}}
 \newcommand{\posto}{\ensuremath{\text{posto}}}
@@ -70,13 +70,18 @@
 
 \newcommand{\chisq}{\ensuremath{\chi^{2}}}
 
+\newcommand{\nor}{\ensuremath{\mathcal{N}}}
+
+\newcommand{\proj}{\ensuremath{\text{proj}}}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Lims
 \newcommand{\plim}{\ensuremath{\text{plim} \,}}
 
 \newcommand{\arrowp}{\ensuremath{ \overset{p}{\longrightarrow} } }
 \newcommand{\arrowd}{\ensuremath{ \overset{d}{\longrightarrow} } }
-\newcommand{\asim}{\ensuremath{ \overset{a}{\sim} } }
+\newcommand{\asim}{\ensuremath{\overset{a}{\sim}}}
 
 \newcommand{\bigO}{\ensuremath{\text{O}}}
 \newcommand{\bigOp}{\ensuremath{\text{O}_{p}}}
@@ -97,6 +102,7 @@
 \newcommand{\Omegahat}{\ensuremath{\widehat{\Omega}}}
 
 \newcommand{\mubold}{\ensuremath{\mbs{\mu}}}
+\newcommand{\muvec}{\ensuremath{\mbs{\mu}}}
 
 \newcommand{\betahat}{\ensuremath{\hat{\beta}}}
 \newcommand{\betahatbold}{\ensuremath{\widehat{\mbs{\beta}}}}
@@ -111,9 +117,8 @@
 
 \newcommand{\thetabold}{\ensuremath{\mbs{\theta}}}
 \newcommand{\Thetabold}{\ensuremath{\mbs{\Theta}}}
-
 \newcommand{\thetahat}{\ensuremath{\hat{\theta}}}
-\newcommand{\thetahatbold}{\ensuremath{\hat{\mbs{\theta}}}}
+\newcommand{\thetaboldhat}{\ensuremath{\hat{\mbs{\theta}}}}
 
 \newcommand{\thetatil}{\ensuremath{\tilde{\theta}}}
 \newcommand{\thetatilbold}{\ensuremath{\tilde{\mbs{\theta}}}}
@@ -138,6 +143,7 @@
 \newcommand{\vhat}{\ensuremath{\hat{v}}}
 \newcommand{\xvec}{\ensuremath{\mbs{x}}}
 \newcommand{\yvec}{\ensuremath{\mbs{y}}}
+\newcommand{\yvechat}{\ensuremath{\widehat{\mbs{y}}}}
 \newcommand{\zvec}{\ensuremath{\mbf{z}}}
 \newcommand{\wvec}{\ensuremath{\mbf{w}}}
 
@@ -154,6 +160,7 @@
 \newcommand{\Mmat}{\ensuremath{\mbf{M}}}
 \newcommand{\Mzero}{\ensuremath{\mbf{M}^{0}}}
 
+\newcommand{\Pmat}{\ensuremath{\mbf{P}}}
 \newcommand{\Rmat}{\ensuremath{\mbf{R}}}
 \newcommand{\Vmat}{\ensuremath{\mbf{V}}}
 \newcommand{\Xmat}{\ensuremath{\mbf{X}}}
@@ -184,7 +191,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % inner product
 % produto interno na forma <x,y>
-%   \DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{#1,#2}
 %   \DeclarePairedDelimiterX\floor[1]{\lfloor}{\rfloor}{#1}
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
