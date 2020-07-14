@@ -1101,41 +1101,71 @@ y_{it} &= \xvec_{it} \betavec + u_{it} \, , \quad i=1, \dots, N, \quad t=1, \dot
 \end{align}
 
 \noindent onde
-\vspace{-1 em}
+\vspace{-1 ex}
 \begin{description}[noitemsep]
 	\item[$y_{it}$] é um escalar.
 	\item[$\betavec$] é um vetor $K \times 1$.
-	\item[$\xvec_{it}$] é um vetor $K \times 1$.
+	\item[$\xvec_{it}$] é um vetor $1 \times K$.
 	\item[$u_{it}$] é um escalar.
 \end{description}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Em notação vetorial:
-
-\vspace{-1 em}
+\vspace{-2 em}
 \begin{align*}
-\yvec_{i} &= \Xmat_{i} \betavec + \uvec_{i} \, , \quad i=1, \dots, N,
+\underset{1 \times K}{\xvec_{it}} = 
+\begin{bmatrix}
+x_{1,it} & \dots & x_{K, it}
+\end{bmatrix}
+\quad
+\underset{K \times 1}{\betavec} = 
+\begin{bmatrix}
+\beta_{1} \\ \vdots \\ \beta_{K}
+\end{bmatrix}
 \end{align*}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Notação Vetorial:}
+$\yvec_{i} = \Xmat_{i} \betavec + \uvec_{i}$,  pra cada $i=1, \dots, N$.
+
 \noindent onde
-\vspace{-1 em}
+\vspace{-1 ex}
 \begin{description}[noitemsep]
 	\item[$\yvec_{i}$] é um vetor $T \times 1$.
 	\item[$\betavec$] é um vetor $K \times 1$.
-	\item[$\Xmat_{i}$] é uma matriz $K \times T$.
+	\item[$\Xmat_{i}$] é uma matriz $T \times K$.
 	\item[$\uvec_{it}$] é um vetor $T \times 1$.
 \end{description}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Em notação matricial:
-
+% X vecs
 \vspace{-1 em}
 \begin{align*}
-\yvec &= \Xmat \betavec + \uvec
+\underset{T \times K}{\Xmat_{i}} = 
+\begin{bmatrix}
+\xvec_{1} \\ \vdots \\ \xvec_{T}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	x_{1,i1} & \dots  & x_{K, i1}	\\
+	\vdots          & \ddots &  \vdots \\
+	x_{1,iT} & \dots  & x_{K, iT}
+\end{bmatrix}
+\quad
+\underset{T \times 1}{\yvec_{i}} = 
+\begin{bmatrix}
+y_{i1} \\ \vdots \\ y_{iT}
+\end{bmatrix}
+\quad
+\underset{T \times 1}{\uvec_{i}} = 
+\begin{bmatrix}
+u_{i1} \\ \vdots \\ u_{iT}
+\end{bmatrix}
 \end{align*}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Notação Matricial:}
+$\yvec = \Xmat \betavec + \uvec$
+
 \noindent onde
-\vspace{-1 em}
+\vspace{-1 ex}
 \begin{description}[noitemsep]
 	\item[$\yvec$] é um vetor $NT \times 1$.
 	\item[$\betavec$] é um vetor $K \times 1$.
@@ -1143,14 +1173,64 @@ Em notação matricial:
 	\item[$\uvec$] é um vetor $NT \times 1$.
 \end{description}
 
+% XMAT
+\begin{align*}
+\underset{NT \times K}{\ddot{\Xmat}} = 
+\begin{bmatrix}
+\ddot{\Xmat}_{1} \\ \vdots \\ \ddot{\Xmat}_{N}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\ddot{x}_{1,11} & \dots & \ddot{x}_{K, 11} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,1T} & \dots & \ddot{x}_{K, 1T} \\
+	\ddot{x}_{1,21} & \dots & \ddot{x}_{K, 21} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,2T} & \dots & \ddot{x}_{K, 2T} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,N1} & \dots & \ddot{x}_{K, N1} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,NT} & \dots & \ddot{x}_{K, NT}
+\end{bmatrix}
+\quad
+% Y vecs
+\underset{NT \times 1}{\ddot{\yvec}} = 
+\begin{bmatrix}
+\ddot{\yvec}_{1} \\ \vdots \\ \ddot{\yvec}_{N}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\ddot{y}_{11} \\ \vdots \\ \ddot{y}_{1T} \\
+	\ddot{y}_{21} \\ \vdots \\ \ddot{y}_{2T} \\
+	\vdots \\
+	\ddot{y}_{N1} \\ \vdots \\ \ddot{y}_{NT} \\
+\end{bmatrix}
+\quad
+\underset{NT \times 1}{\ddot{\uvec}} = 
+\begin{bmatrix}
+\ddot{\uvec}_{1} \\ \vdots \\ \ddot{\uvec}_{N}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\ddot{u}_{11} \\ \vdots \\ \ddot{u}_{1T} \\
+	\ddot{u}_{21} \\ \vdots \\ \ddot{u}_{2T} \\
+	\vdots \\
+	\ddot{u}_{N1} \\ \vdots \\ \ddot{u}_{NT} \\
+\end{bmatrix}
+\end{align*}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Estimação}
 
 \begin{align*}
+\Xmat' \Xmat 
+=
 \sum_{i=1}^{N} \Xmat_{i}' \Xmat_{i}
 =
 \sum_{i=1}^{N} \sum_{t=1}^{T} \xvec_{it}' \xvec_{it};
 \quad
+\Xmat' \yvec 
+=
 \sum_{i=1}^{N} \Xmat_{i}' \yvec_{i}
 =
 \sum_{i=1}^{N} \sum_{t=1}^{T} \xvec_{it}' y_{it}.
@@ -1472,9 +1552,8 @@ Portanto, a inferência do POLS requer um estimador robusto de matriz de covari�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \section{Modelo de Efeitos Fixos (EF), (Fixed Effects FE)}
-
 \noindent
-\citet[Sec.10.5 -- Fixed Effects Methods, p.265]{wool-2010} \\
+\citet[Sec.10.5 -- Fixed Effects Methods, p.265]{wool-2010}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo}
@@ -1581,7 +1660,8 @@ Agora, definimos a matriz $\Mzero$ (\citet[p. 268]{wool-2010} usa a notação $\
 \end{align*}
 
 \noindent
-A matriz $\Mzero$ é idempotente ($\Mzero \Mzero = \Mzero$) e simétrica (\Mzero' = \Mzero).
+A matriz $\Mzero$ tem dimensão $T \times T$.
+Além disso, ela é idempotente ($\Mzero \Mzero = \Mzero$) e simétrica (\Mzero' = \Mzero).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \vspace{1 em}
@@ -1658,253 +1738,361 @@ $\E( \uvec_{i} \uvec_{i}' \,|\, \Xmat_{i}, c_{i}) = \sigma_{u}^{2} \Imat_{T}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Estimação POLS}
-
-Usando a equação \eqref{fe:mod:ddot:vec}, temos:
-
-\vspace{-1 em}
-\begin{align*}
-\ddot{\Xmat}_{i}' \ddot{\yvec}_{i} &=
-\ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \betavec +
-\ddot{\Xmat}_{i}' \ddot{\uvec_{i}},
-\quad i = 1, \dots, N.
-\\
-\E\left( \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right) \betavec  &=
-\E\left( \ddot{\Xmat}_{i}' \ddot{\yvec}_{i} \right) -
-\E\left( \ddot{\Xmat}_{i}' \ddot{\uvec_{i}} \right)
-\end{align*}
+\noindent
+\citet[p.269]{wool-2010} 
 
 \noindent
-Note que para 
-$\E(\ddot{\Xmat}_{i} \ddot{\uvec}_{i}) = \zerovec$,
-é necessário não haver correlação entre todos os erros 
-$u_{it}$ para cada $t = 1, \dots, T$
-e todos os regressores 
-$\xvec_{it}$ para cada $t = 1, \dots, T$.
-A hipótese \textbf{FE.1} implica a condição acima.
-Assim,
-
-\vspace{-1 em}
-\begin{align*}
-\E\left( \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right) \betavec  =
-\E\left( \ddot{\Xmat}_{i}' \ddot{\yvec}_{i} \right)
-\end{align*}
-
-\noindent
-E utilizando \textbf{FE.2}:
-
-\vspace{-1 em}
-\begin{align}\label{fe:beta}
-\boxed{
-\betavec =
-\left[  
-\E\left( \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right) \right]^{-1}
-\E\left( \ddot{\Xmat}_{i}' \ddot{\yvec}_{i} \right)
-}
-\end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Utilizando o princípio da analogia e utilizando estimadores amostrais:
+Aplicando POLS no modelo transformado \eqref{fe:mod:ddot:vec}, temos:
 
 \vspace{-1 em}
 \begin{align} \label{fe:betahat}
 \Aboxed{
 \betavechat^{FE} =
-\left[ N^{-1} \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right]^{-1}
-\left[ N^{-1} \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\yvec}_{i} \right]
+\left( \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\yvec}_{i} \right)
+=
+\left( \sum_{i=1}^{N} \sum_{t=1}^{T} \ddot{\xvec}_{it}' \ddot{\xvec}_{it} \right)^{-1}
+\left( \sum_{i=1}^{N} \sum_{t=1}^{T} \ddot{\xvec}_{it}' \ddot{y}_{it} \right)
 }
 \end{align}
 
+\noindent
+Este estimador também é chamado de \textbf{estimador within}.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Consistência}
+\noindent
+\citet[sec.10.5.1 -- Consistency of the Fixed Effects Estimator, p.265--269]{wool-2010} \\
+\citet[p.269]{wool-2010} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1 em}
+\noindent
 Usando a equação \eqref{fe:mod:ddot:vec} em \eqref{fe:betahat}, temos:
 
 \vspace{-1 em}
-\begin{align*} 
+\begin{align} \label{fe:betahat:2}
 \betavechat^{FE} =
 \betavec +
 \left[ N^{-1} \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right]^{-1}
 \left[ N^{-1} \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\uvec}_{i} \right]
-\end{align*}
-
-Então, como
-
-\vspace{-1 em}
-\begin{align*} 
-\left[ N^{-1} \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\Xmat}_{i} \right]^{-1}
-\arrowp \Amat^{-1}
-\quad
-\text{ e }
-\quad
-\left[ N^{-1} \sum_{i=1}^{N} \ddot{\Xmat}_{i}' \ddot{\uvec}_{i} \right]
-\arrowp \zerovec
-\end{align*}
+\end{align}
 
 \noindent
-Então,
-$\betavechat^{FE} \arrowp \betavec$,
-e temos um estimador consistente para $\betavec^{FE}$.
+Nota que para $\E(\ddot{\Xmat}_{i}' \ddot{\uvec}_{i}) = \zerovec$ é necessário não haver correlação entre todos os erros 
+$u_{it}$ $t=1, \dots, T$
+e todos os regressores
+$\xvec_{it}'$ $t=1, \dots, T$.
+\textbf{FE.1} implica a condição acima.
+Além disso, sob \textbf{FE.1}, $\betavechat^{FE}$ é não viciado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Formato Totalmente Matricial}
+\subsection*{Formato Totalmente Matricial}
 
-\noindent
-Sabendo que 
-$\ddot{\Xmat} = ( \Imat_{N} \otimes \Mzero ) \Xmat$
-e
-$\ddot{\uvec} = ( \Imat_{N} \otimes \Mzero ) \uvec$,
-definimos:
+Empilhando os vetores $N$ vezes, vamos definir:
 
 \vspace{-1 em}
 \begin{align*}
-\E( \betavec^{FE} ) &=
-\betavec +
-\E \left\{
-\left[  
-\Xmat' ( \Imat_{N} \otimes \Mzero )( \Imat_{N} \otimes \Mzero ) \Xmat 
-\right]^{-1}
-\left[ 
-\Xmat' ( \Imat_{N} \otimes \Mzero )( \Imat_{N} \otimes \Mzero ) \uvec
-\right]
-\right\}
-\\
-\Aboxed{
-\E( \betavec^{FE} ) &=
-\betavec +
-\E \left\{
-\left[  
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat 
-\right]^{-1}
-\left[ 
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \uvec
-\right]
-\right\} }
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Variância}
-
-Usamos a variância do estimador para inferência.
-Usando \textbf{FE.1} e \textbf{FE.2}, apenas:
-
-\vspace{-1 em}
-\begin{align*} 
-	\Aboxed{
-\Var( \betavec^{FE} ) = 
-\E \left[
-	( \ddot{\Xmat}' \ddot{\Xmat} )^{-1}
-	(\ddot{\Xmat}' \ddot{\uvec}) (\ddot{\uvec}' \ddot{\Xmat} )
-	( \ddot{\Xmat}' \ddot{\Xmat} )^{-1} 
-\right]}
-\end{align*}
-
-
-\begin{description}
-\item [Pão:]
-\begin{align*}
-	\E\left[ ( \ddot{\Xmat}' \ddot{\Xmat} )^{-1} \right] &=
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-\\ &=
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-\end{align*}
-
-\item [Recheio:]
-\begin{align*}
-\E\left[
-	(\ddot{\Xmat}' \ddot{\uvec}) (\ddot{\uvec}' \ddot{\Xmat} ) 
-\right] 
-&=
-\E \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) ( \Imat_{N} \otimes \Mzero ) 
-\uvec \uvec'
-( \Imat_{N} \otimes \Mzero ) ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]
-\\ &=
-\E \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \uvec \uvec' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]
-\end{align*}
-\end{description}
-
-\vspace{-1 em}
-\begin{align*} 
-\Var( \betavec^{FE} ) &= \text{Pão Recheio Pão}
-\\ 
-\Aboxed{
-\Var( \betavec^{FE} ) &= 
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-\E \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \uvec \uvec' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-}
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Variância sob Homocedasticidade}
-
-Usando \textbf{FE.3}, temos
-
-\begin{description}
-\item [Recheio':]
-\begin{align*}
-\E \left[ \Xmat' ( \Imat_{N} \otimes \Mzero ) \right]
-\sigma^2_{u} \Imat_{NT}
-\E \left[ ( \Imat_{N} \otimes \Mzero ) \Xmat \right]
+\underset{NT \times K}{\ddot{\Xmat}} = 
+\begin{bmatrix}
+\ddot{\Xmat}_{1} \\ \vdots \\ \ddot{\Xmat}_{N}
+\end{bmatrix}
 =
-\sigma^2_{u}
-\E \left[ \Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat \right]
+\begin{bmatrix}
+	\ddot{x}_{1,11} & \dots & \ddot{x}_{K, 11} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,1T} & \dots & \ddot{x}_{K, 1T} \\
+	\ddot{x}_{1,21} & \dots & \ddot{x}_{K, 21} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,2T} & \dots & \ddot{x}_{K, 2T} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,N1} & \dots & \ddot{x}_{K, N1} \\
+	\vdots          &       &  \vdots          \\
+	\ddot{x}_{1,NT} & \dots & \ddot{x}_{K, NT}
+\end{bmatrix}
+\quad
+% Y vecs
+\underset{NT \times 1}{\ddot{\yvec}} = 
+\begin{bmatrix}
+\ddot{\yvec}_{1} \\ \vdots \\ \ddot{\yvec}_{N}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\ddot{y}_{11} \\ \vdots \\ \ddot{y}_{1T} \\
+	\ddot{y}_{21} \\ \vdots \\ \ddot{y}_{2T} \\
+	\vdots \\
+	\ddot{y}_{N1} \\ \vdots \\ \ddot{y}_{NT} \\
+\end{bmatrix}
+\quad
+% u vecs
+\underset{NT \times 1}{\ddot{\uvec}} = 
+\begin{bmatrix}
+\ddot{\uvec}_{1} \\ \vdots \\ \ddot{\uvec}_{N}
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\ddot{u}_{11} \\ \vdots \\ \ddot{u}_{1T} \\
+	\ddot{u}_{21} \\ \vdots \\ \ddot{u}_{2T} \\
+	\vdots \\
+	\ddot{u}_{N1} \\ \vdots \\ \ddot{u}_{NT} \\
+\end{bmatrix}
 \end{align*}
-\end{description}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1 em}
+\noindent
+A matriz $\Xmat$ é $NT \times K$, a matriz $\Mzero$ é $T \times T$ e a matriz $\Imat_{N}$ é $N \times N$.
+A produto \textbf{Kronecker} de $\Imat_{N}$ por $\Mzero$,
+
+\vspace{-1 em}
+\begin{align*}
+\underset{N \times N}{\Imat_{N}},
+\otimes
+\underset{T \times T}{\Mzero}
+\end{align*}
 
 \noindent
-\red{ $( \Imat_{N} \otimes \Mzero )$ é uma matrix de dimensão $NT \times NT$, visto que $\Imat_{N}$ é $N\times N$ e $\Mzero$ é $T \times T$.}
+é uma matriz $NT \times NT$.
+Dessa forma, podemos definir:
 
-\vspace{-2 em}
+\vspace{-1 em}
 \begin{align*}
-\Var( \betavec^{FE} ) &= \text{Pão Recheio' Pão} 
-\\ &=
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-\sigma_{u}^{2} \E\left[ \Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat \right]
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-\\  &=
-\E \left\{ \left[
-\Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat
-\right]^{-1} \right\}
-\sigma_{u}^{2} \Imat_{NT}
+\ddot{\yvec} = ( \Imat_{N} \otimes \Mzero ) \yvec,
 \\
-\Aboxed{ \Var( \betavec^{FE} ) &= \sigma_{u}^{2} \cdot  \E\left[ \Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat \right] }
+\ddot{\Xmat} = ( \Imat_{N} \otimes \Mzero ) \Xmat
+\\
+\ddot{\uvec} = ( \Imat_{N} \otimes \Mzero ) \uvec,
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
-Abordamos esse componente como parte do erro, não como parâmetro a não observado.
-No caso da análise de \textbf{Efeitos Fixos (EF, FE)}, permitimos que esse componente $c_{i}$ seja correlacionado com $\xvec_{it}$.
-Assim, se decidíssemos estimar o modelo \eqref{fe:mod:1} por POLS, ignorando $c_{i}$, teríamos problemas de inconsistência devido a \textbf{endogeneidade}.
-
-As $T$ equações do modelo \eqref{fe:mod:1} podem ser reescritas como:
+\vspace{1 em}
+\noindent
+E com isso, reescrevermos \eqref{fe:betahat:2} como:
 
 \vspace{-1 em}
-\begin{align*} % \label{mod2:FE}
-	\yvec_{i} = \Xmat_{i} \betavec + c_{1} \onevec_{T} + \uvec_{i},
+\begin{align} \label{fe:betahat:3}
+\betavechat^{FE} =
+\betavec +
+\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+\ddot{\Xmat}' \ddot{\uvec}
+\end{align}
+
+\noindent
+Ou ainda, como:
+
+\vspace{-1 em}
+\begin{align}
+\notag
+\betavechat^{FE} &=
+\betavec +
+\left[ \Xmat' ( \Imat_{N} \otimes \Mzero )( \Imat_{N} \otimes \Mzero ) \Xmat \right]^{-1}
+\left[ \Xmat' ( \Imat_{N} \otimes \Mzero )( \Imat_{N} \otimes \Mzero ) \uvec \right]
+\\
+\label{fe:betahat:4}
+\betavechat^{FE} &=
+\betavec +
+\left[ \Xmat' ( \Imat_{N} \otimes \Mzero ) \Xmat \right]^{-1}
+\left[ \Xmat' ( \Imat_{N} \otimes \Mzero ) \uvec \right]
+\end{align}
+
+\noindent
+onde usamos as propriedades de simetria e idempotência da matriz $\Mzero$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matriz de Covariância Robusta}
+\noindent
+\citet[sec.10.5.2 -- Asymptotic Inference with Fixed Effects, p.269--272]{wool-2010} \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A matriz de covariância assintótica fica:
+
+\vspace{-1 em}
+\begin{align*}
+	\E\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+	\E\left( \ddot{\Xmat}' \ddot{\uvec} \ddot{\uvec}' \ddot{\Xmat} \right)
+	\E\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+\end{align*}
+
+A qual pode ser estimada por
+
+\vspace{-1 em}
+\begin{align*}
+\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+\left( \sum_{i=1}^{N} \ddot{\Xmat}'
+\widehat{\ddot{\uvec}} \widehat{\ddot{\uvec}}'
+\ddot{\Xmat} \right)
+\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Analisando
+$\E\left( \ddot{\Xmat}_{i}' \ddot{\uvec}_{i} \ddot{\uvec}_{i}' \ddot{\Xmat}_{i} \right)$:
+
+\vspace{-1 em}
+\begin{align*}
+\E\left( \ddot{\Xmat}_{i}' \ddot{\uvec}_{i} \ddot{\uvec}_{i}' \ddot{\Xmat}_{i} \right)
+&=
+\E\left[
+	(\Xmat_{i}' \Mzero')  (\Mzero \uvec_{i}) (\uvec_{i}' \Mzero')  (\Mzero \Xmat_{i})
+\right]
+\\ &=
+\E\left[
+	(\Xmat_{i}' \Mzero') \uvec_{i} \uvec_{i}' (\Mzero \Xmat_{i})
+\right]
+\\ &=
+\E\left[
+\ddot{\Xmat}_{i}' \uvec_{i} \uvec_{i}'  \ddot{\Xmat}_{i}
+\right]
 \end{align*}
 
 \noindent
-com
-$\mbs{v}_{i} = c_{i} \onevec_{T} + \uvec_{i}$ sendo os erros compostos.
+onde usamos as propriedades de simetria e idempotência da matriz $\Mzero$ e as definições de $\ddot{\Xmat}_{i}$ e $\ddot{\uvec}_{i}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Sob \textbf{FE.3}, 
+$\E(\uvec_{i} \uvec_{i}' | \ddot{\Xmat}_{i}) = \sigma^2_{u} \Imat_{T}$,
+temos:
+
+\vspace{-1 em}
+\begin{align*}
+\E\left( \ddot{\Xmat}_{i}' \uvec_{i} \uvec_{i}' \ddot{\Xmat}_{i} \right)
+=
+\E\left[
+\E\left( 
+\ddot{\Xmat}_{i}' \uvec_{i} \uvec_{i}'  \ddot{\Xmat}_{i}
+| \Xmat_{i}, c_{i} \right)
+\right]
+=
+\E\left[
+\ddot{\Xmat}_{i}'
+\E\left( 
+\uvec_{i} \uvec_{i}' 
+| \Xmat_{i}, c_{i} \right)
+ \ddot{\Xmat}_{i}
+\right]
+=
+\sigma^{2}_{u} \Imat_{T} \E(\ddot{\Xmat}_{i}' \ddot{\Xmat}_{i})
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Assim, a matriz de covariância fica:
+
+\vspace{-1 em}
+\begin{align*}
+\E\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+\sigma^{2}_{u} \Imat_{T} \E(\ddot{\Xmat}_{i}' \ddot{\Xmat}_{i})
+\E\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1}
+=
+\boxed{
+\sigma^{2}_{u} 
+\E\left( \ddot{\Xmat}' \ddot{\Xmat} \right)^{-1} }
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Estimando Elementos da Matriz de Covariância}
+\noindent
+Queremos estimar $\sigma^2_{u}$ por valores amostrais:
+
+\vspace{-1 em} 
+\begin{align*}
+\E( u_{it}^2) &= \sigma^2_{u}
+\quad \text{ e } \quad
+\E( \ddot{u}_{it}^2) = \sigma^{2}_{\ddot{u}}
+\end{align*}
+
+\vspace{-1 em} 
+\begin{align*}
+\sigma^{2}_{\ddot{u}} &=
+\E[ ( u_{it} - \overline{u}_{i})^2] = 
+\E( u_{it}^2) + \E( \overline{u}_{i}^2) - 2 \E( u_{it} \overline{u}_{i})
+\end{align*}
+
+\noindent
+utilizando $\overline{u}_{i} = T^{-1} \sum_{t=1}^{T} u_{it}$:
+
+\vspace{-1 em} 
+\begin{align*}
+\E( \ddot{u}_{it}^2) 
+&=
+\E( u_{it}^2) + T^{-1} \sum_{t=1}^{T} \E( u_{it}^2) - 2 \E( u_{it} T^{-1} \sum_{t=1}^{T} u_{it})
+= 
+\E( u_{it}^2) + T^{-1} \sum_{t=1}^{T} \E( u_{it}^2) - 2T^{-1} \sum_{t=1}^{T} \E( u^2_{it})
+\\
+&= 
+\sigma^2_{u} + \sigma^2_{u}/T - 2\sigma^2_{u}/T = \sigma^2_{u}(1 - 1/T)
+\implies
+\boxed{\sigma^2_{u} = \frac{T}{T-1} \sigma^2_{\ddot{u}} }
+\end{align*}
+
+\noindent
+Utilizando estimadores amostrais para $\E(\ddot{u}_{it}^{2})$:
+
+\vspace{-1 em} 
+\begin{align*}
+\sigmahat_{u}^2
+&= 
+\frac{T}{T-1} \frac{1}{NT}
+\sum_{i=1}^{N} \sum_{t=1}^{T}  
+\widehat{\ddot{u}}_{it}^2
+\end{align*}
+
+\noindent
+Ajustando os Graus de Liberdade (Cortando $T$s e subtraindo $K$ do número de regressores):
+
+\vspace{-1 em} 
+\begin{align}\label{fe:sighat}
+\sigmahat^2_{u} = \frac{1}{N(T-1) - K}
+\sum_{i=1}^{N} \sum_{t=1}^{T} \widehat{\ddot{u}}^2_{it}.
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Teste para Autocorrelação AR(1)}
+\noindent
+\citet[p.275]{wool-2010}
+
+\vspace{-1 em} 
+\begin{align*}
+	\E( \ddot{u}_{it} \ddot{u}_{i,t-1} ) &=
+	\E\left[ ( u_{i,t} - \overline{u}_{i} ) ( u_{i,t-1} - \overline{u}_{i} ) \right]
+	\\
+	&=
+	\E( u_{i,t} u_{i,t-1} ) - 
+	\E( u_{i,t} \overline{u}_{i} ) -
+	\E( \overline{u}_{i} u_{i,t-1} ) +
+	\E( \overline{u}^2_{i} )
+	\\
+	&=
+	0 - T^{-1} \sigma^2_{u} - T^{-1} \sigma^2_{u} + T^{-1} \sigma^2_{u}
+	\\
+	\E( \ddot{u}_{it} \ddot{u}_{i,t-1} ) 
+	&= -T^{-1} \sigma_{u}^2
+\end{align*}
+
+\vspace{-1 em} 
+\begin{align*}
+\Corr( \ddot{u}_{it}, \ddot{u}_{i,t-1} ) &=
+\frac{\E( \ddot{u}_{it} \ddot{u}_{i,t-1} )}{\E( \ddot{u}_{it}^2 )} =
+\frac{-T^{-1} \sigma_{u}^2}{\frac{T-1}{T}\sigma^2_{u}} = 
+\frac{-1}{T-1}
+\end{align*}
+
+Vamos testar 
+
+\vspace{-1 em} 
+\begin{align*}
+H_{0}: \delta = \frac{-1}{T-1}
+\end{align*}
+(ausência de correlação em \red{$\uvec$}) na equação:
+
+\vspace{-1 em} 
+\begin{align*}
+	\widehat{\ddot{u}}_{it} = \delta \widehat{\ddot{u}}_{it-1} + e_{it}
+\end{align*}
+para $t=2, \dots, T$.
+Fazer teste $t$ robusto.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
