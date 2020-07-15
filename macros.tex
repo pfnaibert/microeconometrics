@@ -77,7 +77,6 @@
 
 \newcommand{\proj}{\ensuremath{\text{proj}}}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Lims
 \newcommand{\plim}{\ensuremath{\text{plim} \,}}
@@ -194,10 +193,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% inner product
-% produto interno na forma <x,y>
-\DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{#1,#2}
-%   \DeclarePairedDelimiterX\floor[1]{\lfloor}{\rfloor}{#1}
+% \DeclarePairedDelimiter depende de mathtools
+% \DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{#1,#2}
+% \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}%
+% \DeclarePairedDelimiter\abs{\lver}{\rvert}%
+% \DeclarePairedDelimiter\norm{\lVer}{\rVert}%
+
+\newcommand{\innerp}[1]{\langle #1 \rangle}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+
+
+
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 \DeclareMathOperator*{\argmax}{\arg\!\max}
