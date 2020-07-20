@@ -64,7 +64,7 @@
 % \linenumbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{macros.tex}
+\input{../macros.tex}
 % \pagestyle{headings}
 \pagestyle{fancy}
 \numberwithin{equation}{section}
@@ -2103,9 +2103,9 @@ Fazer teste $t$ robusto.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\section{First Difference (FD, PD)}
+\section{Primeira Difereça (First Difference, FD, PD)}
 \noindent
-\citet[Sec.10.6 -- First Difference Methods, p.279]{wool-2010} \\
+\citet[Sec.10.6 -- First Difference Methods, p.279]{wool-2010}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo}
@@ -2113,87 +2113,85 @@ Fazer teste $t$ robusto.
 O modelo linear de \textbf{efeitos não observados}:
 
 \vspace{-1 em}
-\begin{align} \label{mod1:FD}
-	y_{it} = \xvec_{it} \betavec + c_{i} + u_{it},
+\begin{align} \label{fd:mod:1}
+y_{it} &= \xvec_{it} \betavec + c_{i} + u_{it},
+\qquad i = 1, \dots, N, \text{ e } \quad t = 1, \dots, T.
+\\
+\notag
+y_{i,t-1} &= \xvec_{i,t-1} \betavec + c_{i} + u_{i,t-1},
 \end{align}
 
-\noindent
-para
-$t = 1, \dots, T$ e $i = 1, \dots, N$.
+\vspace{-2 em}
+\begin{align} 
+	\notag
+y_{it} - y_{i,t-1} &=
+(\xvec_{it} - \xvec_{i,t-1}) \betavec
++ c_{i} - c_{i} + u_{it} - u_{i,t-1}
+\\
+\label{fd:mod:delta}
+\Delta y_{it} &= \Delta \xvec_{it}\betavec + \Delta u_{it}
+\qquad i = 1, \dots, N, \text{ e } \quad t = 2, \dots, T.
+\end{align}
 
-O modelo contém explicitamente um componente não observado, $c_{i}$, que não varia no tempo.
-Tratamos o componente não observado como parte do erro, não como parâmetro a ser estimado.
-Aqui permitimos que $c_{i}$ seja correlacionado com $\xvec_{it}$.
-Deste modo, \textbf{não} podemos ignorar a sua presença e estimar \eqref{mod1:FD} por POLS, visto que isso resultaria num estimador inconsistente devido a \textbf{endogeneidade}.
-
-Assim, transformamos o modelo para eliminar $c_{i}$ e conseguirmos fazer uma estimação consistente de $\betavec$.
-A trasnformação a ser feita é a primeira diferença.
-Para tanto, seguimos os seguintes passos:
-
-\begin{itemize}\itemsep0pt
-	\item Reescrevemos \eqref{mod1:FD} defasado:
-
-		\vspace{-1 em}
-		\begin{align}  \label{mod2:FD}
-			y_{it-1} = \xvec_{it-1} \betavec + c_{i} + u_{it-1}
-		\end{align}
-
-	\item Tiramos a diferença entre \eqref{mod2:FD} e \eqref{mod1:FD}:
-
-		\vspace{-1 em}
-		\begin{align}
-			\nonumber
-			y_{it} - y_{it-1} &=
-			(\xvec_{it} - \xvec_{it-1}) \betavec +
-			c_{i} - c_{i} +
-			u_{it} - u_{it-1}
-			\\
-			\label{mod3:FD}
-			\Delta y_{it} &=
-			\Delta \xvec_{it} \betavec +
-			\Delta u_{it}. 
-		\end{align}
-
-		\noindent
-		para
-		$t = 2, \dots, T$ e $i = 1, \dots, N$.
-\end{itemize}
-
-Reescrevendo \eqref{mod3:FD} no formato matricial empilhando $T$:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Definindo 
+$e_{it} = \Delta u_{it}$, 
+reescrvemos \eqref{fd:mod:delta} no formato matricial empilhando $T$:
 
 \vspace{-1 em}
-\begin{align} \label{mod4:FD}
-	\Delta \yvec_{i} = \Delta \Xmat_{i} \betavec + \mbs{e}_{i}
+\begin{align} \label{fd:mod:delta:mat}
+\Delta \yvec_{i} = \Delta \Xmat_{i} \betavec + \mbs{e}_{i}
+\qquad i = 1, \dots, N.
 \end{align}
 
-\noindent
-com 
-$\boxed{e_{it} = \Delta u_{it}}$.
-
+\noindent onde, 
+\vspace{-1 ex}
 \begin{itemize}\itemsep0pt
-	\item
-		$\Delta \yvec_{i}$ vetor $( T - 1 ) \times 1$ 
-	\item
-		$\Delta \Xmat_{i}$  matriz  $( T - 1 ) \times K$
-	\item
-		$\betavec$ vetor $K \times 1$
-	\item
-		$\mbs{e}_{i}$ vetor $(T - 1 ) \times 1$
+  \item[$\Delta \yvec_{i}$] é um vetor $( T - 1 ) \times 1$ 
+  \item[$\Delta \Xmat_{i}$] é uma matriz  $( T - 1 ) \times K$
+  \item[$\Delta \xvec_{it}$] é a $(t-1)$-ésima linha da matriz $\Delta \Xmat_{i}$.
+  \item[$\betavec$] é um vetor $K \times 1$
+  \item[$\mbs{e}_{i}$] é um vetor $(T - 1 ) \times 1$
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Matriz $\Dmat$}
+
+Vamos definir $\Dmat$ como  a matriz $(T-1) \times T$ como a matriz bidiagonal cuja diagonal inferior é $-1$ e a diagonal superior é $1$.
+Assim, 
+
+\vspace{-1 em}
+\begin{align*}
+\Dmat =
+\begin{bmatrix}
+-1 & 1 &  & 0
+\\
+& \ddots & \ddots & 
+\\
+0 & & -1 & 1
+\end{bmatrix}
+\end{align*}
+
+\noindent
+E podemos escrever $\Delta \yvec_{i}$ como:
+
+\vspace{-1 em}
+\begin{align*}
+	\Delta \yvec_{i} = \Dmat \yvec_{i}.
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Estimação POLS}
 
-O estimador $\widehat{\betavec}^{FD}$ é o POLS da regressão no modelo \eqref{mod4:FD}, assim:
+O estimador $\betavechat^{FD}$ é o POLS da regressão no modelo \eqref{fd:mod:delta:mat}, assim:
 
 \vspace{-1 em}
-\begin{align} \label{beta:pols:FD}
-	\Aboxed{
-		\betavec^{FD} =
-		\left[ \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right]^{-1}
-		\left[ \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \yvec_{i} \right]
-	}
+\begin{align} \label{fd:betahat}
+\Aboxed{
+\betavechat^{FD} =
+\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \yvec_{i} \right)
+}
 \end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2202,111 +2200,152 @@ O estimador $\widehat{\betavec}^{FD}$ é o POLS da regressão no modelo \eqref{m
 As Hipóteses que usamos para $\widehat{\betavec}^{FD}$ são:
 
 \begin{description}
-		\setlength\itemsep{.5 em}
+\setlength\itemsep{.5 em}
 
-	\item [FD.1:] Exogeneidade Estrita:
-		$\E( u _{it} \, | \, \xvec_{i1}, \dots, \xvec_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
+\item [FD.1:] Exogeneidade Estrita:
+$\E( u _{it} \, | \, \xvec_{i1}, \dots, \xvec_{iT}, c_{i}) = 0$, para $t=1, \dots, T$ e $i = 1, \dots, N$.
 
-	\item  [FD.2:] Posto completo de $\E( \Delta \Xmat_{i}' \Delta \Xmat_{i} )$ (para inverter a matriz).
-		$posto[ \E( \Delta \Xmat_{i} ' \Delta \Xmat_{i} ) ]  = K$.
+\item  [FD.2:] Posto completo de $\E( \Delta \Xmat_{i}' \Delta \Xmat_{i} )$ (para inverter a matriz).
+$\posto[ \E( \Delta \Xmat_{i} ' \Delta \Xmat_{i} ) ]  = K$.
 
-	\item [FD.3:] Homoscedasticidade:
-		$\E(\mbs{e}_{i} \mbs{e}_{i}' \,|\, \Xmat_{i}, c_{i}) = \sigma_{e}^{2} \Imat_{T-1}$.
+\item [FD.3:] Homoscedasticidade:
+$\E(\mbs{e}_{i} \mbs{e}_{i}' \,|\, \Xmat_{i}, c_{i}) = \sigma_{e}^{2} \Imat_{T-1}$.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Valor Esperado}
-Usando apenas \textbf{FD.1} e \textbf{FD.2}:
+\subsection{Consistência}
+
+Usando \eqref{fd:mod:delta:mat} em \eqref{fd:betahat}:
 
 \vspace{-1 em}
 \begin{align*}
-	\E( \betavec^{FD} ) &=
-	\betavec +
-	\E\left[
-		\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
-		\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \mbs{e}_{i} \right)
-	\right]
-	\\
-	\Aboxed{
-		\E( \betavec^{FD} ) &=
-		\betavec +
-		\E \left[ ( \Delta \Xmat' \Delta \Xmat )^{-1} ( \Delta \Xmat' \mbs{e} \right]
-		}
-	\end{align*}
+\betavec^{FD} &=
+\betavec +
+\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \mbs{e}_{i} \right)
+\end{align*}
+
+\noindent
+\textbf{FD.1} é suficiente para
+$\E(\Delta \Xmat_{i}' \ebold) = \zerovec$, $i =1, \dots, N$.
+Uma condição necessária para $\betavechat^{FD} \arrowp \betavec$ é 
+$\E(\xvec_{it} u_{it}) = \E(\xvec_{it} u_{i,t-1}) = 0$, para $i =1, \dots, N$ e $t=2, \dots, T$.
+Note que sob \textbf{FD.1}, 
+$\E(\betavechat^{FD} | \xvec_{i1}, \dots, \xvec_{it}, c_{i}) = \betavec$.
+Ou seja, $\betavechat^{FD}$ é não viciado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Variância}
+\subsection{Variância}
 
-	Usando apenas \textbf{FD.1} e \textbf{FD.2}:
+\vspace{-1 em}
+\begin{align*} 
+\Cov( \betavec^{FD} ) = 
+\E\left( \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
+\E\left( \Delta \Xmat_{i}' \ebold_{i}  \ebold_{i}' \Delta \Xmat_{i} \right)
+\E\left( \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
+\end{align*}
 
-	\vspace{-1 em}
-	\begin{align*} 
-		\Aboxed{
-			\Var( \betavec^{FD} ) = 
-			\E \left[
-				( \Delta \Xmat' \Delta \Xmat )^{-1}
-				( \Delta \Xmat' \mbs{e}  \mbs{e}' \Delta \Xmat )
-				( \Delta \Xmat' \Delta \Xmat )^{-1} 
-		\right]}
-	\end{align*}
+Usando estimadores amostrais:
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Variância sob Homocedasticidade}
+\begin{center}
+	\red{\Large rever}
+\end{center}
 
-	Usando \textbf{FD.3}, temos
+\vspace{-1 em}
+\begin{align*} 
+\widehat{\Cov}( \betavec^{FD} ) &= 
+\left( N^{-1} \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
+\left( N^{-1} \sum_{i=1}^{N} \Delta \Xmat_{i}' \ebold_{i}  \ebold_{i}' \Delta \Xmat_{i} \right)
+\left( N^{-1} \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
+\\ &=
+N
+( \Delta \Xmat' \Delta \Xmat_{i} )^{-1}
+\left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \ebold_{i}  \ebold_{i}' \Delta \Xmat_{i} \right)
+( \Delta \Xmat' \Delta \Xmat )^{-1} 
+\end{align*}
 
-	\vspace{-1 em}
-	\begin{align*} 
-		\Var( \betavec^{FD} ) &= 
-		\sigma_{e}^{2}
-		\E \left[
-			( \Delta \Xmat' \Delta \Xmat )^{-1}
-			( \Delta \Xmat' \Delta \Xmat )
-			( \Delta \Xmat' \Delta \Xmat )^{-1} 
-		\right]
-		\\
-		\Aboxed{
-			\Var( \betavec^{FD} ) &= 
-			\sigma^2_{e}
-			\E \left[
-				( \Delta \Xmat' \Delta \Xmat )^{-1} 
-		\right]}
-	\end{align*}
+\noindent onde $\Delta \Xmat$ é a matriz $N(T-1) \times K$ das matrizes $\Delta \Xmat_{i}$ empilhadas.
 
-	\noindent 
-	com
-
-	\vspace{-1 em}
-	\begin{align*} 
-		\sigma^2_{e} = 
-		\left[ N ( T - 1 ) - K \right]^{-1}
-		\left[  
-			\sum_{i=1}^{N} 
-			\sum_{t=1}^{T}
-			\hat{e}_{it}^{2}
-		\right],
-	\end{align*}
-
-	\noindent
-	que é a média de todos $\hat{e}^{2}_{it}$ contando $K$ regressores.
+\begin{align*}
+\Delta \Xmat = 
+\begin{bmatrix}
+	\Delta \Xmat_{1} \\	\vdots \\ \Delta \Xmat_{N}
+\end{bmatrix}
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\clearpage
-	\section{System GLS (SGLS)}
+\subsubsection{Variância sob Homocedasticidade}
 
-	\noindent
-	\citet[Sec.7.4 -- Consistency and Asymptotic Normality of Generalized Least Squares, p.153]{wool-2010} 
+Usando \textbf{FD.3}, temos
+
+\vspace{-1 em}
+\begin{align*} 
+\Var( \betavec^{FD} ) &= 
+\sigma_{e}^{2}
+\E \left[
+( \Delta \Xmat' \Delta \Xmat )^{-1}
+( \Delta \Xmat' \Delta \Xmat )
+( \Delta \Xmat' \Delta \Xmat )^{-1} 
+\right]
+\\
+\Aboxed{
+\Var( \betavec^{FD} ) &= 
+\sigma^2_{e}
+\E \left[
+( \Delta \Xmat' \Delta \Xmat )^{-1} 
+\right]}
+\end{align*}
+
+\noindent 
+com
+
+\vspace{-1 em}
+\begin{align*} 
+\sigma^2_{e} = 
+\left[ N ( T - 1 ) - K \right]^{-1}
+\left[  
+	\sum_{i=1}^{N} 
+	\sum_{t=1}^{T}
+	\hat{e}_{it}^{2}
+\right],
+\end{align*}
+
+\noindent
+que é a média de todos $\hat{e}^{2}_{it}$ contando $K$ regressores.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Modelo Linear}
+\subsubsection{Teste para autocorrelação AR(1) dos resíduos}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Hipóteses}
+\subsection{Teste de Exogeneidade Estrita}
 
-	Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipótese:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Teste para o Estimador FD}
 
-	\begin{enumerate}
-		\item %1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Teste para o Estimador FE}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Alguns Detalhes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section{System GLS (SGLS)}
+
+\noindent
+\citet[Sec.7.4 -- Consistency and Asymptotic Normality of Generalized Least Squares, p.153]{wool-2010} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo Linear}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Hipóteses}
+
+Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipótese:
+
+\begin{enumerate}
+\item %1
 
 			$\E(\Xmat_{i} \otimes \uvec_{i}) = 0$.
 
@@ -4516,10 +4555,10 @@ Se sim, precisamos de referências.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{remark}
-	\red{Achar referência?}
+\red{Achar referência?}
 
-	Então, se $Bias(\thetahat) \to 0$ e $\Var(\thetahat) \to 0$, temos que $EQM(\thetahat) \to 0$.
-	Pelo \textbf{Teorema do Sanduíche}, $P(|\thetahat - \theta| > \err) \to 0$; logo, $\thetahat \arrowp \theta$.
+Então, se $Bias(\thetahat) \to 0$ e $\Var(\thetahat) \to 0$, temos que $EQM(\thetahat) \to 0$.
+Pelo \textbf{Teorema do Sanduíche}, $P(|\thetahat - \theta| > \err) \to 0$; logo, $\thetahat \arrowp \theta$.
 \end{remark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -4528,7 +4567,7 @@ Se sim, precisamos de referências.}
 \clearpage
 \bibliographystyle{authordate3} % bibliography style
 \renewcommand\bibname{REFERENCES} 
-\bibliography{./refs.bib}
+\bibliography{../refs.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
