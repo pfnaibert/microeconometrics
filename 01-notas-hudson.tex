@@ -2258,7 +2258,7 @@ Usando estimadores amostrais:
 \left( N^{-1} \sum_{i=1}^{N} \Delta \Xmat_{i}' \ebold_{i}  \ebold_{i}' \Delta \Xmat_{i} \right)
 \left( N^{-1} \sum_{i=1}^{N} \Delta \Xmat_{i}' \Delta \Xmat_{i} \right)^{-1}
 \\ &=
-N
+\red{N}
 ( \Delta \Xmat' \Delta \Xmat_{i} )^{-1}
 \left( \sum_{i=1}^{N} \Delta \Xmat_{i}' \ebold_{i}  \ebold_{i}' \Delta \Xmat_{i} \right)
 ( \Delta \Xmat' \Delta \Xmat )^{-1} 
@@ -2275,59 +2275,253 @@ N
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Variância sob Homocedasticidade}
-
 Usando \textbf{FD.3}, temos
 
 \vspace{-1 em}
 \begin{align*} 
-\Var( \betavec^{FD} ) &= 
-\sigma_{e}^{2}
-\E \left[
-( \Delta \Xmat' \Delta \Xmat )^{-1}
-( \Delta \Xmat' \Delta \Xmat )
-( \Delta \Xmat' \Delta \Xmat )^{-1} 
-\right]
-\\
-\Aboxed{
-\Var( \betavec^{FD} ) &= 
-\sigma^2_{e}
-\E \left[
-( \Delta \Xmat' \Delta \Xmat )^{-1} 
-\right]}
+\E\left( \Delta \Xmat_{i}' \ebold_{i} \ebold_{i} \Delta \Xmat_{i} \right) &= 
+\E\left[ \E\left(
+\Delta \Xmat_{i}' \ebold_{i} \ebold_{i} \Delta \Xmat_{i} |   
+\xvec_{i1}, \dots, \xvec_{iT}, c_{i}
+\right) \right]
+\\ &=
+\E\left( \Delta \Xmat_{i}' \sigma_{e}^2 \Imat_{T-1} \Delta \Xmat_{i} \right)
+=
+\sigma_{e}^2 \E\left( \Delta \Xmat_{i}'\Delta \Xmat_{i} \right)
 \end{align*}
 
-\noindent 
-com
+Então, sob \textbf{FD.3}:
 
 \vspace{-1 em}
 \begin{align*} 
-\sigma^2_{e} = 
-\left[ N ( T - 1 ) - K \right]^{-1}
-\left[  
-	\sum_{i=1}^{N} 
-	\sum_{t=1}^{T}
-	\hat{e}_{it}^{2}
-\right],
+\widehat{\Cov}( \betavec^{FD} ) &= 
+\sigma_{e}^2 \E\left( \Delta \Xmat_{i}'\Delta \Xmat_{i} \right)^{-1}
 \end{align*}
 
-\noindent
-que é a média de todos $\hat{e}^{2}_{it}$ contando $K$ regressores.
+\noindent onde
+
+
+\vspace{-1 em}
+\begin{align*} 
+\sigma_{e}^2 = 
+\frac{1}{N(T-1) - K} \sum_{i=1}^{N}\sum_{t=2}^{T} \widehat{e}^{2}_{it}.
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Teste para autocorrelação AR(1) dos resíduos}
 
+A equação do erro $e_{it}$ é 
+
+\vspace{-1 em}
+\begin{align*}
+e_{it} = u_{it} - u_{i,t-1}
+\end{align*}
+
+\noindent 
+rearranjando os termos, encontramos
+
+\vspace{-1 em}
+\begin{align*}
+	\boxed{u_{it} =  u_{i,t-1} + e_{it} } ,
+\qquad t=2, \dots, T.
+\end{align*}
+
+\noindent
+que é um passeio aleatório.
+Sob \textbf{FD.3}, 
+$e_{it} \sim \rb(0, \sigma^2_{e})$ e $u_{it}$ é um passeio aleatório.
+
+\vspace{-1 em}
+\begin{align*}
+	\ehat_{it} = \delta \ehat_{it-1}  + \err_{it},
+	\qquad  t=2, \dots, T.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Note que sob \textbf{FD.1}, 
+
+\vspace{-1 em}
+\begin{align*}
+	\E\left( e_{it} | \xvec_{i1}, \dots, \xvec_{iT}, c_{i} \right) = 0
+\end{align*}
+
+\vspace{-2 em}
+\begin{align*}
+	H_{0}: \delta = 0
+	\\
+	H_{1}: \delta \neq 0
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Sob \textbf{FD.3},
+
+\vspace{-1 em}
+\begin{align*}
+\E\left( e_{it}^2 \right) &=
+\E\left[ (u_{it} - u_{it-1})^2 \right]
+\\ &=
+\E\left[ u_{it}^2 + u_{it-1}^2 - 2u_{it}u_{it-1} \right]
+= 2 \sigma_{u}^2
+\end{align*}
+
+\vspace{-1.5 em}
+\begin{align*}
+\E\left( e_{it} e_{i,t-1} \right) &=
+\E\left[ (u_{it} - u_{it-1}) (u_{it-1} - u_{it-2}) \right]
+\\ &=
+\E\left[ u_{it}u_{it-1} - u_{it}u_{it-2} - u_{it-1}^{2} + u_{it-1}u_{it-2} \right]
+\\ &=
+\E(- u_{it-1}^2) = - \E(u_{it-1}^2) = - \sigma_{u}^2
+\end{align*}
+
+\vspace{-1.5 em}
+\begin{align*}
+\E\left( e_{it} e_{i,t-2} \right) &=
+\E\left[ (u_{it} - u_{it-1}) (u_{it-2} - u_{it-3}) \right]
+= 0
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Assim, temos que, sob \textbf{FD.3},
+$\E(\ebold_{i} \ebold_{i}')$
+é uma matriz tridiagonal $XX \times XX$:
+
+\vspace{-1 em}
+\begin{align*}
+\E(\ebold_{i} \ebold_{i}') =
+\begin{bmatrix}
+2 \sigma_{u}^{2} & - \sigma_{u}^{2} & & & 0
+\\
+- \sigma_{u}^{2} & \ddots & \ddots
+\\
+ & \ddots & \ddots & \ddots
+%%%%
+\\
+& & \ddots & \ddots & - \sigma_{u}^{2}
+\\
+0 & & & - \sigma_{u}^{2} & 2 \sigma_{u}^{2}
+\end{bmatrix}
+\end{align*}
+
+\noindent
+onde
+\begin{align*}
+	\Cov(e_{it}, e_{it-1}) = \frac{-\sigma_{u}^{2}}{2 \sigma_{u}^{2}} = \frac{-1}{2}.
+\end{align*}
+
+\noindent
+Assim, podemos testar $H_{0}: \delta = -1/2$ na seguinte equação
+
+\vspace{-1 em}
+\begin{align*}
+	\ehat_{it} = \delta \ehat_{it-1} + \err_{it}.
+\end{align*}
+
+\noindent
+Se \textbf{não rejeitar} $H_{0}$ temos evidência \textbf{favorável} a FE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Teste de Exogeneidade Estrita}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Teste para o Estimador FD}
 
+\vspace{-2 em}
+\begin{align*}
+	\Delta y_{it} = \Delta \xvec_{it} \betavec + \wvec_{it} \gammavec + e_{it}
+\end{align*}
+
+\noindent
+onde $\wvec_{it}$ é um subconjunto de $\xvec_{it}$ (excluindo as dummies de tempo).
+
+Testamos
+
+\vspace{-2 em}
+\begin{align*}
+	H_{0}: \gammavec = \zerovec
+	\\
+	H_{1}: \gammavec \neq \zerovec
+\end{align*}
+
+\noindent
+via teste de Wald (Robusto).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Teste para o Estimador FE}
 
+\vspace{-2 em}
+\begin{align*}
+	y_{it} = \xvec_{it} \betavec + \wvec_{it} \gammavec + v_{it}
+\end{align*}
+
+Testamos
+
+\vspace{-2 em}
+\begin{align*}
+	H_{0}: \gammavec = \zerovec
+	\\
+	H_{1}: \gammavec \neq \zerovec
+\end{align*}
+
+\noindent
+Sob $H_{0}$, podemos estimar o modelo via FE.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Alguns Detalhes}
+
+\begin{remark}
+Como no modelo FE, perdemos as variáveis constantes no tempo.
+Por exemplo, uma variável cujo incremento é igual a $1$ a cada período (e.g. experiência profissional), causa multicolinearidade perfeita, pois
+
+\vspace{-1 em}
+\begin{align*}
+	\Delta d_{2} + \dots + \Delta d_{T} = \Delta exper.
+\end{align*}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Avaliação de Políticas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Se $T=2$:
+
+\vspace{-1.5 em}
+\begin{align*}
+y_{i1} &= \xvec_{i1} \betavec + \delta prog_{i1} + v_{i1}
+\\
+y_{i2} &= \xvec_{i2} \betavec + \delta prog_{i2} + v_{i2}
+\end{align*}
+
+\noindent
+onde $prog_{i1} =0$ para todo mundo.
+Vamos considerar
+
+\vspace{-1 em}
+\begin{align*}
+\Delta y_{i2} &= \Delta \xvec_{i2} \betavec + \delta prog_{i2} + e_{i2}
+\end{align*}
+
+\noindent
+como $prog_{i1} =0$, então $prog_{i2} = prog_{i2} - prog_{i1} = \Delta prog_{i2}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1 em}
+\noindent
+Para $T>2$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\Delta y_{i2} &= \Delta\xvec_{i2}\betavec + \delta \Delta prog_{i2} + e_{i2},
+\qquad t=2, \dots, T.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Exemplo}
+\begin{align*}
+	\log(scrap_{it}) =
+	\xvec_{it} \betavec + \delta_{1} grant_{t} + \delta_{2} grant_{t-1} + v_{it}.
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
