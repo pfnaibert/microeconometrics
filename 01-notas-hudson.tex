@@ -86,21 +86,19 @@
 \pagenumbering{gobble}
 
 \begin{center}
-	\textbf{UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL}
-	\\
-	\textbf{PROGRAMA DE PÓS-GRADUAÇÃO EM ECONOMIA}
-	\\
-	\textbf{Microeconometria -- 2015/3}
+\textbf{UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL}
+\\
+\textbf{PROGRAMA DE PÓS-GRADUAÇÃO EM ECONOMIA}
+\\
+\textbf{Microeconometria -- 2015/3}
 
-	\vfill
-	\textbf{\thetitle}
+\vfill
+\textbf{\thetitle}
 
-	\vfill
-	\textbf{Autor: Paulo Ferreira Naibert } 
-	\\
-	\textbf{Professor: Hudson Torrent} 
-
-
+\vfill
+\textbf{Autor: Paulo Ferreira Naibert } 
+\\
+\textbf{Professor: Hudson Torrent} 
 \end{center}
 
 \vfill
@@ -156,9 +154,9 @@ onde,
 
 \vspace{-1 em}
 \begin{description}[noitemsep]
-	\item [$\xvec \equiv (x_{1}, \dots, x_{K})$] é um vetor $1 \times K$ de regressores;
+\item [$\xvec \equiv (x_{1}, \dots, x_{K})$] é um vetor $1 \times K$ de regressores;
 
-	\item [$\betavec \equiv (\beta_{1}, \dots, \beta_{K})'$] é um vetor $K \times 1$.
+\item [$\betavec \equiv (\beta_{1}, \dots, \beta_{K})'$] é um vetor $K \times 1$.
 \end{description}
 
 \noindent
@@ -1011,10 +1009,10 @@ Estimando:
 
 \vspace{-1 em}
 \begin{align*}
-	\sum_{i=1}^{N} \Xmat_{i}' \Omegahat \Xmat_{i} \arrowp 
-	\E(\Xmat_{i} \Omega \Xmat_{i})
+	\sum_{i=1}^{N} \Xmat_{i}' \Omegamathat \Xmat_{i} \arrowp 
+	\E(\Xmat_{i} \Omegamat \Xmat_{i})
 \end{align*}
-Mas \textbf{não} é verdade que $\Omegahat \arrowp \Omega$.
+Mas \textbf{não} é verdade que $\Omegamathat \arrowp \Omegamat$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{itemize}[noitemsep]
@@ -2533,469 +2531,589 @@ Para $T>2$:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo Linear}
 
+\vspace{-1.5 em}
+\begin{align*}
+\yvec_{i} &= \Xmat_{i}\betavec + \uvec_{i},
+\end{align*}
+
+\noindent
+onde
+
+\vspace{-1 em}
+\begin{description}[noitemsep]
+	\item[$\yvec$] é um vetor $G \times 1$
+	\item[$\Xmat_{i}$] é uma matriz $G \times K$
+	\item[$\betavec$] é um vetor $K \times 1$
+	\item[$\uvec$] é um vetor $G \times 1$
+\end{description}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Hipóteses}
 
-Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipótese:
+\paragraph{SGLS.1:} $\E(\Xmat_{i} \otimes \uvec_{i}) = {\zerovec}_{G^2 \times K}$.
+
+\noindent
+Isso implica que se $\Xmat_{i}$ contém constante, 
+
+\vspace{-1 em}
+\begin{align*}
+	\E(u_{ig}) = 0, \quad g=1,\dots, G.
+\end{align*}
+
+\noindent
+Nesse caso, implica também que $\E(x_{ikg} u_{ig})=0$, $k=1,\dots,K$, $g=1,\dots,G$.
+
+\paragraph{SGLS.2:}  $\Omegamat = \E(\uvec_{i} \uvec_{i}^{\prime})$.
+
+\noindent
+Com $\Omegamat$ positiva definida (para ter inversa).
+
+\paragraph{SGLS.3:}
+$\E\left( \Xmat_{i}' \Omegamatinv \uvec_{i} \uvec_{i}' \Omegamatinv \Xmat_{i} \right) = \E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right)$.
+
+\noindent
+É suficiente para \textbf{SGLS.3} supor 
+$\E\left( \uvec_{i} \uvec_{i}' | \Xmat_{i} \right) = \Omegamat$,
+pois
+
+\vspace{-1 em}
+\begin{align*}
+\E\left( \Xmat_{i}' \Omegamatinv \uvec_{i} \uvec_{i}' \Omegamatinv \Xmat_{i} \right) &=
+\E\left[ 
+\E\left( \Xmat_{i}' \Omegamatinv \uvec_{i} \uvec_{i}' \Omegamatinv \Xmat_{i} | \Xmat_{i} \right)
+\right]
+\\ &=
+\E\left[ 
+\Xmat_{i}' \Omegamatinv
+\underbracket[.75 pt]{\E\left(  \uvec_{i} \uvec_{i}'  | \Xmat_{i} \right)}_{=\Omegamat}
+\Omegamatinv \Xmat_{i}
+\right]
+\\ &=
+\E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right)
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Estimação}
+O estimador SOLS é consistente, nesse caso, mas sua matriz de covariância é dada por:
+
+\vspace{-1 em}
+\begin{align*}
+	\Avar(\betavechat^{SOLS}) = 
+	\E\left( \Xmat_{i}' \Xmat_{i} \right)^{-1}
+	\E\left( \Xmat_{i}' \uvec_{i} \uvec_{i}' \Xmat_{i} \right)
+	\E\left( \Xmat_{i}' \Xmat_{i} \right)^{-1},
+\end{align*}
+
+\noindent
+supondo $\E\left( \uvec_{i} \uvec_{i}' | \Xmat_{i} \right) = \Omegamat$,
+
+\vspace{-1 em}
+\begin{align*}
+	\Avar(\betavechat^{SOLS}) = 
+	\E\left( \Xmat_{i}' \Xmat_{i} \right)^{-1}
+	\E\left( \Xmat_{i}' \Omegamat \Xmat_{i} \right)
+	\E\left( \Xmat_{i}' \Xmat_{i} \right)^{-1}.
+\end{align*}
+
+É possível encontrar $\Omegamat^{1/2}$ e $\Omegamat^{-1/2}$ tais que:
+
+\vspace{-1 em}
+\begin{align*}
+\Omegamat^{1/2} \Omegamat^{1/2} = \Omegamat 
+\quad \text{ e } \quad
+\Omegamat^{-1/2} \Omegamat^{-1/2} = \Omegamatinv
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Estimação}
+
+Agora, transformamos o sistema de equações ao realizarmos a pré-multiplicação do sistema por $\Omegamat^{-1/2}$:
+% \vspace{-1.5 em}
+\begin{align}
+\notag
+\Omegamat^{-1/2} \yvec_{i} &= \Omegamat^{-1/2}\Xmat_{i}\betavec + \Omegamat^{-1/2} \uvec_{i}
+\\
+\label{sgls:mod:star}
+\yvec_{i}^{*} &= \Xmat_{i}^{*}\betavec + \uvec^{*}_{i}
+\end{align}
+
+\vspace{-1.5 em}
+\begin{align*}
+\E\left( \uvec_{i}^{*}\uvec_{i}^{*}' \right) =
+\E\left( \Omegamat^{-1/2} \uvec_{i} \uvec_{i}' \Omegamat^{-1/2} \right) =
+\Omegamat^{-1/2} 
+\underbracket[.75 pt]{\E\left( \uvec_{i} \uvec_{i}' \right)}_{\Omegamat = \Omegamat^{1/2} \Omegamat^{1/2}} 
+\Omegamat^{-1/2} =
+\Imat_{G}.
+\end{align*}
+
+\vspace{-1.5 em}
+\begin{align*}
+\E\left( \Xmat_{i}^{*}' \uvec_{i}^{*} \right) =
+\E\left( \Xmat_{i}' \Omegamat^{-1/2} \Omegamat^{-1/2} \uvec_{i} \right) =
+\E\left( \Xmat_{i}' \Omegamatinv \uvec_{i} \right) =
+\zerovec_{K \times 1}.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Então, o estimador SOLS aplicado ao modelo transformado \eqref{sgls:mod:star} nos fornece um estimador consistente e eficiente.
+
+\vspace{-1.5 em}
+\begin{align*}
+\betavechat^{SGLS}
+&=
+\left( \sum_{i=1}^{N} \Xmat_{i}^{*'} \Xmat_{i}^{*} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}^{*'} \yvec_{i}^{*} \right)
+\\
+&=
+\left( \sum_{i=1}^{N} \Xmat_{i}^{'} \Omegamat^{-1/2} \Omegamat^{-1/2} \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}^{'} \Omegamat^{-1/2} \Omegamat^{-1/2} \yvec_{i} \right)
+\\
+&=
+\left( \sum_{i=1}^{N} \Xmat_{i}^{'} \Omegamat^{-1} \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}^{'} \Omegamat^{-1} \yvec_{i} \right)
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+No formato puramente matricial:
+
+\vspace{-1.5 em}
+\begin{align*}
+\Aboxed{
+\betavechat^{SGLS} &=
+\left[ \Xmat \left( \Imat_{N} \otimes \Omegamatinv \right) \Xmat \right]^{-1}
+\left[ \Xmat \left( \Imat_{N} \otimes \Omegamatinv \right) \yvec \right]
+}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Variância}
+
+\vspace{-1 em}
+\begin{align*}
+\Avar(\betavechat^{SGLS}) &= 
+\E\left( \Xmat_{i}^{*}' \Xmat_{i}^{*} \right)^{-1}
+\E\left( \Xmat_{i}^{*}' \uvec_{i}^{*} \uvec_{i}^{*}' \Xmat_{i}^{*} \right)
+\E\left( \Xmat_{i}^{*}' \Xmat_{i}^{*} \right)^{-1}
+\\ &=
+\E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right)^{-1}
+\E\left( \Xmat_{i}' \Omegamatinv \uvec_{i} \uvec_{i}' \Omegamatinv \Xmat_{i} \right)
+\E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right)^{-1}.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Sob \textbf{SGLS.3:}
+
+\vspace{-1 em}
+\begin{align*}
+\Avar(\betavechat^{SGLS}) &= 
+\E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right)^{-1}
+\E\left( \Xmat_{i}' \Omegamatinv  \Xmat_{i} \right)
+\E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right)^{-1}
+=
+\E\left( \Xmat_{i}' \Omegamatinv \Xmat_{i} \right).
+\end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{FSGLS: SGLS Factível}
+\noindent
+\citet[Sec.7.5 -- Feasible GLS, p.153]{wool-2010} \\
+
+Para obtermos $\betavec^{SGLS}$ precisamos conhecer $\Omegamat$, o que não ocorre na prática.
+Então, precisamos estimar $\Omegamat$ com um estimador consistente.
+Para tanto usamos um procedimento de dois passos:
 
 \begin{enumerate}
-\item %1
+\item  % Passo 1
+Estimar $\yvec_{i} = \Xmat_{i} \betavec + \uvec_{i}$ via \textbf{SOLS} e guardar o resíduo estimado $\widehat{\uvec}_{i}$.
 
-			$\E(\Xmat_{i} \otimes \uvec_{i}) = 0$.
+\item  %Passo 2
+Estimar $\Omegamat$ com o seguinte estimador $\widehat{\Omegamat}$:
 
-			Para SGLS ser consistente, precisamos que $\uvec_{i}$ não seja correlacionada com nenhum elemento de $\Xmat_{i}$.
+\vspace{-1.5 em}
+\begin{align*}
+\widehat{\Omegamat} 
+= 
+N^{-1} \sum_{i=1}^{N} \uvec_{i} \uvec_{i}'
+\end{align*}
 
-		\item %2
+\noindent
+Note que $\Omegamathat \arrowp \Omegamat$.
+\end{enumerate}
 
-			$\Omega$ é positiva definida (para ter inversa).
-			$\E(\Xmat_{i}^{\prime} \Omega^{-1} \Xmat_{i})$ é \textbf{não} singular (para ter invesa).
+Com a estimativa $\widehat{\Omegamat}$ feita, podemos obter $\betavec^{FSGLS}$ pela fórmula do $\betavec^{SGLS}$:
 
-			Onde, $\Omega$ é a seguinte matriz \textbf{simétrica}, positiva-definida:
+\vspace{-1.5 em}
+\begin{align*}
+\betavec^{FGLS}
+= 
+\left[ 
+\sum_{i} \Xmat_{i}' \widehat{\Omegamat}^{-1} \Xmat_{i}
+\right]^{-1}
+\left[ 
+\sum_{i} \Xmat_{i}' \widehat{\Omegamat}^{-1} \yvec_{i}
+\right]
+\end{align*}
 
-			\vspace{-1.5 em}
-			\begin{align*}
-				\Omega = \E(\uvec_{i} \uvec_{i}^{\prime}).
-			\end{align*}
-	\end{enumerate}
+Empilhando as $N$ observações:
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Estimação}
+\vspace{-1.5 em}
+\begin{align*}
+\betavec^{FGLS}
+= 
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \yvec \right]
+\end{align*}
 
-	Agora, transformamos o sistema de equações ao realizarmos a pré-multiplicação do sistema por $\Omega^{-1/2}$:
+Reescrevendo a equação acima:
 
-	\vspace{-1.5 em}
-	\begin{align*}
-		\Omega^{-1/2} \yvec_{i} 
-		&=
-		\Omega^{-1/2} \Xmat_{i} \betavec
-		+
-		\Omega^{-1/2} \uvec_{i}
-		\\
-		\yvec_{i}^{*}
-		&=
-		\Xmat_{i}^{*} \betavec
-		+
-		\uvec^{*}_{i}
-	\end{align*}
-
-	Estimando a equação acima por \textbf{SOLS}:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\beta^{SOLS}
-		&=
-		\left( \sum_{i=1} \Xmat_{i}^{*'} \Xmat_{i}^{*} \right)^{-1}
-		\left( \sum_{i=1} \Xmat_{i}^{*'} \yvec_{i}^{*} \right)
-		\\
-		&=
-		\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} \Xmat_{i} \right)^{-1}
-		\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1/2} \Omega^{-1/2} \yvec_{i} \right)
-		\\
-		&=
-		\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1} \Xmat_{i} \right)^{-1}
-		\left( \sum_{i=1} \Xmat_{i}^{'} \Omega^{-1} \yvec_{i} \right)
-	\end{align*}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\clearpage
-	\section{GLS Factível}
-
-	\noindent
-	\citet[Sec.7.5 -- Feasible GLS, p.153]{wool-2010} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{FSGLS: SGLS Factível}
-
-	Para obtermos $\beta^{SGLS}$ precisamos conhecer $\Omega$, o que não ocorre na prática.
-	Então, precisamos estimar $\Omega$ com um estimador consistente.
-	Para tanto usamos um procedimento de dois passos:
-
-	\begin{enumerate}
-		\item  % Passo 1
-			Estimar $\yvec_{i} = \Xmat_{i} \betavec + \uvec_{i}$ via \textbf{SOLS} e guardar o resíduo estimado $\widehat{\uvec_{i}}$.
-
-		\item  %Passo 2
-			Estimar $\Omega$ com o seguinte estimador $\widehat{\Omega}$:
-
-			\vspace{-1.5 em}
-			\begin{align*}
-				\widehat{\Omega} 
-				= 
-				N^{-1} \sum_{i=1}^{N} \uvec_{i} \uvec_{i}'
-			\end{align*}
-	\end{enumerate}
-
-	Com a estimativa $\widehat{\Omega}$ feita, podemos obter $\beta^{FSGLS}$ pela fórmula do $\beta^{SGLS}$:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\beta^{FGLS}
-		= 
-		\left[ 
-			\sum_{i} \Xmat_{i}' \widehat{\Omega}^{-1} \Xmat_{i}
-		\right]^{-1}
-		\left[ 
-			\sum_{i} \Xmat_{i}' \widehat{\Omega}^{-1} \yvec_{i}
-		\right]
-	\end{align*}
-
-	Empilhando as $N$ observações:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\beta^{FGLS}
-		= 
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \yvec \right]
-	\end{align*}
-
-	Reescrevendo a equação acima:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\beta^{FGLS}
-		&= 
-		\left[  \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left[  \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) (\Xmat \beta + u) \right]
-		\\
-		&= 
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left\{ 
-			\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \beta \right]
+\vspace{-1.5 em}
+\begin{align*}
+\betavec^{FGLS}
+&= 
+\left[  \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[  \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) (\Xmat \betavec + u) \right]
+\\
+&= 
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left\{ 
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \betavec \right]
 % \\
 % &
-			\; +
-			\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
-		\right\}
-		\\
-		&= 
-		\beta +
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
-	\end{align*}
+\; +
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\right\}
+\\
+&= 
+\betavec +
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Valor Esperado}
+\subsection{Valor Esperado}
 
-	\vspace{-1 em}
-	\begin{align*}
-		\E(\beta^{FGLS})
-		= 
-		\beta +
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
-	\end{align*}
+\vspace{-1 em}
+\begin{align*}
+\E(\betavec^{FGLS})
+= 
+\betavec +
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\end{align*}
 
-	Concluímos que, se 
-	$\widehat{\Omega} \xrightarrow{\enskip p \enskip} \Omega$,
-	então,
-	$\beta^{FSGLS} \xrightarrow{\enskip p \enskip} \beta$,
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Variância}
-
-	\vspace{-1 em}
-	\begin{align*}
-		\Var(\beta^{FGLS})
-		&= 
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
-		\left\{ 
-			\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-			\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) u \right]
-		\right\}^{\prime}
-		\\
-		&=
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-		\left[
-			\Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) 
-			u u'
-			\left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat
-		\right]
-		\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right) \Xmat \right]^{-1}
-	\end{align*}
-
-	Tirando o valor Esperado e supondo que:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\E(\Xmat_{i} \Omega^{-1} u_{i} u_{i}' \Xmat_{i}) = \E(\Xmat_{i} \Omega^{-1})
-	\end{align*}
-	temos:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\E\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right)
-			u u'
-		\left( \Imat_{N} \otimes \widehat{\Omega}^{-1} \right)' \Xmat \right]
-		=
-		\E(\Xmat' \Omega^{-1} \Xmat)
-	\end{align*}
-	e temos:
-
-	\vspace{-1.5 em}
-	\begin{align*}
-		\Var(\beta^{FSGLS}) = \left[ \E(\Xmat' \Omega^{-1} \Xmat \right]^{-1}.
-		\end{align*}
+Concluímos que, se 
+$\widehat{\Omegamat} \xrightarrow{\enskip p \enskip} \Omegamat$,
+então,
+$\betavec^{FSGLS} \xrightarrow{\enskip p \enskip} \betavec$,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		\clearpage
-		\section{Random Effects (RE, EA)}
-		\noindent
-		\citet[Sec.10.4 -- Random Effects Methods, p.257]{wool-2010} \\
+\subsection{Variância}
+
+\vspace{-1 em}
+\begin{align*}
+\Var(\betavec^{FGLS})
+&= 
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\left\{ 
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\right\}^{\prime}
+\\
+&=
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[
+\Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) 
+u u'
+\left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat
+\right]
+\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\end{align*}
+
+Tirando o valor Esperado e supondo que:
+
+\vspace{-1.5 em}
+\begin{align*}
+\E(\Xmat_{i} \Omegamat^{-1} u_{i} u_{i}' \Xmat_{i}) = \E(\Xmat_{i} \Omegamat^{-1})
+\end{align*}
+temos:
+
+\vspace{-1.5 em}
+\begin{align*}
+\E\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right)
+u u'
+\left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right)' \Xmat \right]
+=
+\E(\Xmat' \Omegamat^{-1} \Xmat)
+\end{align*}
+e temos:
+
+\vspace{-1.5 em}
+\begin{align*}
+\Var(\betavec^{FSGLS}) = \left[ \E(\Xmat' \Omegamat^{-1} \Xmat \right]^{-1}.
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		\subsection{Modelo}
-
-		O modelo linear de \textbf{efeitos não observados}:
-
-		\vspace{-1 em}
-		\begin{align} \label{mod1:EA}
-			y_{it} = \xvec_{it} \betavec + c_{i} + u_{it},
-		\end{align}
-
-		\noindent
-		onde
-		$t = 1, \dots, T$ e $i = 1, \dots, N$.
-
-		O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
-		Abordamos esse componente como parte do erro, não como parâmetro a ser estimado.
-		Para a análise de \textbf{Efeitos Aleatórios, (EA) ou (RE)}, supomos que os regressões $\xvec_{it}$ são \textbf{não correlacionados} com $c_{i}$, mas fazemos hipóteses mais restritas que o \textbf{POLS}; pois assim exploramos a presença de \textbf{correlação serial} do erro composto por GLS e garantimos a consitência do estimador de FGLS.
-
-		Podemos reescrever \eqref{mod1:EA} como:
-
-		\vspace{-1 em}
-		\begin{align} \label{mod2:EA}
-			y_{it} = \xvec_{it} \betavec + v_{it},
-		\end{align}
-
-		\noindent
-		onde
-		$t = 1, \dots, T$, $i = 1, \dots, N$ e $\boxed{v_{it} = c_{i} + u_{it}}$ é o erro composto.
-
-		Agora, vamos empilhar os $t$'s e reescrever \eqref{mod2:EA} como:
-
-		\vspace{-1 em}
-		\begin{align} \label{mod3:EA}
-			\yvec_{i} = \Xmat_{i} \betavec + \mbs{v}_{i},
-		\end{align}
-
-		\noindent
-		onde
-		$i = 1, \dots, N$ e $\boxed{\mbs{v}_{i} = c_{i} \onevec_{T} + \uvec_{i}}$.
+\clearpage
+\section{Random Effects (RE, EA)}
+\noindent
+\citet[Sec.10.4 -- Random Effects Methods, p.257]{wool-2010} \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		\subsection{Hipóteses}
+\subsection{Modelo}
 
-		As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{RE}$ são:
+O modelo linear de \textbf{efeitos não observados}:
 
-		\begin{enumerate} \itemsep0pt
-			\item  
-				Usamos o modelo correto e $c_{i}$ não é endógeno.
+\vspace{-1 em}
+\begin{align} \label{mod1:EA}
+y_{it} = \xvec_{it} \betavec + c_{i} + u_{it},
+\end{align}
 
-				\begin{enumerate}[label =\alph*)]
-				\item 
-					$\E( u_{it} \, | \,  x_{i1}, \dots, x_{iT}, c_{i} ) = 0$,
-					$i = 1, \dots, N$.
-				\item        
-					$\E( c_{it} \, | \, x_{i1}, \dots, x_{iT} ) = \E( c_{i} ) = 0$,
-					$i = 1, \dots, N$.
-			\end{enumerate}
+\noindent
+onde
+$t = 1, \dots, T$ e $i = 1, \dots, N$.
 
-		\item  Posto completo de $\E( \Xmat_{i}' \Omega^{-1} \Xmat_{i} )$.
+O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
+Abordamos esse componente como parte do erro, não como parâmetro a ser estimado.
+Para a análise de \textbf{Efeitos Aleatórios, (EA) ou (RE)}, supomos que os regressões $\xvec_{it}$ são \textbf{não correlacionados} com $c_{i}$, mas fazemos hipóteses mais restritas que o \textbf{POLS}; pois assim exploramos a presença de \textbf{correlação serial} do erro composto por GLS e garantimos a consitência do estimador de FGLS.
 
-			Definindo a matriz $T \times T$, $\boxed{\Omega \equiv \E(\mbs{v}_{i} \mbs{v}_{i}')}$, queremos que $\E( \Xmat_{i} \Omega^{-1} \Xmat_{i} )$ tenha posto completo (posto = $K$).
-	\end{enumerate}
+Podemos reescrever \eqref{mod1:EA} como:
 
-	A matriz $\Omega$ é simétrica $\Omega' = \Omega$ e positiva definida $\det(\Omega) > 0$.
-	Assim podemos achar $\Omega^{1/2}$ e $\Omega^{-1/2}$ com $\Omega = \Omega^{1/2} \Omega^{1/2}$ e $\Omega^{-1} = \Omega^{-1/2} \Omega^{-1/2}$.
+\vspace{-1 em}
+\begin{align} \label{mod2:EA}
+y_{it} = \xvec_{it} \betavec + v_{it},
+\end{align}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Estimação}
+\noindent
+onde
+$t = 1, \dots, T$, $i = 1, \dots, N$ e $\boxed{v_{it} = c_{i} + u_{it}}$ é o erro composto.
 
-	Premultiplicando \eqref{mod3:EA} port $\Omega^{-1/2}$ do dois lados, temos:
+Agora, vamos empilhar os $t$'s e reescrever \eqref{mod2:EA} como:
 
-	\vspace{-1 em}
-	\begin{align} 
-		\notag
-		\Omega^{-1/2}\yvec_{i} &= \Omega^{-1/2}\Xmat_{i} \betavec + \Omega^{-1/2}\mbs{v}_{i}
-		\\
-		\label{mod4:EA}
-		\yvec_{i}^{*} &= \Xmat_{i}^{*} \betavec + \mbs{v}_{i}^{*},
-	\end{align}
+\vspace{-1 em}
+\begin{align} \label{mod3:EA}
+\yvec_{i} = \Xmat_{i} \betavec + \mbs{v}_{i},
+\end{align}
 
-	Estimando o modelo acima por POLS:
-
-	\vspace{-1 em}
-	\begin{align} 
-		\notag
-		\betavec^{POLS} &= 
-		\left( \sum_{i=1}^{N} \Xmat_{i}^{*}' \Xmat_{i}^{*} \right)^{-1}
-		\left( \sum_{i=1}^{N} \Xmat_{i}^{*}' \yvec_{i}^{*} \right)
-		\\ \notag
-		&=
-		\left( \sum_{i=1}^{N} \Xmat_{i}' \Omega^{-1} \Xmat_{i} \right)^{-1}
-		\left( \sum_{i=1}^{N} \Xmat_{i}' \Omega^{-1} \yvec_{i} \right)
-		\\ \label{beta:RE:1}
-		&=
-		\left( \Xmat' (\Imat_{N} \otimes \Omega^{-1}) \Xmat \right)^{-1}
-		\left( \Xmat' (\Imat_{N} \otimes \Omega^{-1}) \yvec \right).
-	\end{align}
-
-	O problema, agora, é estimar $\Omega$.
-	Supondo:
-	\begin{itemize}\itemsep0pt
-		\item $\E(u_{it}u_{it}) = \sigma_{u}^{2}$;
-		\item $\E(u_{it}u_{is}) = 0$.
-	\end{itemize}
-	Como $\Omega = \E(\mbs{v}_{i} \mbs{v}_{i}') = \E[ ( c_{i} \onevec_{T} + \uvec_{i} ) ( c_{i} \onevec_{T} + \uvec_{i} )' ]$, temos que:
-
-	\vspace{-1 em}
-	\begin{align*} 
-		\E(v_{it}v_{it}) &=
-		\E( c_{i}^{2} + 2c_{i} u_{it} + u_{it}^{2}) 
-		=
-		\sigma_{c}^{2} + \sigma_{u}^{2}
-		\\
-		\E(v_{it}v_{is})	&=
-		\E[ ( c_{i} + u_{it} ) ( c_{i} + u_{is} ) ]
-		=
-		\E( c_{i}^{2} + c_{i} u_{is} + u_{it} c_{i} + u_{it} u_{is} )
-		=
-		\sigma_{c}^{2}.
-	\end{align*}
-
-	Assim, 
-
-	\vspace{-1 em}
-	\begin{align*}
-		\Omega 
-		= 
-		\E(\mbs{v}_{i} \mbs{v}_{i}') = \sigma^{2}_{u} \Imat_{T} + \sigma_{c}^{2} \onevec_{T} \onevec_{T}'
-	\end{align*}
-
-	\noindent
-	onde
-	$\sigma^{2}_{u} \Imat_{T}$ 
-	é uma matriz diagonal, e 
-	$\sigma_{c}^{2} \onevec_{T} \onevec_{T}'$ é uma matriz com todos os elementos iguais a $\sigma_{c}^{2}$.
-
-	Agora, rodando POLS em \eqref{mod3:EA} e guardando os resíduos, temos:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\hat{v}_{it}^{POLS}
-		= 
-		\hat{y}_{it}^{POLS} - \xvec_{it} \mbs{\hat{\beta}}^{POLS}
-	\end{align*}
-
-	\noindent
-	e conseguimos estimar $\sigma_{v}^{2}$ e $\sigma_{c}^{2}$ por estimadores amostrais:
-
-	\begin{itemize}\itemsep0pt
-		\item 
-			como $\sigma_{v}^{2} = \E(v_{it}^{2})$:
-
-			\vspace{-1.5 em}
-			\begin{align*}
-				\hat{\sigma}_{v}^{2} =
-				(NT - K)^{-1} 
-				\sum_{i=1}^{N}
-				\sum_{t=1}^{T}
-				\hat{v}_{it}^2
-			\end{align*}
-			\vspace{-1.5 em}
-
-		\item 
-			como $\sigma_{c}^{2} = \E(v_{it} v_{is})$:
-
-			\vspace{-1.5 em}
-			\begin{align*}
-				\hat{\sigma}_{c}^{2} =
-				\left[ N \frac{T ( T-1 )}{2} - K  \right]^{-1}
-				\sum_{i=1}^{N}
-				\sum_{t=1}^{T-1}
-				\sum_{s=t+1}^{T}
-				\hat{v}_{it} \hat{v}_{is}
-			\end{align*}
-			\vspace{-1.5 em}
-
-		\item $N$ indivíduos;
-
-		\item $T$ elementos da diagonal principal de $\Omega$
-
-		\item $\frac{T ( T - 1)}{2}$ elementos da matriz triangular superior dos elementos fora da diagonal.
-
-		\item $K$ regressores.
-	\end{itemize}
-
-	Agora que temos $\hat{\sigma}^2_{v}$ e $\hat{\sigma}^2_{c}$ podemos achar $\hat{\sigma}^{2}_{u}$ pela equação $\boxed{\hat{\sigma}_{u}^{2} = \hat{\sigma}_{v}^{2} - \hat{\sigma}_{c}^{2}}$.
-	Dessa forma, achamos os $T^2$ elementos de $\widehat{\Omega}$, e podemos escrever:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\widehat{\Omega}
-		= 
-		\hat{\sigma}^{2}_{u} \Imat_{T} + \hat{\sigma}_{c}^{2} \onevec_{T} \onevec_{T}'
-	\end{align*}
-
-	Com $\widehat{\Omega}$ estimado, reescrevemos \eqref{beta:RE:1} como:
-
-	\vspace{-1 em}
-	\begin{align} \label{beta:RE:2}
-		\betavec^{RE} = 
-		\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omega}^{-1}) \Xmat \right]^{-1}
-		\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omega}^{-1}) \yvec \right].
-	\end{align}
-
+\noindent
+onde
+$i = 1, \dots, N$ e $\boxed{\mbs{v}_{i} = c_{i} \onevec_{T} + \uvec_{i}}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Valor Esperado}
+\subsection{Hipóteses}
 
-	\vspace{-1 em}
-	\begin{align*}
-		\Aboxed{
-			\E( \betavec^{RE} ) = 
-			\betavec +
-			\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omega}^{-1}) \Xmat \right]^{-1}
-		\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omega}^{-1}) \mbs{v} \right] }.
-	\end{align*}
+As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{RE}$ são:
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Variância}
+\begin{enumerate} \itemsep0pt
+\item  
+Usamos o modelo correto e $c_{i}$ não é endógeno.
 
-	\vspace{-1 em}
-	\begin{align*} 
-		\Var( \betavec^{RE} ) = 
-		E
-		\left\{ 
-			\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omega}^{-1} ) \Xmat \right]^{-1}
-			\left[
-				\Xmat' ( \Imat_{N} \otimes \widehat{\Omega}^{-1} )
-				\mbs{v} \mbs{v}'
-				( \Imat_{N} \otimes \widehat{\Omega}^{-1} )' \Xmat
-			\right]
-			\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omega}^{-1} ) \Xmat \right]
-		\right\},
-	\end{align*}
+\begin{enumerate}[label =\alph*)]
+\item 
+$\E( u_{it} \, | \,  x_{i1}, \dots, x_{iT}, c_{i} ) = 0$,
+$i = 1, \dots, N$.
+\item        
+$\E( c_{it} \, | \, x_{i1}, \dots, x_{iT} ) = \E( c_{i} ) = 0$,
+$i = 1, \dots, N$.
+\end{enumerate}
 
-	\noindent
-	como $\E( \mbs{v}_{i} \mbs{v}_{i}' ) =\Omega$,
+\item  Posto completo de $\E( \Xmat_{i}' \Omegamat^{-1} \Xmat_{i} )$.
 
-	\vspace{-1 em}
-	\begin{align*} 
-		\Aboxed{
-			\Var( \betavec^{RE} ) = 
-			E
-		\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omega}^{-1} ) \Xmat \right] }.
-	\end{align*}
+Definindo a matriz $T \times T$, $\boxed{\Omegamat \equiv \E(\mbs{v}_{i} \mbs{v}_{i}')}$, queremos que $\E( \Xmat_{i} \Omegamat^{-1} \Xmat_{i} )$ tenha posto completo (posto = $K$).
+\end{enumerate}
 
-
+A matriz $\Omegamat$ é simétrica $\Omegamat' = \Omegamat$ e positiva definida $\det(\Omegamat) > 0$.
+Assim podemos achar $\Omegamat^{1/2}$ e $\Omegamat^{-1/2}$ com $\Omegamat = \Omegamat^{1/2} \Omegamat^{1/2}$ e $\Omegamat^{-1} = \Omegamat^{-1/2} \Omegamat^{-1/2}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\clearpage
-	\section{Endogeneity and GMM}
+\subsection{Estimação}
+
+Premultiplicando \eqref{mod3:EA} port $\Omegamat^{-1/2}$ do dois lados, temos:
+
+\vspace{-1 em}
+\begin{align} 
+\notag
+\Omegamat^{-1/2}\yvec_{i} &= \Omegamat^{-1/2}\Xmat_{i} \betavec + \Omegamat^{-1/2}\mbs{v}_{i}
+\\
+\label{mod4:EA}
+\yvec_{i}^{*} &= \Xmat_{i}^{*} \betavec + \mbs{v}_{i}^{*},
+\end{align}
+
+Estimando o modelo acima por POLS:
+
+\vspace{-1 em}
+\begin{align} 
+\notag
+\betavec^{POLS} &= 
+\left( \sum_{i=1}^{N} \Xmat_{i}^{*}' \Xmat_{i}^{*} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}^{*}' \yvec_{i}^{*} \right)
+\\ \notag
+&=
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Omegamat^{-1} \Xmat_{i} \right)^{-1}
+\left( \sum_{i=1}^{N} \Xmat_{i}' \Omegamat^{-1} \yvec_{i} \right)
+\\ \label{beta:RE:1}
+&=
+\left( \Xmat' (\Imat_{N} \otimes \Omegamat^{-1}) \Xmat \right)^{-1}
+\left( \Xmat' (\Imat_{N} \otimes \Omegamat^{-1}) \yvec \right).
+\end{align}
+
+O problema, agora, é estimar $\Omegamat$.
+Supondo:
+\begin{itemize}\itemsep0pt
+\item $\E(u_{it}u_{it}) = \sigma_{u}^{2}$;
+\item $\E(u_{it}u_{is}) = 0$.
+\end{itemize}
+
+Como $\Omegamat = \E(\mbs{v}_{i} \mbs{v}_{i}') = \E[ ( c_{i} \onevec_{T} + \uvec_{i} ) ( c_{i} \onevec_{T} + \uvec_{i} )' ]$, temos que:
+
+\vspace{-1 em}
+\begin{align*} 
+\E(v_{it}v_{it}) &=
+\E( c_{i}^{2} + 2c_{i} u_{it} + u_{it}^{2}) 
+=
+\sigma_{c}^{2} + \sigma_{u}^{2}
+\\
+\E(v_{it}v_{is})	&=
+\E[ ( c_{i} + u_{it} ) ( c_{i} + u_{is} ) ]
+=
+\E( c_{i}^{2} + c_{i} u_{is} + u_{it} c_{i} + u_{it} u_{is} )
+=
+\sigma_{c}^{2}.
+\end{align*}
+
+Assim, 
+
+\vspace{-1 em}
+\begin{align*}
+\Omegamat 
+= 
+\E(\mbs{v}_{i} \mbs{v}_{i}') = \sigma^{2}_{u} \Imat_{T} + \sigma_{c}^{2} \onevec_{T} \onevec_{T}'
+\end{align*}
+
+\noindent
+onde
+$\sigma^{2}_{u} \Imat_{T}$ 
+é uma matriz diagonal, e 
+$\sigma_{c}^{2} \onevec_{T} \onevec_{T}'$ é uma matriz com todos os elementos iguais a $\sigma_{c}^{2}$.
+
+Agora, rodando POLS em \eqref{mod3:EA} e guardando os resíduos, temos:
+
+\vspace{-1 em}
+\begin{align*}
+\hat{v}_{it}^{POLS}
+= 
+\hat{y}_{it}^{POLS} - \xvec_{it} \mbs{\hat{\beta}}^{POLS}
+\end{align*}
+
+\noindent
+e conseguimos estimar $\sigma_{v}^{2}$ e $\sigma_{c}^{2}$ por estimadores amostrais:
+
+\begin{itemize}\itemsep0pt
+\item 
+como $\sigma_{v}^{2} = \E(v_{it}^{2})$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\hat{\sigma}_{v}^{2} =
+(NT - K)^{-1} 
+\sum_{i=1}^{N}
+\sum_{t=1}^{T}
+\hat{v}_{it}^2
+\end{align*}
+\vspace{-1.5 em}
+
+\item 
+como $\sigma_{c}^{2} = \E(v_{it} v_{is})$:
+
+\vspace{-1.5 em}
+\begin{align*}
+\hat{\sigma}_{c}^{2} =
+\left[ N \frac{T ( T-1 )}{2} - K  \right]^{-1}
+\sum_{i=1}^{N}
+\sum_{t=1}^{T-1}
+\sum_{s=t+1}^{T}
+\hat{v}_{it} \hat{v}_{is}
+\end{align*}
+\vspace{-1.5 em}
+
+\item $N$ indivíduos;
+
+\item $T$ elementos da diagonal principal de $\Omegamat$
+
+\item $\frac{T ( T - 1)}{2}$ elementos da matriz triangular superior dos elementos fora da diagonal.
+
+\item $K$ regressores.
+\end{itemize}
+
+Agora que temos $\hat{\sigma}^2_{v}$ e $\hat{\sigma}^2_{c}$ podemos achar $\hat{\sigma}^{2}_{u}$ pela equação $\boxed{\hat{\sigma}_{u}^{2} = \hat{\sigma}_{v}^{2} - \hat{\sigma}_{c}^{2}}$.
+Dessa forma, achamos os $T^2$ elementos de $\widehat{\Omegamat}$, e podemos escrever:
+
+\vspace{-1 em}
+\begin{align*}
+\widehat{\Omegamat}
+= 
+\hat{\sigma}^{2}_{u} \Imat_{T} + \hat{\sigma}_{c}^{2} \onevec_{T} \onevec_{T}'
+\end{align*}
+
+Com $\widehat{\Omegamat}$ estimado, reescrevemos \eqref{beta:RE:1} como:
+
+\vspace{-1 em}
+\begin{align} \label{beta:RE:2}
+\betavec^{RE} = 
+\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \Xmat \right]^{-1}
+\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \yvec \right].
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Valor Esperado}
+
+\vspace{-1 em}
+\begin{align*}
+\Aboxed{
+\E( \betavec^{RE} ) = 
+\betavec +
+\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \Xmat \right]^{-1}
+\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \mbs{v} \right] }.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Variância}
+
+\vspace{-1 em}
+\begin{align*} 
+\Var( \betavec^{RE} ) = 
+E
+\left\{ 
+\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} ) \Xmat \right]^{-1}
+\left[
+\Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} )
+\mbs{v} \mbs{v}'
+( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} )' \Xmat
+\right]
+\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} ) \Xmat \right]
+\right\},
+\end{align*}
+
+\noindent
+como $\E( \mbs{v}_{i} \mbs{v}_{i}' ) =\Omegamat$,
+
+\vspace{-1 em}
+\begin{align*} 
+\Aboxed{
+\Var( \betavec^{RE} ) = 
+E
+\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} ) \Xmat \right] }.
+\end{align*}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section{Endogeneity and GMM}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3238,7 +3356,7 @@ Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipóte
 	\end{align*}
 
 	\noindent
-	Se tivéssemos definido $W = (Z'Z)^{-1}$, teríamos $\beta^{2SLS}$.
+	Se tivéssemos definido $W = (Z'Z)^{-1}$, teríamos $\betavec^{2SLS}$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3451,7 +3569,7 @@ Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipóte
 	\vspace{-1 em}
 	\begin{align*}
 		\E( \betavec^{FDIV} ) =  
-		\beta + 
+		\betavec + 
 		\left( \Delta X' P_{W} \Delta X \right)^{-1}
 		\left( \Delta X' P_{W} \mbs{e} \right)
 	\end{align*}
@@ -3463,8 +3581,8 @@ Para implementarmos o estimador de \textbf{GLS} precisamos das seguintes hipóte
 	\begin{align*}
 		\Var( \betavec^{FDIV} ) &=
 		\E\left\{  
-			\left[ \E( \betavec^{FDIV} ) - \beta \right] 
-			\left[ \E( \betavec^{FDIV} ) - \beta \right]'
+			\left[ \E( \betavec^{FDIV} ) - \betavec \right] 
+			\left[ \E( \betavec^{FDIV} ) - \betavec \right]'
 		\right\}
 		\\
 		&=
