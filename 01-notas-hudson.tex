@@ -1,6 +1,4 @@
 \documentclass[11pt, oneside, a4paper, article]{article}
-% \documentclass[11pt, oneside, a4paper, article, ms]{memoir}
-% \documentclass[11pt,oneside,a4paper]{letter}
 \usepackage[a4paper, margin=1in]{geometry}   % MARGENS
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2849,9 +2847,9 @@ Onde,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\section{Random Effects (RE, EA)}
+\section{Modelo de Efeitos Aleatórios (EA, Random Effects, RE)}
 \noindent
-\citet[Sec.10.4 -- Random Effects Methods, p.257]{wool-2010} \\
+\citet[Sec.10.4 -- Random Effects Methods, p.257]{wool-2010}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo}
@@ -2859,113 +2857,105 @@ Onde,
 O modelo linear de \textbf{efeitos não observados}:
 
 \vspace{-1 em}
-\begin{align} \label{mod1:EA}
-y_{it} = \xvec_{it} \betavec + c_{i} + u_{it},
+\begin{align} 
+\label{re:mod}
+y_{it} &= \xvec_{it}\betavec + c_{i} + u_{it},
+\qquad t = 1, \dots, T \quad \text{ e } \quad i = 1, \dots, N.
+\\
+\label{re:mod:vec}
+\yvec_{i} &= \Xmat_{i}\betavec + c_{i} \onevec + \uvec_{i},
+\qquad i = 1, \dots, N.
+\\
+\label{re:mod:mat}
+\yvec &= \Xmat\betavec + c_{i} \onevec + \uvec.
 \end{align}
 
-\noindent
-onde
-$t = 1, \dots, T$ e $i = 1, \dots, N$.
-
-O modelo contém explicitamente um componente não observado que não varia no tempo $c_{i}$.
-Abordamos esse componente como parte do erro, não como parâmetro a ser estimado.
-Para a análise de \textbf{Efeitos Aleatórios, (EA) ou (RE)}, supomos que os regressões $\xvec_{it}$ são \textbf{não correlacionados} com $c_{i}$, mas fazemos hipóteses mais restritas que o \textbf{POLS}; pois assim exploramos a presença de \textbf{correlação serial} do erro composto por GLS e garantimos a consitência do estimador de FGLS.
-
-Podemos reescrever \eqref{mod1:EA} como:
-
-\vspace{-1 em}
-\begin{align} \label{mod2:EA}
-y_{it} = \xvec_{it} \betavec + v_{it},
-\end{align}
-
-\noindent
-onde
-$t = 1, \dots, T$, $i = 1, \dots, N$ e $\boxed{v_{it} = c_{i} + u_{it}}$ é o erro composto.
-
-Agora, vamos empilhar os $t$'s e reescrever \eqref{mod2:EA} como:
-
-\vspace{-1 em}
-\begin{align} \label{mod3:EA}
-\yvec_{i} = \Xmat_{i} \betavec + \mbs{v}_{i},
-\end{align}
-
-\noindent
-onde
-$i = 1, \dots, N$ e $\boxed{\mbs{v}_{i} = c_{i} \onevec_{T} + \uvec_{i}}$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Hipóteses}
 
 As Hipóteses que usamos para $\mbs{\widehat{\beta}}^{RE}$ são:
 
-\begin{enumerate} \itemsep0pt
-\item  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{hypo}[\textbf{RE.1}]
 Usamos o modelo correto e $c_{i}$ não é endógeno.
 
 \begin{enumerate}[label =\alph*)]
 \item 
-$\E( u_{it} \, | \,  x_{i1}, \dots, x_{iT}, c_{i} ) = 0$,
-$i = 1, \dots, N$.
+$\E( u_{it} \, | \,  \xvec_{i1}, \dots, \xvec_{iT}, c_{i} ) = 0, \qquad i = 1, \dots, N$.
+
 \item        
-$\E( c_{it} \, | \, x_{i1}, \dots, x_{iT} ) = \E( c_{i} ) = 0$,
-$i = 1, \dots, N$.
+$\E( c_{i} \, | \, \xvec_{i1}, \dots, \xvec_{iT} ) = \E( c_{i} ) = 0, \qquad i = 1, \dots, N$.
 \end{enumerate}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\item  Posto completo de $\E( \Xmat_{i}' \Omegamat^{-1} \Xmat_{i} )$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{hypo}[\textbf{RE.2}]
+Posto completo de $\E( \Xmat_{i}' \Omegamat^{-1} \Xmat_{i} )$.
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Definindo a matriz $T \times T$, $\boxed{\Omegamat \equiv \E(\mbs{v}_{i} \mbs{v}_{i}')}$, queremos que $\E( \Xmat_{i} \Omegamat^{-1} \Xmat_{i} )$ tenha posto completo (posto = $K$).
+Definindo a matriz $T \times T$,
+$\Omegamat \equiv \E(\mbs{v}_{i} \mbs{v}_{i}')$,
+queremos que 
+$\E( \Xmat_{i} \Omegamat^{-1} \Xmat_{i} )$
+tenha posto completo (posto = $K$).
+
+A matriz $\Omegamat$ é simétrica 
+$\Omegamat' = \Omegamat$
+e positiva definida $\det(\Omegamat) > 0$.
+Assim podemos achar $\Omegamat^{1/2}$ e $\Omegamat^{-1/2}$ com 
+$\Omegamat = \Omegamat^{1/2} \Omegamat^{1/2}$ e
+$\Omegamat^{-1} = \Omegamat^{-1/2} \Omegamat^{-1/2}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{hypo}[\textbf{RE.3}]
+\item
+
+\begin{enumerate}[label =\alph*)]
+\item 
+$\E( \uvec_{i} \uvec_{i}' \, | \,  \xvec_{i1}, \dots, \xvec_{iT}, c_{i} ) = \sigmasq_{u}\Imat_{T}$;
+
+\item        
+$\E( c_{it} \, | \, x_{i1}, \dots, x_{iT} ) = \E( c_{i} ) = \sigmasq_{c}$.
 \end{enumerate}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A matriz $\Omegamat$ é simétrica $\Omegamat' = \Omegamat$ e positiva definida $\det(\Omegamat) > 0$.
-Assim podemos achar $\Omegamat^{1/2}$ e $\Omegamat^{-1/2}$ com $\Omegamat = \Omegamat^{1/2} \Omegamat^{1/2}$ e $\Omegamat^{-1} = \Omegamat^{-1/2} \Omegamat^{-1/2}$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{remark} \item
+	\textbf{RE.1 (a)} está presente em FE e FD.
+
+\noindent
+\textbf{RE.1 (b)} está presente em POLS e implica ausência de correlação entre $c_{i}$ e os regressores do modelo.
+\end{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Estimação}
 
-Premultiplicando \eqref{mod3:EA} port $\Omegamat^{-1/2}$ do dois lados, temos:
-
-\vspace{-1 em}
-\begin{align} 
-\notag
-\Omegamat^{-1/2}\yvec_{i} &= \Omegamat^{-1/2}\Xmat_{i} \betavec + \Omegamat^{-1/2}\mbs{v}_{i}
-\\
-\label{mod4:EA}
-\yvec_{i}^{*} &= \Xmat_{i}^{*} \betavec + \mbs{v}_{i}^{*},
-\end{align}
-
-Estimando o modelo acima por POLS:
-
-\vspace{-1 em}
-\begin{align} 
-\notag
-\betavec^{POLS} &= 
-\left( \sum_{i=1}^{N} \Xmat_{i}^{*}' \Xmat_{i}^{*} \right)^{-1}
-\left( \sum_{i=1}^{N} \Xmat_{i}^{*}' \yvec_{i}^{*} \right)
-\\ \notag
-&=
-\left( \sum_{i=1}^{N} \Xmat_{i}' \Omegamat^{-1} \Xmat_{i} \right)^{-1}
-\left( \sum_{i=1}^{N} \Xmat_{i}' \Omegamat^{-1} \yvec_{i} \right)
-\\ \label{beta:RE:1}
-&=
-\left( \Xmat' (\Imat_{N} \otimes \Omegamat^{-1}) \Xmat \right)^{-1}
-\left( \Xmat' (\Imat_{N} \otimes \Omegamat^{-1}) \yvec \right).
-\end{align}
-
-O problema, agora, é estimar $\Omegamat$.
-Supondo:
-\begin{itemize}\itemsep0pt
-\item $\E(u_{it}u_{it}) = \sigma_{u}^{2}$;
-\item $\E(u_{it}u_{is}) = 0$.
-\end{itemize}
-
-Como $\Omegamat = \E(\mbs{v}_{i} \mbs{v}_{i}') = \E[ ( c_{i} \onevec_{T} + \uvec_{i} ) ( c_{i} \onevec_{T} + \uvec_{i} )' ]$, temos que:
+Vamos considerar o modelo:
 
 \vspace{-1 em}
 \begin{align*} 
-\E(v_{it}v_{it}) &=
-\E( c_{i}^{2} + 2c_{i} u_{it} + u_{it}^{2}) 
-=
-\sigma_{c}^{2} + \sigma_{u}^{2}
+y_{it} &= \xvec_{it}\betavec + v_{it},
+\qquad t = 1, \dots, T \quad \text{ e } \quad i = 1, \dots, N.
+\\
+\yvec_{i} &= \Xmat_{i}\betavec + \vvec_{i},
+\qquad i = 1, \dots, N.
+\\
+\yvec &= \Xmat\betavec + \vvec.
+\end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Sob \textbf{RE.3:}
+\begin{align*} 
+\E(v_{it}v_{it}) &= 
+\E( c_{i}^{2} + 2c_{i} u_{it} + u_{it}^{2}) =
+\sigmasq_{c} + \sigmasq_{u} = \sigmasq_{v}
 \\
 \E(v_{it}v_{is})	&=
 \E[ ( c_{i} + u_{it} ) ( c_{i} + u_{is} ) ]
@@ -2975,13 +2965,33 @@ Como $\Omegamat = \E(\mbs{v}_{i} \mbs{v}_{i}') = \E[ ( c_{i} \onevec_{T} + \uvec
 \sigma_{c}^{2}.
 \end{align*}
 
-Assim, 
+\noindent
+Então, 
+\begin{align*}
+\E(\mbs{v}_{i} \mbs{v}_{i}') =
+\begin{bmatrix}
+	\sigmasq_{c} + \sigmasq_{u} & \sigmasq_{c} & \dots & \sigmasq_{c} \\	
+	\sigmasq_{c} & \sigmasq_{c} + \sigmasq_{u} & \dots & \sigmasq_{c} \\	
+	\vdots & \vdots & \ddots & \vdots \\
+	\sigmasq_{c} & \sigmasq_{c} & \dots & \sigmasq_{c} + \sigmasq_{u}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\sigmasq_{c} + \sigmasq_{u}  & & \sigmasq_{c} \\	
+& \ddots & \\
+\sigmasq_{c} & & \sigmasq_{c} + \sigmasq_{u}
+\end{bmatrix}
+\equiv
+\Omegamat
+\end{align*}
+
+\noindent
+Também poderíamos escrever:
 
 \vspace{-1 em}
 \begin{align*}
-\Omegamat 
-= 
-\E(\mbs{v}_{i} \mbs{v}_{i}') = \sigma^{2}_{u} \Imat_{T} + \sigma_{c}^{2} \onevec_{T} \onevec_{T}'
+\boxed{\Omegamat = \E(\mbs{v}_{i} \mbs{v}_{i}') =
+\sigmasq_{u} \Imat_{T} + \sigmasq_{c} \onevec_{T} \onevec_{T}'}
 \end{align*}
 
 \noindent
@@ -2990,115 +3000,124 @@ $\sigma^{2}_{u} \Imat_{T}$
 é uma matriz diagonal, e 
 $\sigma_{c}^{2} \onevec_{T} \onevec_{T}'$ é uma matriz com todos os elementos iguais a $\sigma_{c}^{2}$.
 
-Agora, rodando POLS em \eqref{mod3:EA} e guardando os resíduos, temos:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Estimador RE}
+
+\vspace{-1.5 em}
+\begin{align}
+\label{re:betahat}
+\betavechat^{RE}
+= 
+\left[ \Xmat' \left( \Imat_{N} \otimes \Omegamathatinv \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \Omegamathatinv \right) \yvec \right]
+\end{align}
+
+\noindent
+onde
 
 \vspace{-1 em}
 \begin{align*}
-\hat{v}_{it}^{POLS}
-= 
-\hat{y}_{it}^{POLS} - \xvec_{it} \mbs{\hat{\beta}}^{POLS}
+\Omegamathat =
+\begin{bmatrix}
+\sigmasqhat_{v} & & \sigmasqhat_{c} \\	
+& \ddots & \\
+\sigmasqhat_{c} & & \sigmasqhat_{v}
+\end{bmatrix}
 \end{align*}
 
 \noindent
-e conseguimos estimar $\sigma_{v}^{2}$ e $\sigma_{c}^{2}$ por estimadores amostrais:
-
-\begin{itemize}\itemsep0pt
-\item 
-como $\sigma_{v}^{2} = \E(v_{it}^{2})$:
+onde conseguimos estimar $\sigma_{v}^{2}$ e $\sigma_{c}^{2}$ por estimadores amostrais:
 
 \vspace{-1.5 em}
 \begin{align*}
-\hat{\sigma}_{v}^{2} =
-(NT - K)^{-1} 
-\sum_{i=1}^{N}
-\sum_{t=1}^{T}
-\hat{v}_{it}^2
-\end{align*}
-\vspace{-1.5 em}
-
-\item 
-como $\sigma_{c}^{2} = \E(v_{it} v_{is})$:
-
-\vspace{-1.5 em}
-\begin{align*}
-\hat{\sigma}_{c}^{2} =
+\hat{\sigma}_{v}^{2} &=
+(NT - K)^{-1} \sum_{i=1}^{N} \sum_{t=1}^{T} \vhat_{it}^2
+\\
+\hat{\sigma}_{c}^{2} &=
 \left[ N \frac{T ( T-1 )}{2} - K  \right]^{-1}
-\sum_{i=1}^{N}
-\sum_{t=1}^{T-1}
-\sum_{s=t+1}^{T}
-\hat{v}_{it} \hat{v}_{is}
+\sum_{i=1}^{N} \sum_{t=1}^{T-1} \sum_{s=t+1}^{T} \vhat_{it} \vhat_{is}
 \end{align*}
-\vspace{-1.5 em}
 
-\item $N$ indivíduos;
-
-\item $T$ elementos da diagonal principal de $\Omegamat$
-
-\item $\frac{T ( T - 1)}{2}$ elementos da matriz triangular superior dos elementos fora da diagonal.
-
-\item $K$ regressores.
-\end{itemize}
-
-Agora que temos $\hat{\sigma}^2_{v}$ e $\hat{\sigma}^2_{c}$ podemos achar $\hat{\sigma}^{2}_{u}$ pela equação $\boxed{\hat{\sigma}_{u}^{2} = \hat{\sigma}_{v}^{2} - \hat{\sigma}_{c}^{2}}$.
-Dessa forma, achamos os $T^2$ elementos de $\widehat{\Omegamat}$, e podemos escrever:
+\noindent
+e $\vhat_{it}$ é o resíduo de POLS do modelo \eqref{re:mod}
 
 \vspace{-1 em}
 \begin{align*}
-\widehat{\Omegamat}
-= 
-\hat{\sigma}^{2}_{u} \Imat_{T} + \hat{\sigma}_{c}^{2} \onevec_{T} \onevec_{T}'
-\end{align*}
-
-Com $\widehat{\Omegamat}$ estimado, reescrevemos \eqref{beta:RE:1} como:
-
-\vspace{-1 em}
-\begin{align} \label{beta:RE:2}
-\betavec^{RE} = 
-\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \Xmat \right]^{-1}
-\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \yvec \right].
-\end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Valor Esperado}
-
-\vspace{-1 em}
-\begin{align*}
-\Aboxed{
-\E( \betavec^{RE} ) = 
-\betavec +
-\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \Xmat \right]^{-1}
-\left[ \Xmat' (\Imat_{N} \otimes \widehat{\Omegamat}^{-1}) \mbs{v} \right] }.
+\vhat_{it}^{POLS} = 
+y_{it} - \yhat_{it}^{POLS} =
+y_{it} - \xvec_{it} \mbs{\hat{\beta}}^{POLS}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Variância}
+\subsection{Inferência}
 
-\vspace{-1 em}
+Robusta:
 \begin{align*} 
-\Var( \betavec^{RE} ) = 
-E
-\left\{ 
-\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} ) \Xmat \right]^{-1}
-\left[
-\Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} )
-\mbs{v} \mbs{v}'
-( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} )' \Xmat
-\right]
-\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} ) \Xmat \right]
+\Var( \betavechat^{RE} ) = 
+\E \left\{ 
+\left[ \Xmat' ( \Imat_{N} \otimes \Omegamathatinv ) \Xmat \right]^{-1}
+\left[ \sum_{i=1}^{N}
+\Xmat_{i}'\Omegamathatinv\vvechat_{i} \vvechat_{i}' \Omegamathatinv \Xmat_{i} \right]
+\left[ \Xmat' ( \Imat_{N} \otimes \Omegamathatinv ) \Xmat \right]^{-1}
 \right\},
 \end{align*}
 
-\noindent
-como $\E( \mbs{v}_{i} \mbs{v}_{i}' ) =\Omegamat$,
-
-\vspace{-1 em}
+Sob Homocedasticidade:
 \begin{align*} 
 \Aboxed{
-\Var( \betavec^{RE} ) = 
+\Var( \betavechat^{RE} ) = 
 E
-\left[ \Xmat' ( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} ) \Xmat \right] }.
+\left[ \Xmat' ( \Imat_{N} \otimes \Omegamathatinv ) \Xmat \right] }.
 \end{align*}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Testes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Teste para presença de componente não observável}
+
+\begin{align*}
+H_{0}&: \sigmasq_{c} = 0
+\\     
+H_{1}&: \sigmasq_{c} \neq 0
+\end{align*}
+
+Estatística do teste:
+\begin{align*}
+\text{Est. Teste} =
+\dfrac{ \sum_{i=1}^{N} \sum_{t=1}^{T-1} \sum_{s=t+1}^{T} \vhat_{it}\vhat_{is} }
+{\left[ \sum_{i=1}^{N} \left(  \sum_{t=1}^{T-1} \sum_{s=t+1}^{T} \vhat_{it}\vhat_{is} \right)^{2} \right]^{1/2}}
+\end{align*}
+
+\noindent
+Sob $H_{0}$, $\text{Est. Teste} \sim \nor(0,1)$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Teste de Hausman (FE v. RE)}
+
+\begin{align*}
+H_{0}&: \text{Tanto FE, quanto RE são consistentes}
+\\    
+H_{1}&: \text{Apenas FE é consistente}
+\end{align*}
+
+Estatística do teste:
+\begin{align*}
+\text{Est. Teste} =
+\left( \deltavechat_{FE} - \deltavechat_{RE}  \right)
+\left[ \Varhat(\deltavechat_{FE}) - \Varhat(\deltavechat_{RE})  \right]^{-1}
+\left( \deltavechat_{FE} - \deltavechat_{RE}  \right)
+\end{align*}
+
+\noindent
+onde $\deltavechat$ é um vetor $M \times 1$ e $M$ é o número de regressores que variam no tempo.
+
+\noindent
+Sob $H_{0}$, 
+\begin{align*}
+\text{Est. Teste} \asim \chisq_{M}.
+\end{align*}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3107,259 +3126,259 @@ E
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Modelo}
+\subsection{Modelo}
 
-	No seguinte modelo \textit{cross-section}:
+No seguinte modelo \textit{cross-section}:
 
-	\vspace{-1 em}
-	\begin{align} \label{mod1}
-		y_{i} = \beta_{0} + \beta_{1} x_{1i} + \beta_{2} x_{2i} + \err_{i}
-		\; ; \quad i = 1, \dots, N.
-	\end{align}
+\vspace{-1 em}
+\begin{align} \label{mod1}
+y_{i} = \beta_{0} + \beta_{1} x_{1i} + \beta_{2} x_{2i} + \err_{i}
+\; ; \quad i = 1, \dots, N.
+\end{align}
 
-	\noindent
-	A variável explicativa $x_{k}$ é dita \textbf{endógena} se ela for correlacionada com erro.
-	Se $x_{k}$ for não correlacionada com o erro, então $x_{k}$ é dita \textbf{exógena}.
+\noindent
+A variável explicativa $x_{k}$ é dita \textbf{endógena} se ela for correlacionada com erro.
+Se $x_{k}$ for não correlacionada com o erro, então $x_{k}$ é dita \textbf{exógena}.
 
-	Endogeneidade surge, normalmente, de três maneiras diferentes:
+Endogeneidade surge, normalmente, de três maneiras diferentes:
 
-	\begin{enumerate}\itemsep0pt
-		\item Variável Omitida;
-		\item Simultaneidade;
-		\item Erro de Medida.
-	\end{enumerate}
+\begin{enumerate}\itemsep0pt
+\item Variável Omitida;
+\item Simultaneidade;
+\item Erro de Medida.
+\end{enumerate}
 
-	No modelo \eqref{mod1} vamos supor:
+No modelo \eqref{mod1} vamos supor:
 
-	\begin{itemize}\itemsep0pt
-		\item $x_{1}$ é exógena.
-		\item $x_{2}$ é endógena.
-	\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Hipóteses}
-
-	Assim, precisamos encontrar um instrumento $z_{i}$ para $x_{2}$, uma vez que queremos estimar $\beta_{0}$, $\beta_{1}$ e $\beta_{2}$ de maneira consistente.
-	Para $z_{i}$ ser um bom instrumento precisamos que $z$ tenha:
-
-	\begin{enumerate}\itemsep0pt
-		\item $Cov(z, \err) = 0$ $\implies$  $z$ é exógena em \eqref{mod1}.
-		\item $Cov(z, x_{2}) \neq 0$ $\implies$  correlação com $x_{2}$ após controlar para outras vaariáveis.
-	\end{enumerate}
+\begin{itemize}\itemsep0pt
+\item $x_{1}$ é exógena.
+\item $x_{2}$ é endógena.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Estimação}
+\subsection{Hipóteses}
 
-	Indo para o problema de dados de painel, temos:
+Assim, precisamos encontrar um instrumento $z_{i}$ para $x_{2}$, uma vez que queremos estimar $\beta_{0}$, $\beta_{1}$ e $\beta_{2}$ de maneira consistente.
+Para $z_{i}$ ser um bom instrumento precisamos que $z$ tenha:
 
-	\vspace{-1 em}
-	\begin{align} \label{mod2}
-		\yvec_{i} = \Xmat_{i} \betavec + \uvec_{i}
-		\; ; \quad i = 1, \dots, N.
-	\end{align}
-
-	\noindent
-	onde 
-	$\yvec_{i}$ é um vetor $T \times 1$,
-	$\Xmat_{i}$ é uma matriz $T \times K$,
-	$\betavec$ é o vetor de coeficientes $K \times 1$,
-	$\uvec_{i}$ é o vetor de erros $T \times 1$.
-
-	Se é verdade que há endogeneidade em \eqref{mod2}, então:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\E(\Xmat_{i}^{\prime} \uvec_{i}) \neq 0
-	\end{align*}
-
-	Definimos $Z_{i}$ como uma matriz $T \times L$ com $L \geq K$ de variáveis exógenas (incluindo o instrumento).
-	Queremos acabar com a endogeneidade, ou seja:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\E(Z_{i}^{\prime} \uvec_{i}) = 0
-	\end{align*}
-
-	Supondo $L = K$ (apenas substituímos a variável endógena por um instrumento).
-
-	\vspace{-1 em}
-	\begin{align*}
-		\E[ Z_{i}^{\prime} ( \yvec_{i} - \Xmat_{i} \betavec ) ] &= 0
-		\\
-		\E( Z_{i}^{\prime} \yvec_{i} ) - \E( Z_{i}^{\prime} \Xmat_{i} ) \betavec &= 0
-		\\
-		\E( Z_{i}^{\prime} \yvec_{i} ) &= \E( Z_{i}^{\prime} \Xmat_{i} ) \betavec
-		\\
-		\Aboxed{
-			\betavec &=
-			\left[ \E( Z_{i}^{\prime} \Xmat_{i} ) \right]^{-1}
-			\left[ \E( Z_{i}^{\prime} \yvec_{i} ) \right]
-		}
-	\end{align*}
-
-	Se Usarmos estimadores amostrais:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\mbs{\hat{\beta}} &=
-		\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \Xmat_{i} \right]^{-1}
-		\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \yvec_{i} \right]
-		\\
-		\Aboxed{
-			\mbs{\hat{\beta}} &=
-		( Z^{\prime} \Xmat )^{-1} ( Z^{\prime} \yvec ) }
-	\end{align*}
-
-	\vspace{1 em}
-	Se $L > K$, vamos considerar:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\underset{\betavec}{\text{Min}} \;
-		\E( Z_{i}\uvec_{i} )^2
-	\end{align*}
-	\noindent onde:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\E( Z_{i}\uvec_{i} )^2 
-		&=
-		\E[ ( Z_{i}\uvec_{i} )' ( Z_{i}\uvec_{i} ) ]
-		=
-		( Z' \yvec - Z' \Xmat \betavec )' ( Z' \yvec - Z' \Xmat \betavec )
-		\\
-		&=
-		\yvec' ZZ' \yvec
-		-
-		\yvec' ZZ' \Xmat \betavec
-		-
-		\betavec' \Xmat' ZZ' \yvec
-		+
-		\betavec' \Xmat' ZZ' \Xmat \betavec
-	\end{align*}
-
-	Derivando em relação em $\betavec$ e igualando a zero:
-
-	\vspace{-1 em}
-	\begin{align*}
-		-2 \yvec' ZZ' \Xmat + 2 \betavec'\Xmat' ZZ' \Xmat &= 0
-		\\
-		\betavec'\Xmat' ZZ' \Xmat &= \yvec' ZZ' \Xmat 
-		\\
-		\betavec' &= ( \yvec' ZZ' \Xmat ) ( \Xmat' ZZ' \Xmat )^{-1}
-		\\
-		\Aboxed{
-		\betavec &= ( \Xmat' ZZ' \Xmat )^{-1} ( \Xmat' ZZ' \yvec ) }
-	\end{align*}
-
-	Um estimador mais eficiente pode ser encontrado fazendo:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\underset{\betavec}{\text{Min}} \;
-		\E[ ( Z_{i}' \yvec - Z' \Xmat \betavec )' W ( Z_{i}' \yvec - Z' \Xmat \betavec ) ].
-	\end{align*}
-
-	\noindent
-	Escolhendo $\widehat{W}$, a priori, temos:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\underset{\betavec}{\text{Min}} \;
-		\left\{ 
-			\yvec' Z \widehat{W} Z' \yvec
-			-
-			\yvec' Z \widehat{W} Z' \Xmat \betavec
-			-
-			\betavec' \Xmat'  Z \widehat{W} Z' \yvec
-			+
-			\betavec' \Xmat'  Z \widehat{W} Z' \Xmat \betavec
-		\right\}
-	\end{align*}
-
-	Derivando em relação em $\betavec$ e igualando a zero:
-
-	\vspace{-1 em}
-	\begin{align*}
-		-2 \yvec' Z \widehat{W} Z' \Xmat + 2 \betavec'\Xmat' Z \widehat{W} Z' \Xmat &= 0
-		\\
-		\betavec'\Xmat' Z \widehat{W} Z' \Xmat &= \yvec' Z \widehat{W} Z' \Xmat 
-		\\
-		\betavec' &= ( \yvec' Z \widehat{W} Z' \Xmat ) ( \Xmat' Z \widehat{W} Z' \Xmat )^{-1}
-		\\
-		\Aboxed{
-		\betavec^{GMM} &= ( \Xmat' Z \widehat{W}' Z' \Xmat )^{-1} ( \Xmat' Z \widehat{W}' Z' \yvec ) }
-	\end{align*}
+\begin{enumerate}\itemsep0pt
+\item $Cov(z, \err) = 0$ $\implies$  $z$ é exógena em \eqref{mod1}.
+\item $Cov(z, x_{2}) \neq 0$ $\implies$  correlação com $x_{2}$ após controlar para outras variáveis.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Valor Esperado} 
+\subsection{Estimação}
 
-	\vspace{-1 em}
-	\begin{align*}
-		\Aboxed{
-			\E( \betavec^{GMM} ) &=
-			\betavec +
-		\E[ ( \Xmat' Z \widehat{W}' Z' \Xmat )^{-1} ( \Xmat' Z \widehat{W}' Z' \uvec ) ] }.
-	\end{align*}
+Indo para o problema de dados de painel, temos:
+
+\vspace{-1 em}
+\begin{align} \label{mod2}
+\yvec_{i} = \Xmat_{i} \betavec + \uvec_{i}
+\; ; \quad i = 1, \dots, N.
+\end{align}
+
+\noindent
+onde 
+$\yvec_{i}$ é um vetor $T \times 1$,
+$\Xmat_{i}$ é uma matriz $T \times K$,
+$\betavec$ é o vetor de coeficientes $K \times 1$,
+$\uvec_{i}$ é o vetor de erros $T \times 1$.
+
+Se é verdade que há endogeneidade em \eqref{mod2}, então:
+
+\vspace{-1 em}
+\begin{align*}
+\E(\Xmat_{i}^{\prime} \uvec_{i}) \neq 0
+\end{align*}
+
+Definimos $Z_{i}$ como uma matriz $T \times L$ com $L \geq K$ de variáveis exógenas (incluindo o instrumento).
+Queremos acabar com a endogeneidade, ou seja:
+
+\vspace{-1 em}
+\begin{align*}
+\E(Z_{i}^{\prime} \uvec_{i}) = 0
+\end{align*}
+
+Supondo $L = K$ (apenas substituímos a variável endógena por um instrumento).
+
+\vspace{-1 em}
+\begin{align*}
+\E[ Z_{i}^{\prime} ( \yvec_{i} - \Xmat_{i} \betavec ) ] &= 0
+\\
+\E( Z_{i}^{\prime} \yvec_{i} ) - \E( Z_{i}^{\prime} \Xmat_{i} ) \betavec &= 0
+\\
+\E( Z_{i}^{\prime} \yvec_{i} ) &= \E( Z_{i}^{\prime} \Xmat_{i} ) \betavec
+\\
+\Aboxed{
+\betavec &=
+\left[ \E( Z_{i}^{\prime} \Xmat_{i} ) \right]^{-1}
+\left[ \E( Z_{i}^{\prime} \yvec_{i} ) \right]
+}
+\end{align*}
+
+Se Usarmos estimadores amostrais:
+
+\vspace{-1 em}
+\begin{align*}
+\mbs{\hat{\beta}} &=
+\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \Xmat_{i} \right]^{-1}
+\left[ N^{-1} \sum_{i=1}^{N} Z_{i}^{\prime} \yvec_{i} \right]
+\\
+\Aboxed{
+\mbs{\hat{\beta}} &=
+( Z^{\prime} \Xmat )^{-1} ( Z^{\prime} \yvec ) }
+\end{align*}
+
+\vspace{1 em}
+Se $L > K$, vamos considerar:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\betavec}{\text{Min}} \;
+\E( Z_{i}\uvec_{i} )^2
+\end{align*}
+\noindent onde:
+
+\vspace{-1 em}
+\begin{align*}
+\E( Z_{i}\uvec_{i} )^2 
+&=
+\E[ ( Z_{i}\uvec_{i} )' ( Z_{i}\uvec_{i} ) ]
+=
+( Z' \yvec - Z' \Xmat \betavec )' ( Z' \yvec - Z' \Xmat \betavec )
+\\
+&=
+\yvec' ZZ' \yvec
+-
+\yvec' ZZ' \Xmat \betavec
+-
+\betavec' \Xmat' ZZ' \yvec
++
+\betavec' \Xmat' ZZ' \Xmat \betavec
+\end{align*}
+
+Derivando em relação em $\betavec$ e igualando a zero:
+
+\vspace{-1 em}
+\begin{align*}
+-2 \yvec' ZZ' \Xmat + 2 \betavec'\Xmat' ZZ' \Xmat &= 0
+\\
+\betavec'\Xmat' ZZ' \Xmat &= \yvec' ZZ' \Xmat 
+\\
+\betavec' &= ( \yvec' ZZ' \Xmat ) ( \Xmat' ZZ' \Xmat )^{-1}
+\\
+\Aboxed{
+\betavec &= ( \Xmat' ZZ' \Xmat )^{-1} ( \Xmat' ZZ' \yvec ) }
+\end{align*}
+
+Um estimador mais eficiente pode ser encontrado fazendo:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\betavec}{\text{Min}} \;
+\E[ ( Z_{i}' \yvec - Z' \Xmat \betavec )' W ( Z_{i}' \yvec - Z' \Xmat \betavec ) ].
+\end{align*}
+
+\noindent
+Escolhendo $\widehat{W}$, a priori, temos:
+
+\vspace{-1 em}
+\begin{align*}
+\underset{\betavec}{\text{Min}} \;
+\left\{ 
+\yvec' Z \widehat{W} Z' \yvec
+-
+\yvec' Z \widehat{W} Z' \Xmat \betavec
+-
+\betavec' \Xmat'  Z \widehat{W} Z' \yvec
++
+\betavec' \Xmat'  Z \widehat{W} Z' \Xmat \betavec
+\right\}
+\end{align*}
+
+Derivando em relação em $\betavec$ e igualando a zero:
+
+\vspace{-1 em}
+\begin{align*}
+-2 \yvec' Z \widehat{W} Z' \Xmat + 2 \betavec'\Xmat' Z \widehat{W} Z' \Xmat &= 0
+\\
+\betavec'\Xmat' Z \widehat{W} Z' \Xmat &= \yvec' Z \widehat{W} Z' \Xmat 
+\\
+\betavec' &= ( \yvec' Z \widehat{W} Z' \Xmat ) ( \Xmat' Z \widehat{W} Z' \Xmat )^{-1}
+\\
+\Aboxed{
+\betavec^{GMM} &= ( \Xmat' Z \widehat{W}' Z' \Xmat )^{-1} ( \Xmat' Z \widehat{W}' Z' \yvec ) }
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Variância} 
+\subsection{Valor Esperado} 
 
-	\vspace{-1 em}
-	\begin{align*}
-		\Var( \betavec^{GMM} ) &=
-		\E \left\{ 
-			\left[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \uvec ) \right]
-			\left[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \uvec ) \right]'
-		\right\}
-		\\ &=
-		\E \left\{ 
-			( X' Z \widehat{W}' Z' X )^{-1}
-			X' Z \widehat{W}' Z' \uvec \uvec' Z \widehat{W} Z' X 
-			( X' Z \widehat{W} Z' X )^{-1}
-		\right\}.
-	\end{align*}
-
-	\noindent
-	Definindo $\Delta = \E(Z' \uvec\uvec' Z)$ com $\Delta = W^{-1}$:
-
-	\vspace{-1 em}
-	\begin{align*}
-		\Var( \betavec^{GMM} ) &=
-		\E \left\{ 
-			( X' Z \widehat{W}' Z' X )^{-1}
-			X' Z \widehat{W}' W^{-1} \widehat{W} Z' X 
-			( X' Z \widehat{W} Z' X )^{-1}
-		\right\}
-		\\ &=
-		\E \left\{ 
-			( X' Z \widehat{W}' Z' X )^{-1}
-			( X' Z \widehat{W}' Z' X )
-			( X' Z \widehat{W} Z' X )^{-1}
-		\right\}.
-		\\
-		\Aboxed{
-			\Var( \betavec^{GMM} ) &=
-			\E \left[
-				( X' Z \widehat{W} Z' X )^{-1}
-		\right] }.
-	\end{align*}
-
-	\noindent
-	Se tivéssemos definido $W = (Z'Z)^{-1}$, teríamos $\betavec^{2SLS}$.
-
+\vspace{-1 em}
+\begin{align*}
+\Aboxed{
+\E( \betavec^{GMM} ) &=
+\betavec +
+\E[ ( \Xmat' Z \widehat{W}' Z' \Xmat )^{-1} ( \Xmat' Z \widehat{W}' Z' \uvec ) ] }.
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\clearpage
-	\section{Exogeneidade Estrita e FDIV}
+\subsection{Variância} 
+
+\vspace{-1 em}
+\begin{align*}
+\Var( \betavec^{GMM} ) &=
+\E \left\{ 
+\left[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \uvec ) \right]
+\left[ ( X' Z \widehat{W}' Z' X )^{-1} ( X' Z \widehat{W}' Z' \uvec ) \right]'
+\right\}
+\\ &=
+\E \left\{ 
+( X' Z \widehat{W}' Z' X )^{-1}
+X' Z \widehat{W}' Z' \uvec \uvec' Z \widehat{W} Z' X 
+( X' Z \widehat{W} Z' X )^{-1}
+\right\}.
+\end{align*}
+
+\noindent
+Definindo $\Delta = \E(Z' \uvec\uvec' Z)$ com $\Delta = W^{-1}$:
+
+\vspace{-1 em}
+\begin{align*}
+\Var( \betavec^{GMM} ) &=
+\E \left\{ 
+( X' Z \widehat{W}' Z' X )^{-1}
+X' Z \widehat{W}' W^{-1} \widehat{W} Z' X 
+( X' Z \widehat{W} Z' X )^{-1}
+\right\}
+\\ &=
+\E \left\{ 
+( X' Z \widehat{W}' Z' X )^{-1}
+( X' Z \widehat{W}' Z' X )
+( X' Z \widehat{W} Z' X )^{-1}
+\right\}.
+\\
+\Aboxed{
+\Var( \betavec^{GMM} ) &=
+\E \left[
+( X' Z \widehat{W} Z' X )^{-1}
+\right] }.
+\end{align*}
+
+\noindent
+Se tivéssemos definido $W = (Z'Z)^{-1}$, teríamos $\betavec^{2SLS}$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Modelo}
+\clearpage
+\section{Exogeneidade Estrita e FDIV}
 
-	No seguinte modelo
 
-	\vspace{-1 em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo}
+
+No seguinte modelo
+
+\vspace{-1 em}
 	\begin{align*} 
 		y_{it} = \xvec_{it} \betavec + u_{it},
 	\end{align*}
