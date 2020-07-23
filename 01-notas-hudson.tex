@@ -2531,7 +2531,7 @@ Para $T>2$:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo Linear}
 
-\vspace{-1.5 em}
+\vspace{-2 em}
 \begin{align*}
 \yvec_{i} &= \Xmat_{i}\betavec + \uvec_{i},
 \end{align*}
@@ -2718,7 +2718,7 @@ Sob \textbf{SGLS.3:}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{FSGLS: SGLS Factível}
+\subsection{Esimtação FSGLS (SGLS Factível)}
 \noindent
 \citet[Sec.7.5 -- Feasible GLS, p.153]{wool-2010} \\
 
@@ -2744,118 +2744,108 @@ N^{-1} \sum_{i=1}^{N} \uvec_{i} \uvec_{i}'
 Note que $\Omegamathat \arrowp \Omegamat$.
 \end{enumerate}
 
-Com a estimativa $\widehat{\Omegamat}$ feita, podemos obter $\betavec^{FSGLS}$ pela fórmula do $\betavec^{SGLS}$:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Com a estimativa $\widehat{\Omegamat}$ feita, podemos obter $\betavechat^{FSGLS}$ pela fórmula do $\betavec^{SGLS}$:
 
 \vspace{-1.5 em}
-\begin{align*}
-\betavec^{FGLS}
+\begin{align}
+\label{fgls:betahat}
+\betavechat^{FGLS}
 = 
-\left[ 
-\sum_{i} \Xmat_{i}' \widehat{\Omegamat}^{-1} \Xmat_{i}
-\right]^{-1}
-\left[ 
-\sum_{i} \Xmat_{i}' \widehat{\Omegamat}^{-1} \yvec_{i}
-\right]
-\end{align*}
+\left[ \sum_{i=1}^{N} \Xmat_{i}' \widehat{\Omegamat}^{-1} \Xmat_{i} \right]^{-1}
+\left[ \sum_{i=1}^{N} \Xmat_{i}' \widehat{\Omegamat}^{-1} \yvec_{i} \right]
+\end{align}
 
-Empilhando as $N$ observações:
+Empilhando as $N$ observações, podemos expressar $\betavechat^{FGLS}$ matricialmente:
 
 \vspace{-1.5 em}
-\begin{align*}
-\betavec^{FGLS}
+\begin{align}
+\label{fgls:betahat:mat}
+\betavechat^{FGLS}
 = 
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
 \left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \yvec \right]
-\end{align*}
+\end{align}
 
-Reescrevendo a equação acima:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Consistência FGLS}
+Reescrevendo a equação \eqref{fgls:betahat:mat}:
 
 \vspace{-1.5 em}
 \begin{align*}
-\betavec^{FGLS}
-&= 
-\left[  \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
-\left[  \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) (\Xmat \betavec + u) \right]
-\\
-&= 
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\betavechat^{FGLS} &= 
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) (\Xmat \betavec + \uvec) \right]
+\\ &= 
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
 \left\{ 
-\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \betavec \right]
-% \\
-% &
-\; +
-\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \betavec \right] +
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \uvec \right]
 \right\}
 \\
-&= 
+\Aboxed{ \betavechat^{FGLS} &= 
 \betavec +
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
-\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
+\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \uvec \right] }
 \end{align*}
 
+\noindent
+Então, 
+$\betavechat^{FSGLS} \arrowp \betavec$,
+se 
+$\Omegamathat \arrowp \Omegamat$.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Valor Esperado}
+\subsection{Variância FGLS}
 
 \vspace{-1 em}
 \begin{align*}
-\E(\betavec^{FGLS})
-= 
-\betavec +
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
-\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
+\Varhat(\betavechat^{FGLS}) &= 
+\left[ \Xmat' \left( \Imat_{N} \otimes \Omegamathatinv \right) \Xmat \right]^{-1}
+\left( \sum_{i=1}^{N}
+\Xmat_{i}' \Omegamathatinv \uvechat_{i} \uvechat_{i}' \Omegamathatinv \Xmat_{i} 
+\right)
+\left[ \Xmat' \left( \Imat_{N} \otimes \Omegamathatinv \right) \Xmat \right]^{-1}
 \end{align*}
 
-Concluímos que, se 
-$\widehat{\Omegamat} \xrightarrow{\enskip p \enskip} \Omegamat$,
-então,
-$\betavec^{FSGLS} \xrightarrow{\enskip p \enskip} \betavec$,
+\noindent
+onde
+$\uvechat_{i} = \yvec_{i} - \Xmat_{i} \betavechat^{FGLS}$.
+
+\paragraph{Sob Homocedasticidade (SGLS.3)}
+
+\begin{align*}
+\Varhat(\betavechat^{FGLS}) &= 
+\left[ \Xmat' \left( \Imat_{N} \otimes \Omegamathatinv \right) \Xmat \right]^{-1}
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Variância}
+\subsection{Testes}
 
-\vspace{-1 em}
+Podemos fazer o teste $t$ e de Wald.
+
+Além disso, podemos comparar o modelo restrito e irrestrito.
+
 \begin{align*}
-\Var(\betavec^{FGLS})
-&= 
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
-\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
-\left\{ 
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
-\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) u \right]
-\right\}^{\prime}
-\\
-&=
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
-\left[
-\Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) 
-u u'
-\left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat
+\text{Est. Teste} =
+\left[ 
+\uvectil'\left( \Imat \otimes \Omegamathatinv \right) \uvectil
+-
+\uvechat' \left( \Imat \otimes \Omegamathatinv \right) \uvechat
 \right]
-\left[ \Xmat \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right) \Xmat \right]^{-1}
 \end{align*}
 
-Tirando o valor Esperado e supondo que:
+\noindent
+Sob $H_{0}$, 
+$\text{Est. Teste} \sim \chisq_{Q}$.
+Onde,
 
-\vspace{-1.5 em}
-\begin{align*}
-\E(\Xmat_{i} \Omegamat^{-1} u_{i} u_{i}' \Xmat_{i}) = \E(\Xmat_{i} \Omegamat^{-1})
-\end{align*}
-temos:
-
-\vspace{-1.5 em}
-\begin{align*}
-\E\left[ \Xmat' \left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right)
-u u'
-\left( \Imat_{N} \otimes \widehat{\Omegamat}^{-1} \right)' \Xmat \right]
-=
-\E(\Xmat' \Omegamat^{-1} \Xmat)
-\end{align*}
-e temos:
-
-\vspace{-1.5 em}
-\begin{align*}
-\Var(\betavec^{FSGLS}) = \left[ \E(\Xmat' \Omegamat^{-1} \Xmat \right]^{-1}.
-\end{align*}
+\begin{description}[noitemsep]
+	\item[$\uvectil$] é o vetor de resíduos FGLS do modelo restrito.
+	\item[$\uvechat$] é o vetor de resíduos FGLS do modelo irrestrito.
+	\item[$\Omegamathat$] é construída com os resíduos SOLS do modelo irrestrito.
+	\item[$Q$] é o número de restrições.
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
