@@ -3643,155 +3643,32 @@ Podemos usar todos instrumentos disponíveis ou uma subconjunto deles
 \clearpage
 \section{S2SLS}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{FEIV}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{FDIV}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{REIV}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Alguns Testes}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\clearpage
-\section{Exogeneidade Estrita e FDIV}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Modelo}
-
-No seguinte modelo
-
-\vspace{-1 em}
-\begin{align*} 
-y_{it} = \xvec_{it} \betavec + u_{it},
-\end{align*}
-
-\noindent
-para
-$t = 1, \dots, T$ e $i = 1, \dots, N$.
-
-\begin{itemize}\itemsep0pt
-\item
-$y_{it}$ escalar;
-
-\item
-$\xvec_{it}$  vetor $1 \times K$;
-
-\item
-$\betavec$ vetor $K \times 1$;
-
-\item
-$u_{it}$ escalar.
-\end{itemize}
-
-\noindent
-$\{x_{it}\}$ é estritamente \textbf{exógeno} se valer:
-
-\vspace{-1 em}
+\vspace{-2 em}
 \begin{align*}
-\E( u_{it} \, | \, \xvec_{i1}, \dots, \xvec_{iT} ) = 0 \; , \qquad t = 1, \dots, T
+y_{it} = \xvec_{it}\betavec + u_{it}, 
+\qquad i = 1, \dots, N, \quad t = 1, \dots, T
 \end{align*}
 
-\noindent
-ou seja:
+\begin{description}[noitemsep]
+	\item [$y_{it}$] escalar;
+	\item [$\xvec_{it}$]  vetor $1 \times K$;
+	\item [$\betavec$] vetor $K \times 1$;
+	\item [$u_{it}$] escalar.
+\end{description}
 
-\vspace{-1 em}
-\begin{align*}
-\E( y_{it} \, | \, \xvec_{i1}, \dots, \xvec_{iT} ) = \xvec_{it} \betavec 
-\; , \qquad t = 1, \dots, T
-\end{align*}
+\begin{description}[noitemsep]
+	\item [$\xvec_{it}$]  possui pelo menos um regressor endógeno
+	\item [$\zvec_{it}$]  é um vetor de instrumentos.
+\end{description}
 
-\noindent
-o que é equivalente a hipótese de que utilizamos o modelo linear correto.
-
-Para o seguinte modelo:
-
-\vspace{-1.5 em}
-\begin{align*}
-y_{it} = \mbs{z}_{it} \mbs{\gamma} + \rho y_{i t - 1} + c_{i} + u_{it}.
-\; , \qquad t = 2, \dots, T
-\end{align*}
-
-\noindent
-é \textbf{impossível} termos exogeneidade estrita.
-Isso porque, nesse modelo, de efeitos não observados temos:
-
-\vspace{-1.5 em}
-\begin{align*}
-\E( y_{it} \, | \, \mbs{z}_{i1}, \dots, \mbs{z}_{iT}, y_{it-1}, c_{i}) \neq 0.
-\end{align*}
-
-\noindent
-Isso ocorre porque, $y_{it}$ é afetado por $y_{it-1}$ que contribui para $y_{it}$ com, pelo menos, $\rho c_{i}$.
-
-\begin{equation*}
-\left.
-\begin{aligned}
-y_{it} &= \mbs{z}_{it} \mbs{\gamma} + \rho y_{i t - 1} + c_{i} + u_{it}
-\\
-y_{it-1} &= \mbs{z}_{it-1} \mbs{\gamma} + \rho y_{i t - 2} + c_{i} + u_{it-1}
-\end{aligned}
-\right\} 
-\implies
-y_{it} = \mbs{z}_{it} \mbs{\gamma} +
-\rho (\mbs{z}_{it-1} \mbs{\gamma} + \rho y_{i t - 2} + c_{i} + u_{it-1})
-+ c_{i} + u_{it}.
-\end{equation*}
-
-Para eliminarmos este efeito, podemos tirar a primeira diferença do modelo:
-
-\vspace{-1 em}
-\begin{align}
-\nonumber
-y_{it} - y_{it-1} &= 
-(\mbs{z}_{it} - \mbs{z}_{it-1}) \mbs{\gamma} +
-\rho (y_{i t - 1} -  y_{i t - 2} ) +
-(c_{i} - c_{i}) + (u_{it} - u_{it-1})
-\\
-\label{mod1:FDIV}
-\Aboxed{
-\Delta y_{it} &= 
-\Delta \mbs{z}_{it} \mbs{\gamma} + \rho \Delta y_{i t - 1} + \Delta u_{it}
-\, , \qquad t=3, \dots, T}
-\end{align}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Estimação}
-
-Não podemos estimar o modelo \eqref{mod1:FDIV} por POLS, uma vez que $Cov(\Delta y_{it-1}, \Delta u_{it} ) \neq 0$.
-Como saída, podemos estimar por P2SLS, usando instrumentos para $\Delta y_{it-1}$ (alguns intrumentos para $\Delta y_{it-1}$ são $y_{it-2}, y_{it-3}, \dots, y_{i1}$).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{P2SLS}
-
-\vspace{-1 em}
-\begin{align*}
-y_{it} = \xvec_{it}' \betavec + u_{it}
-\end{align*}
-
-\begin{itemize}\itemsep0pt
-\item $i = 1, \dots, N$
-\item $t = 1, \dots, T$
-\item $y_{it}$ escalar;
-\item $\xvec_{it}$  vetor $K \times 1$;
-\item $\betavec$ vetor $K \times 1$;
-\item $u_{it}$ escalar.
-\end{itemize}
-
-\vspace{-1 em}
+\vspace{-2 em}
 \begin{align*}
 \boxed{
-\betavec^{P2SLS} =  ( \Xmat' \PZ \Xmat )^{-1} ( \Xmat' \PZ \yvec ) }
+\betavechat^{S2SLS} =  ( \Xmat' \PZ \Xmat )^{-1} ( \Xmat' \PZ \yvec ) }
 \end{align*}
 
 \noindent
 com
-
-\vspace{-1 em}
 \begin{align*}
 \boxed{\PZ = \Zmat'(\Zmat'\Zmat)^{-1}\Zmat }
 \end{align*}
@@ -3801,30 +3678,156 @@ onde
 $\PZ$ é a matriz de projeção em $Z$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{FDIV}
+\clearpage
+\subsection{FEIV}
 
-\vspace{-1 em}
+\vspace{-2 em}
 \begin{align*}
-y_{it} &= \xvec_{it}' \betavec + c_{i} + u_{it}
-\; , \quad i = 1, \dots, N
-\; , \quad t = 1, \dots, T
+y_{it} &= \xvec_{it}\betavec + c_{i} + u_{it}, 
+\qquad i = 1, \dots, N, \quad t = 1, \dots, T
 \\
-\Delta y_{it} &= \Delta \xvec_{it}' \betavec + \Delta u_{it}
-\; , \quad i = 1, \dots, N
-\; , \quad t = 2, \dots, T
-\end{align*}
-
-Vamos supor $\Delta x_{it}'$ tem variável endógena ($y_{it}$, no caso).
-$\mbs{w}_{it}$ é um vetor $1 \times L_{t}$ de instrumentos, onde $L_{t} \geq K$.
-Se os instrumentos forem diferentes:
-
-\vspace{-1 em}
-\begin{align*}
-W_{i} = diag( \mbs{w}_{i2}', \mbs{w}_{i3}', \dots, \mbs{w}_{iT}')
+\ddot{y}_{it} &= \ddot{\xvec}_{it}\betavec + \ddtos{u}_{it}, 
+\qquad i = 1, \dots, N, \quad t = 1, \dots, T
 \end{align*}
 
 \noindent
-onde $W_{i}$ é uma matriz $( T - 1 ) \times L$
+Suponha que $\ddot{\xvec}_{it}$ possui pelo menos um regressor endógeno.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{hypo}[\textbf{FEIV.1}]
+\begin{align*}
+	\E(u_{it} | \zvec_{i1}, \dots, \zvec_{iT}, c_{i}) = 0	
+\qquad i = 1, \dots, N, \quad t = 1, \dots, T
+\end{align*}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{hypo}[\textbf{FEIV.2}]
+\item
+\begin{enumerate}[label= \alph*)]
+\item  $\posto \sum_{t=1}^{T} \E( \ddot{\zvec}_{it}\ddot{\zvec}_{it}' ) = L$
+\item  $\posto \sum_{t=1}^{T} \E( \ddot{\xvec}_{it}\ddot{\zvec}_{it}' ) = K$
+\end{enumerate}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{hypo}[\textbf{FEIV.3}]
+\begin{align*}
+\E(\uvec_{i} \uvec_{i}' | \zvec_{i1}, \dots, \zvec_{iT}, c_{i}) = \sigmasq_{u} \Imat_{T}
+\end{align*}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{obs}
+	Podemos usar $\zvec$ ou $\ddot{\zvec}$.
+	O importante é usar instrumentos que variam no tempo.
+\end{obs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Então, 
+\begin{align*}
+\Aboxed{ \betavec^{FEIV} &= 
+\left( \ddot{\Xmat}' \PZdot \ddot{\Xmat} \right)^{-1}
+\left( \ddot \Xmat' \PZdot \ddot \yvec\right)
+}
+\\
+\qquad
+\Aboxed{
+\PZdot &= \ddot \Zmat ( \ddot \Zmat' \ddot \Zmat)^{-1} \ddot \Zmat'}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{obs}
+\begin{align*}
+	\ddot \Xmat' \ddot \Zmat = \sum_{i=1}^{N} \ddot \Xmat_{i}' \ddot \Zmat_{i}
+\end{align*}
+
+\begin{description}[noitemsep]
+	\item[$\ddot \Xmat'$] é uma matriz $K \times NT$ 
+	\item[$\ddot \Xmat_{i}'$] é uma matriz $K \times T$ 
+	\item[$\ddot \Zmat$] é uma matriz $NT \times L$ 
+	\item[$\ddot \Zmat_{i}$] é uma matriz $T \times L$ 
+\end{description}
+
+\end{obs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Variância de FEIV}
+
+\paragraph{Robusta}
+\begin{align*}
+\Avar(\betavec^{FEIV}) = & 
+\left[ 
+\E\left( \ddot{\Xmat}_{i}' \ddot{\Zmat}_{i} \right)
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Zmat}_{i} \right)^{-1}
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Xmat}_{i} \right)
+\right]^{-1}
+\\ &
+\left[ 
+\E\left( \ddot{\Xmat}_{i}' \ddot{\Zmat}_{i} \right)
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Zmat}_{i} \right)^{-1}
+\E\left( \ddot{\Zmat}_{i}' \uvec_{i} \uvec_{i} \ddot{\Zmat}_{i} \right)
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Zmat}_{i} \right)^{-1}
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Xmat}_{i} \right)
+\right]
+\\ &
+\left[ 
+\E\left( \ddot{\Xmat}_{i}' \ddot{\Zmat}_{i} \right)
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Zmat}_{i} \right)^{-1}
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Xmat}_{i} \right)
+\right]^{-1}
+\end{align*}
+
+\paragraph{Homocedástica}
+\begin{align*}
+\Avar(\betavec^{FEIV}) & = 
+\sigmasq_{u}
+\left[ 
+\E\left( \ddot{\Xmat}_{i}' \ddot{\Zmat}_{i} \right)
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Zmat}_{i} \right)^{-1}
+\E\left( \ddot{\Zmat}_{i}' \ddot{\Xmat}_{i} \right)
+\right]^{-1}
+\end{align*}
+
+\noindent
+Estimando $\sigmasq_{u}$:
+\begin{align*}
+	\sigmasq_{u} = \left[ N(T-1) -K \right]^{-1} \sum_{i=1}^{N} \sum_{t=1}^{T} \widehat{\ddot{u}}^{2}_{it}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{obs}
+	FEIV é um estimador S2SLS com $\ddot \Xmat$, $\ddot \Zmat$ e $\ddot \yvec$, mas com $gl= N(T-1) - K$.	
+\end{obs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\subsection{FDIV}
+
+\vspace{-2 em}
+\begin{align*}
+y_{it} &= \xvec_{it}' \betavec + c_{i} + u_{it}, 
+\qquad i = 1, \dots, N; \quad t = 1, \dots, T
+\\
+\Delta y_{it} &= \Delta \xvec_{it}' \betavec + \Delta u_{it},
+\qquad i = 1, \dots, N; \quad t = 2, \dots, T
+\end{align*}
+
+Vamos supor $\Delta \xvec_{it}'$ tem variável endógena.
+$\wvec_{it}$ é um vetor $1 \times L_{t}$ de instrumentos, onde $L_{t} \geq K$.
+Se os instrumentos forem diferentes:
+\begin{align*}
+\Wmat_{i} = \diag( \wvec_{i2}', \wvec_{i3}', \dots, \wvec_{iT}')
+\end{align*}
+
+\noindent
+onde $\Wmat_{i}$ é uma matriz $( T - 1 ) \times L$
 
 \vspace{-1 em}
 \begin{align*}
@@ -3832,36 +3835,34 @@ L = L_{2} + L_{3} + \dots + L_{T}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Hipóteses}
-
-\begin{description}
-\item[FDIV.1:] $\E( \mbs{w}_{it} \Delta u_{it}')$ para $i = 1, \dots, N$, $t = 2, \dots, T$.
-\item[FDIV.2:] $Posto\left[ \E( W_{i}' W_{i} ) \right] = L$
-\item[FDIV.3:] $Posto\left[ \E( W_{i}' \Delta X_{i} ) \right] = K$
-\end{description}
+\begin{hypo}[\textbf{FDIV.1}]
+\begin{align*}
+\E( \mbs{w}_{it} \Delta u_{it}') = \zerovec, \qquad
+i = 1, \dots, N; \quad t = 2, \dots, T.
+\end{align*}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Estimação FDIV}
+\begin{hypo}[\textbf{FDIV.2}]
+\begin{align*}
+&\posto\left[ \E( \Wmat_{i}' \Wmat_{i} ) \right] = L
+\\
+&\posto\left[ \E( \Wmat_{i}' \Delta \Xmat_{i} ) \right] = K
+\end{align*}
+\end{hypo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \vspace{-1 em}
 \begin{align*}
-\boxed{
-\betavec^{FDIV} =  
-\left(
-\Delta \Xmat' \PW \Delta \Xmat 
-\right)^{-1}
-\left(
-\Delta \Xmat' \PW \Delta \yvec
-\right)
-}
-\qquad
-\boxed{
-\PW = \Wmat (\Wmat' \Wmat)^{-1} \Wmat'}
+\Aboxed{ \betavec^{FDIV} &=
+\left( \Delta \Xmat' \PW \Delta \Xmat  \right)^{-1}
+\left( \Delta \Xmat' \PW \Delta \yvec \right) }
+\\
+\Aboxed{\PW &= \Wmat (\Wmat' \Wmat)^{-1} \Wmat'}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Valor Esperado}
-
 \vspace{-1 em}
 \begin{align*}
 \E( \betavec^{FDIV} ) =  
@@ -3871,7 +3872,11 @@ L = L_{2} + L_{3} + \dots + L_{T}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Variância}
+\paragraph{Variância Robusta}
+
+\begin{center}
+\red{REVER}
+\end{center}
 
 \vspace{-1 em}
 \begin{align*}
@@ -3884,21 +3889,88 @@ L = L_{2} + L_{3} + \dots + L_{T}
 &=
 \E\left\{  
 \left[ \Delta \Xmat' \PW \Delta \Xmat \right]^{-1}
-\left[ \Delta \Xmat' \PW \mbs{e} \right]
-\left[ \Delta \Xmat' \PW \mbs{e} \right]'
+\left[ \Delta \Xmat' \PW \ebold \right]
+\left[ \Delta \Xmat' \PW \ebold \right]'
 \left[ \Delta \Xmat' \PW \Delta \Xmat \right]^{-1}
 \right\}
 \\
 &=
 \E\left[
 \left( \Delta \Xmat' \PW \Delta \Xmat \right)^{-1}
-\left( \Delta \Xmat' \PW \mbs{e} \mbs{e}' \PW \Delta \Xmat \right)
+\left( \Delta \Xmat' \PW \ebold \ebold' \PW \Delta \Xmat \right)
 \left( \Delta \Xmat' \PW \Delta \Xmat \right)^{-1}
 \right]
 \end{align*}
 
 \noindent
+onde
 $e_{i} = \Delta u_{it}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Variância Homoceddástica}
+\begin{align*}
+\E(\Wmat_{i}' \ebold_{i} \ebold_{i}' \Wmat_{i}) &=
+\sigmasq_{e} \E(\Wmat_{i}' \Wmat_{i}).
+\\
+\Avar{\betavechat^{FDIV}} &=
+\sigmasq_{e} \left[ \E\left( \Delta \Xmat' \PW \Delta \Xmat \right) \right]^{-1}
+\\ &=
+\sigmasq_{e}
+\left[
+\E(\Delta\Xmat_{i}'\Wmat_{i})
+\E(\Wmat_{i}'\Wmat_{i})^{-1}
+\E(\Wmat_{i}'\Delta\Xmat_{i})
+\right]^{-1}
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{obs}
+Podemos fazer GMM usando matriz ótima:
+\begin{align*}
+	& \E(\Wmat_{i}' \eboldhat_{i} \eboldhat_{i} \Wmat_{i})^{-1}
+	\qquad \text{GMM 2SLS}
+	\\ & \text{ou} \\
+	& \E(\Wmat_{i}' \Omegamathat \Wmat_{i})^{-1}
+	\qquad \text{GMM 3SLS}
+\end{align*}
+
+\end{obs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\subsection{REIV}
+
+Estimador GIV (Generalized IV):
+\begin{align*}
+\yvec_{i} = \Xmat_{i} \betavec + \vvec_{i}, \qquad i=1, \dots, N.
+\end{align*}
+
+\noindent onde
+\begin{align*}
+\E(\vvec_{i} \vvec_{i}') = \Omegamat
+\end{align*}
+
+\noindent
+temos o seguinte modelo transformado
+\begin{align*}
+\Omegamat^{-1/2} \yvec_{i} = \Omegamat^{-1/2}\Xmat_{i} \betavec + \Omegamat^{-1/2}\vvec_{i}
+\end{align*}
+
+\noindent ainda
+\begin{align*}
+\E(\Omegamat^{-1/2}\vvec_{i} \vvec_{i}'\Omegamat^{-1/2}) = 
+\Omegamat^{-1/2}\E(\vvec_{i} \vvec_{i}')\Omegamat^{-1/2} =
+\Omegamat^{-1/2}\Omegamat \Omegamat^{-1/2} = \Imat_{T}.
+\end{align*}
+
+Suponha endogeneidade e matriz de intrumentos $\Zmat_{i}$.
+Vamos usar $\Omegamat^{-1/2} \Zmat_{i}$ como instrumento do modelo transformado.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\subsection{Alguns Testes}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
